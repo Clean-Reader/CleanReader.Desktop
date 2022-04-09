@@ -1,0 +1,95 @@
+﻿<UserControl
+    x:Class="CleanReader.App.Controls.OnlineBookCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:CleanReader.App.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Style x:Key="TipIconBlockStyle" TargetType="local:IconTextBlock">
+            <Setter Property="Foreground" Value="{ThemeResource TextFillColorSecondaryBrush}" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="MaxLines" Value="1" />
+        </Style>
+    </UserControl.Resources>
+
+    <local:CardPanel
+        x:Name="Root"
+        Click="OnRootClick"
+        IsChecked="{x:Bind Data.IsSelected, Mode=OneWay}">
+        <Grid Margin="12" ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid VerticalAlignment="Top" CornerRadius="{StaticResource ControlCornerRadius}">
+                <local:CoverImage
+                    x:Name="CoverImage"
+                    Width="84"
+                    Height="112"
+                    IsShowCover="True">
+                    <local:CoverImage.Resources>
+                        <Style x:Key="HolderBorderStyle2" TargetType="Border">
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter Property="Height" Value="4" />
+                            <Setter Property="CornerRadius" Value="{StaticResource ControlCornerRadius}" />
+                            <Setter Property="Background" Value="{ThemeResource ControlAltFillColorTertiaryBrush}" />
+                        </Style>
+                    </local:CoverImage.Resources>
+                    <local:CoverImage.Placeholder>
+                        <Grid
+                            Padding="12,8"
+                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                            CornerRadius="{StaticResource ControlCornerRadius}">
+                            <StackPanel VerticalAlignment="Center" Spacing="8">
+                                <Border Style="{StaticResource HolderBorderStyle2}" />
+                                <Border Style="{StaticResource HolderBorderStyle2}" />
+                                <Border Style="{StaticResource HolderBorderStyle2}" />
+                                <Border Style="{StaticResource HolderBorderStyle2}" />
+                                <Border Style="{StaticResource HolderBorderStyle2}" />
+                                <Border Style="{StaticResource HolderBorderStyle2}" />
+                                <Border
+                                    Style="{StaticResource HolderBorderStyle2}"
+                                    Width="32"
+                                    HorizontalAlignment="Left" />
+                            </StackPanel>
+                        </Grid>
+                    </local:CoverImage.Placeholder>
+                </local:CoverImage>
+            </Grid>
+            <Grid Grid.Column="1" RowSpacing="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    x:Name="TitleBlock"
+                    HorizontalAlignment="Left"
+                    FontWeight="Bold"
+                    TextTrimming="CharacterEllipsis" />
+                <local:IconTextBlock
+                    x:Name="AuthorBlock"
+                    Style="{StaticResource TipIconBlockStyle}"
+                    Grid.Row="1"
+                    Icon="&#xE13D;" />
+                <local:IconTextBlock
+                    x:Name="LatestChapterBlock"
+                    Style="{StaticResource TipIconBlockStyle}"
+                    Grid.Row="2"
+                    Icon="&#xE8FD;" />
+                <local:IconTextBlock
+                    x:Name="DescriptionBlock"
+                    Style="{StaticResource TipIconBlockStyle}"
+                    Grid.Row="3"
+                    Icon="&#xE8A1;"
+                    MaxLines="2" />
+            </Grid>
+        </Grid>
+    </local:CardPanel>
+</UserControl>

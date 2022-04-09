@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8' ?>
+<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1" xml:lang="zh-CN">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta content="2" name="dtb:depth"/>
+        <meta content="0" name="dtb:totalPageCount"/>
+        <meta content="0" name="dtb:maxPageNumber"/>
+        <meta content="c3670885-81de-45d3-b838-6f5a65ccedd0" name="dtb:uid"/>
+        <meta content="calibre (3.23.0)" name="dtb:generator"/>
+    </head>
+    <docTitle>
+        <text>
+            {{title}}
+        </text>
+    </docTitle>
+    <docAuthor>
+        <text>
+            {{author}}
+        </text>
+    </docAuthor>
+    <navMap>
+{{navMap}}
+    </navMap>
+</ncx>

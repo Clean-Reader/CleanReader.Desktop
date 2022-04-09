@@ -1,0 +1,736 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>关于干净阅读</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>添加</value>
+  </data>
+  <data name="AddBook" xml:space="preserve">
+    <value>添加书籍</value>
+  </data>
+  <data name="AddToShelf" xml:space="preserve">
+    <value>加入书架</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="AllBookSources" xml:space="preserve">
+    <value>全部书源</value>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>既可以从网络获取内容，也可以阅读本地TXT，EPUB书籍</value>
+  </data>
+  <data name="AppLanguage" xml:space="preserve">
+    <value>应用语言</value>
+  </data>
+  <data name="AppLanguageDescription" xml:space="preserve">
+    <value>选择应用将使用的界面语言，重启应用后生效</value>
+  </data>
+  <data name="ApplicationTheme" xml:space="preserve">
+    <value>应用主题</value>
+  </data>
+  <data name="ApplicationThemeDescription" xml:space="preserve">
+    <value>选择要显示的应用主题</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>干净阅读</value>
+  </data>
+  <data name="AppShouldUpdate" xml:space="preserve">
+    <value>该书库由更高版本的应用创建，访问之前您需要先升级您的应用</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>作者</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="Background" xml:space="preserve">
+    <value>背景色</value>
+  </data>
+  <data name="BackToShelf" xml:space="preserve">
+    <value>返回书架</value>
+  </data>
+  <data name="BookInformation" xml:space="preserve">
+    <value>书籍信息</value>
+  </data>
+  <data name="BookInformationDescription" xml:space="preserve">
+    <value>您可以在这里查看或修改书籍的元数据，点击保存后，您的修改将会被记录在数据库中</value>
+  </data>
+  <data name="BookName" xml:space="preserve">
+    <value>书名</value>
+  </data>
+  <data name="BookNameInputTip" xml:space="preserve">
+    <value>请输入书名/作者</value>
+  </data>
+  <data name="BookNotExist" xml:space="preserve">
+    <value>书籍文件不存在或已损坏，您可以返回书架后移除书籍条目并重新导入</value>
+  </data>
+  <data name="BookSourceDoc" xml:space="preserve">
+    <value>书源文档</value>
+  </data>
+  <data name="BookSourceManagement" xml:space="preserve">
+    <value>书源管理</value>
+  </data>
+  <data name="BookSourceName" xml:space="preserve">
+    <value>书源名</value>
+  </data>
+  <data name="BookSyncProgress" xml:space="preserve">
+    <value>已同步书籍：{0}/{1}</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
+  <data name="CanNotAccessLibrary" xml:space="preserve">
+    <value>访问书库失败，请确保你已经打开了应用的文件系统访问权限</value>
+  </data>
+  <data name="Catalog" xml:space="preserve">
+    <value>目录</value>
+  </data>
+  <data name="ChapterDownloadingProgress" xml:space="preserve">
+    <value>正在下载章节 {0}/{1} ...</value>
+  </data>
+  <data name="ChapterSplitDescription" xml:space="preserve">
+    <value>对于 TXT 书籍，应用提供默认的表达式来拆分章节。如果下面的结果不符合您的需求，您可以自定义正则表达式来拆分章节</value>
+  </data>
+  <data name="ChapterSplitTitle" xml:space="preserve">
+    <value>章节拆分</value>
+  </data>
+  <data name="ChooseImportWayDescription" xml:space="preserve">
+    <value>你可以从本地导入书籍，也可以在线从书源中搜索书籍添加</value>
+  </data>
+  <data name="ChooseImportWayTitle" xml:space="preserve">
+    <value>选择添加方式</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="CloseLibrary" xml:space="preserve">
+    <value>关闭书库</value>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>颜色</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>确认</value>
+  </data>
+  <data name="ContinueReading" xml:space="preserve">
+    <value>继续阅读</value>
+  </data>
+  <data name="ContinueReadingDescription" xml:space="preserve">
+    <value>继续阅读上次退出时未关闭的书籍</value>
+  </data>
+  <data name="ConvertingAndMovingFile" xml:space="preserve">
+    <value>正在转换并移动文件...</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>复制</value>
+  </data>
+  <data name="CoverUrl" xml:space="preserve">
+    <value>封面链接</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>创建</value>
+  </data>
+  <data name="CreateBookSource" xml:space="preserve">
+    <value>创建书源</value>
+  </data>
+  <data name="CreateBookSourceDescription" xml:space="preserve">
+    <value>创建一个具有指定内容的新书源，配置完成后将会使用您习惯的编辑器打开文件</value>
+  </data>
+  <data name="CreateLibraryFolderDescription" xml:space="preserve">
+    <value>选择一个空文件夹，应用会帮助你进行一些初始化工作。之后您导入的书籍都会在该书库中建立备份</value>
+  </data>
+  <data name="CreateLibraryFolderTitle" xml:space="preserve">
+    <value>创建新书库</value>
+  </data>
+  <data name="CreateNewShelf" xml:space="preserve">
+    <value>创建新书架</value>
+  </data>
+  <data name="CreateNewShelfTip" xml:space="preserve">
+    <value>创建一个新的书架，该书架不能与现有书架同名</value>
+  </data>
+  <data name="Dark" xml:space="preserve">
+    <value>深色</value>
+  </data>
+  <data name="DatabaseMigrating" xml:space="preserve">
+    <value>数据库结构更新，正在迁移中...</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
+  </data>
+  <data name="DeleteBookSourceWarning" xml:space="preserve">
+    <value>是否要删除该书源？删除后从该书源获取的书籍可能无法正常更新</value>
+  </data>
+  <data name="DeleteBookWarning" xml:space="preserve">
+    <value>是否要删除该书籍？
+该书将会从你的书库中被移除，与该书有关的历史记录和笔记也都会被删除</value>
+  </data>
+  <data name="DeleteShelfWarning" xml:space="preserve">
+    <value>是否要删除书架 {0} ？书架内的书将会移至未分类而不会被删除</value>
+  </data>
+  <data name="DeletingBook" xml:space="preserve">
+    <value>正在删除书籍</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>描述</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>详情</value>
+  </data>
+  <data name="DurationEmpty" xml:space="preserve">
+    <value>还没有记录的阅读数据，请阅读书籍后再来查看~</value>
+  </data>
+  <data name="EditAdditionalStyle" xml:space="preserve">
+    <value>编辑附加样式</value>
+  </data>
+  <data name="Explore" xml:space="preserve">
+    <value>探索 &amp; 发现</value>
+  </data>
+  <data name="ExploreBookAdded" xml:space="preserve">
+    <value>已添加新书，请返回书架查看</value>
+  </data>
+  <data name="FailedToDownload" xml:space="preserve">
+    <value>下载失败，请稍后重试</value>
+  </data>
+  <data name="FirstReplaceTip" xml:space="preserve">
+    <value>请切换书源以进行搜索</value>
+  </data>
+  <data name="FirstSearchTip" xml:space="preserve">
+    <value>请输入关键词以查找书籍</value>
+  </data>
+  <data name="FollowSystem" xml:space="preserve">
+    <value>跟随系统</value>
+  </data>
+  <data name="FontFamily" xml:space="preserve">
+    <value>字体</value>
+  </data>
+  <data name="FontSize" xml:space="preserve">
+    <value>字号</value>
+  </data>
+  <data name="Foreground" xml:space="preserve">
+    <value>前景色</value>
+  </data>
+  <data name="FromGoogleTranslate" xml:space="preserve">
+    <value>来自谷歌翻译</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>全屏</value>
+  </data>
+  <data name="GettingChapters" xml:space="preserve">
+    <value>正在获取章节...</value>
+  </data>
+  <data name="HasUpdate" xml:space="preserve">
+    <value>新版本发布</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>帮助 &amp; 支持</value>
+  </data>
+  <data name="Highlight" xml:space="preserve">
+    <value>高亮标记</value>
+  </data>
+  <data name="HighlightNotes" xml:space="preserve">
+    <value>高亮笔记</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>小时</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>标识符</value>
+  </data>
+  <data name="IdRepeat" xml:space="preserve">
+    <value>Id 与现有的书源重复</value>
+  </data>
+  <data name="IgnoreVersion" xml:space="preserve">
+    <value>忽略该版本</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>导入</value>
+  </data>
+  <data name="ImportFromLocal" xml:space="preserve">
+    <value>从本地导入</value>
+  </data>
+  <data name="ImportFromLocalTip" xml:space="preserve">
+    <value>支持 .txt, .epub 书籍</value>
+  </data>
+  <data name="InitializeDatabase" xml:space="preserve">
+    <value>数据初始化中...</value>
+  </data>
+  <data name="Interface" xml:space="preserve">
+    <value>界面</value>
+  </data>
+  <data name="InternalSearchTip" xml:space="preserve">
+    <value>请输入关键词进行搜索，点击搜索结果即可跳转到对应页面</value>
+  </data>
+  <data name="InvalidFilePath" xml:space="preserve">
+    <value>文件路径不可用</value>
+  </data>
+  <data name="InvalidLibraryPath" xml:space="preserve">
+    <value>书库路径不可用，请重新选择书库</value>
+  </data>
+  <data name="InvalidSource" xml:space="preserve">
+    <value>失效书源</value>
+  </data>
+  <data name="JumpTo" xml:space="preserve">
+    <value>跳转</value>
+  </data>
+  <data name="JumpToNotePosition" xml:space="preserve">
+    <value>跳转到笔记位置</value>
+  </data>
+  <data name="Keyword" xml:space="preserve">
+    <value>关键词</value>
+  </data>
+  <data name="KeywordPlaceholder" xml:space="preserve">
+    <value>请输入要查找的内容</value>
+  </data>
+  <data name="LanguageRestartTip" xml:space="preserve">
+    <value>语言已更改，重启应用后生效</value>
+  </data>
+  <data name="LastReadTime" xml:space="preserve">
+    <value>最近阅读时间</value>
+  </data>
+  <data name="LibraryDoNotHaveRequiredFiles" xml:space="preserve">
+    <value>该书库已损坏，不包含书库所必须的元数据</value>
+  </data>
+  <data name="LibraryLocation" xml:space="preserve">
+    <value>书库位置</value>
+  </data>
+  <data name="LibraryLocationDescription" xml:space="preserve">
+    <value>你可以查看或者关闭当前书库</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>浅色</value>
+  </data>
+  <data name="LineHeight" xml:space="preserve">
+    <value>行高</value>
+  </data>
+  <data name="LoadBookFailed" xml:space="preserve">
+    <value>加载书籍失败</value>
+  </data>
+  <data name="LoadingOnlineBooks" xml:space="preserve">
+    <value>正在加载网络书籍...</value>
+  </data>
+  <data name="LoadMore" xml:space="preserve">
+    <value>加载更多</value>
+  </data>
+  <data name="LoadTocFailed" xml:space="preserve">
+    <value>无法加载有效的目录</value>
+  </data>
+  <data name="LocalBook" xml:space="preserve">
+    <value>本地图书</value>
+  </data>
+  <data name="LocalPath" xml:space="preserve">
+    <value>本地路径</value>
+  </data>
+  <data name="MiniView" xml:space="preserve">
+    <value>迷你视图</value>
+  </data>
+  <data name="Modify" xml:space="preserve">
+    <value>修改</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>更多</value>
+  </data>
+  <data name="MoveToTop" xml:space="preserve">
+    <value>置顶</value>
+  </data>
+  <data name="MovingFile" xml:space="preserve">
+    <value>正在移动文件...</value>
+  </data>
+  <data name="MyBookShelf" xml:space="preserve">
+    <value>我的书架</value>
+  </data>
+  <data name="NextChapter" xml:space="preserve">
+    <value>下一章</value>
+  </data>
+  <data name="NoDescription" xml:space="preserve">
+    <value>此书暂无简介</value>
+  </data>
+  <data name="NoSelectedOnlineBook" xml:space="preserve">
+    <value>没有合适的在线书籍被选中</value>
+  </data>
+  <data name="NoShelf" xml:space="preserve">
+    <value>还没有创建书架哦~</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>笔记</value>
+  </data>
+  <data name="NoteEmpty" xml:space="preserve">
+    <value>你还没有记笔记哟~</value>
+  </data>
+  <data name="NoteManagement" xml:space="preserve">
+    <value>笔记管理</value>
+  </data>
+  <data name="NotStarted" xml:space="preserve">
+    <value>未开始</value>
+  </data>
+  <data name="OnlineBook" xml:space="preserve">
+    <value>在线图书</value>
+  </data>
+  <data name="OnlineSearch" xml:space="preserve">
+    <value>在线搜索</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>打开</value>
+  </data>
+  <data name="OpenCurrentNotes" xml:space="preserve">
+    <value>打开本书笔记</value>
+  </data>
+  <data name="OpenDownloadPage" xml:space="preserve">
+    <value>前往下载</value>
+  </data>
+  <data name="OpenInBroswer" xml:space="preserve">
+    <value>在浏览器中打开</value>
+  </data>
+  <data name="OpenLibrary" xml:space="preserve">
+    <value>打开书库</value>
+  </data>
+  <data name="OpenLibraryFolderDescription" xml:space="preserve">
+    <value>选择一个已有的干净阅读书库，其中包含了必要的干净阅读元数据文件</value>
+  </data>
+  <data name="OpenLibraryFolderTitle" xml:space="preserve">
+    <value>打开书库文件夹</value>
+  </data>
+  <data name="OpenSettings" xml:space="preserve">
+    <value>打开设置</value>
+  </data>
+  <data name="OpenWith" xml:space="preserve">
+    <value>通过其它应用打开</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>排序</value>
+  </data>
+  <data name="OriginalSource" xml:space="preserve">
+    <value>原书源</value>
+  </data>
+  <data name="Personalization" xml:space="preserve">
+    <value>个性化</value>
+  </data>
+  <data name="PlaceholderText" xml:space="preserve">
+    <value>鸡蛋因适当的温度而变化为鸡，但温度不能使石头变为鸡</value>
+  </data>
+  <data name="PreRelease" xml:space="preserve">
+    <value>预发布</value>
+  </data>
+  <data name="PreviousChapter" xml:space="preserve">
+    <value>上一章</value>
+  </data>
+  <data name="Read" xml:space="preserve">
+    <value>阅读</value>
+  </data>
+  <data name="ReadTime" xml:space="preserve">
+    <value>阅读时长</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>刷新</value>
+  </data>
+  <data name="Regex" xml:space="preserve">
+    <value>正则表达式</value>
+  </data>
+  <data name="Reload" xml:space="preserve">
+    <value>重新加载</value>
+  </data>
+  <data name="Replace" xml:space="preserve">
+    <value>替换</value>
+  </data>
+  <data name="ReplaceSource" xml:space="preserve">
+    <value>替换书源</value>
+  </data>
+  <data name="ReplaceSourceDescription" xml:space="preserve">
+    <value>将该网络书籍的书源替换为其它的书源，这将重新下载书籍。需要注意的是，尽管进度和笔记得以保留，但如果书籍内容变动较大，进度与笔记可能会有偏差</value>
+  </data>
+  <data name="ReselectLibrary" xml:space="preserve">
+    <value>重新选择书库</value>
+  </data>
+  <data name="Retry" xml:space="preserve">
+    <value>重试</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>搜索</value>
+  </data>
+  <data name="SearchOnline" xml:space="preserve">
+    <value>在线搜索</value>
+  </data>
+  <data name="SearchOnlineDescription" xml:space="preserve">
+    <value>从您已有的书源中搜索包含指定关键词的书籍</value>
+  </data>
+  <data name="SearchOnlineTip" xml:space="preserve">
+    <value>从书源中搜索书籍</value>
+  </data>
+  <data name="SearchResultIsEmpty" xml:space="preserve">
+    <value>没有找到包含指定关键词的搜索结果</value>
+  </data>
+  <data name="SearchSomething" xml:space="preserve">
+    <value>找找你感兴趣的内容吧</value>
+  </data>
+  <data name="SelectionModeOpen" xml:space="preserve">
+    <value>文本选择模式已开启</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>分享</value>
+  </data>
+  <data name="ShelfEmpty" xml:space="preserve">
+    <value>当前书架没有指定的书籍哦~</value>
+  </data>
+  <data name="ShelfList" xml:space="preserve">
+    <value>书架列表</value>
+  </data>
+  <data name="ShelfManagement" xml:space="preserve">
+    <value>书架管理</value>
+  </data>
+  <data name="ShelfManagementDescription" xml:space="preserve">
+    <value>你可以在这里新建或修改书架</value>
+  </data>
+  <data name="ShelfPlaceholder" xml:space="preserve">
+    <value>请输入书架名称</value>
+  </data>
+  <data name="ShelfSelection" xml:space="preserve">
+    <value>选择书架</value>
+  </data>
+  <data name="ShelfSelectionDescription" xml:space="preserve">
+    <value>你可以选择现有书架或者创建一个新的书架</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>登录</value>
+  </data>
+  <data name="SigningIn" xml:space="preserve">
+    <value>登录中...</value>
+  </data>
+  <data name="SmoothScrolling" xml:space="preserve">
+    <value>平滑滚动</value>
+  </data>
+  <data name="SortByLastRead" xml:space="preserve">
+    <value>按最近阅读排序</value>
+  </data>
+  <data name="SortByName" xml:space="preserve">
+    <value>按书名排序</value>
+  </data>
+  <data name="SortByProgress" xml:space="preserve">
+    <value>按进度排序</value>
+  </data>
+  <data name="SortByTimeAdded" xml:space="preserve">
+    <value>按添加时间排序</value>
+  </data>
+  <data name="SortByType" xml:space="preserve">
+    <value>按类型排序</value>
+  </data>
+  <data name="SourceEmpty" xml:space="preserve">
+    <value>当前应用没有可用的书源，快添加一个吧！</value>
+  </data>
+  <data name="SplitChaptersIsEmpty" xml:space="preserve">
+    <value>没有拆分出有效章节</value>
+  </data>
+  <data name="SpreadMinWidth" xml:space="preserve">
+    <value>最小分栏阅读宽度</value>
+  </data>
+  <data name="SpreadMinWidthDescription" xml:space="preserve">
+    <value>在应用窗口达到此宽度后，将会使用双栏阅读</value>
+  </data>
+  <data name="StartupBottomTip" xml:space="preserve">
+    <value>应用目前支持 TXT, EPUB 类型的本地书籍，同时您可以根据协议自定义书源来获取在线书籍</value>
+  </data>
+  <data name="SupportBookDetail" xml:space="preserve">
+    <value>支持获取书籍详情</value>
+  </data>
+  <data name="SupportChapter" xml:space="preserve">
+    <value>支持获取目录</value>
+  </data>
+  <data name="SupportChapterContent" xml:space="preserve">
+    <value>支持获取章节内容</value>
+  </data>
+  <data name="SupportExplore" xml:space="preserve">
+    <value>支持发现模块</value>
+  </data>
+  <data name="SupportSearch" xml:space="preserve">
+    <value>支持搜索模块</value>
+  </data>
+  <data name="Sync" xml:space="preserve">
+    <value>同步</value>
+  </data>
+  <data name="TargetFolderShouldEmpty" xml:space="preserve">
+    <value>用于创建书库的目标文件夹应该是空文件夹</value>
+  </data>
+  <data name="ThemeRestartTip" xml:space="preserve">
+    <value>主题已更改，重启应用后生效</value>
+  </data>
+  <data name="TimeRatio" xml:space="preserve">
+    <value>时长占比</value>
+  </data>
+  <data name="Tip" xml:space="preserve">
+    <value>提示</value>
+  </data>
+  <data name="Tools" xml:space="preserve">
+    <value>工具</value>
+  </data>
+  <data name="TotalDuration" xml:space="preserve">
+    <value>总阅读时长</value>
+  </data>
+  <data name="TransferShelf" xml:space="preserve">
+    <value>移至书架</value>
+  </data>
+  <data name="Translate" xml:space="preserve">
+    <value>翻译</value>
+  </data>
+  <data name="TranslateError" xml:space="preserve">
+    <value>尝试翻译选中语句失败</value>
+  </data>
+  <data name="TranslateResult" xml:space="preserve">
+    <value>翻译结果</value>
+  </data>
+  <data name="Translating" xml:space="preserve">
+    <value>正在翻译...</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>类型</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>更新</value>
+  </data>
+  <data name="UpdateApp" xml:space="preserve">
+    <value>更新应用</value>
+  </data>
+  <data name="UpdateShelf" xml:space="preserve">
+    <value>更新书架</value>
+  </data>
+  <data name="UpdateShelfTip" xml:space="preserve">
+    <value>使用新的书架名称</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>版本</value>
+  </data>
+  <data name="WebUrl" xml:space="preserve">
+    <value>网址</value>
+  </data>
+  <data name="WelcomeDescription" xml:space="preserve">
+    <value>干净阅读现在为 Windows 11 设计，已成为完全的本地化阅读器，您可以在本地创建书库，或将书库保存在您的云盘中以获得云同步的功能 ( OneDrive 需要打开文件访问权限 )</value>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>欢迎使用干净阅读</value>
+  </data>
+  <data name="Words" xml:space="preserve">
+    <value>字</value>
+  </data>
+</root>

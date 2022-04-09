@@ -1,0 +1,290 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>CleanReader.App</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <Platforms>x86;x64;arm64</Platforms>
+    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <PublishProfile>win10-$(Platform).pubxml</PublishProfile>
+    <UseWinUI>true</UseWinUI>
+  </PropertyGroup>
+  
+  <!-- Turn off XAML’s generated Program code -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|arm64'">
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|arm64'">
+    <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Controls\AppTitleBar.xaml" />
+    <None Remove="Controls\App\CustomDialog\CustomDialog.xaml" />
+    <None Remove="Controls\App\ExpanderEx.xaml" />
+    <None Remove="Controls\App\FileSystemErrorPanel.xaml" />
+    <None Remove="Controls\App\TipPopup.xaml" />
+    <None Remove="Controls\BookInformationDialog.xaml" />
+    <None Remove="Controls\ContinueReadingSettingItem.xaml" />
+    <None Remove="Controls\CoverImage.xaml" />
+    <None Remove="Controls\CreateBookSourceDialog.xaml" />
+    <None Remove="Controls\CreateOrUpdateShelfDialog.xaml" />
+    <None Remove="Controls\IconTextBlock.xaml" />
+    <None Remove="Controls\ImportWayButton.xaml" />
+    <None Remove="Controls\ImportWayDialog.xaml" />
+    <None Remove="Controls\InternalSearchDialog.xaml" />
+    <None Remove="Controls\LanguageSettingItem.xaml" />
+    <None Remove="Controls\LastReadSettingItem.xaml" />
+    <None Remove="Controls\LibrarySettingItem.xaml" />
+    <None Remove="Controls\OnlineBookCard.xaml" />
+    <None Remove="Controls\OnlineSearchDialog.xaml" />
+    <None Remove="Controls\Popups\ConfirmDialog.xaml" />
+    <None Remove="Controls\Popups\GithubUpdateDialog.xaml" />
+    <None Remove="Controls\ProgressDialog.xaml" />
+    <None Remove="Controls\ReaderCatalog.xaml" />
+    <None Remove="Controls\ReaderHighlightDialog.xaml" />
+    <None Remove="Controls\ReaderMenu.xaml" />
+    <None Remove="Controls\ReaderNotes.xaml" />
+    <None Remove="Controls\ReaderStyleOptions.xaml" />
+    <None Remove="Controls\ReplaceSourceDialog.xaml" />
+    <None Remove="Controls\ShelfBookCard.xaml" />
+    <None Remove="Controls\ShelfSettingItem.xaml" />
+    <None Remove="Controls\ShelfTransferDialog.xaml" />
+    <None Remove="Controls\SpreadSettingItem.xaml" />
+    <None Remove="Controls\ThemeSettingItem.xaml" />
+    <None Remove="Controls\TxtSplitDialog.xaml" />
+    <None Remove="Controls\UserButton.xaml" />
+    <None Remove="Pages\BookSourceDetailPage.xaml" />
+    <None Remove="Pages\BookSourceOverviewPage.xaml" />
+    <None Remove="Pages\ExplorePage.xaml" />
+    <None Remove="Pages\MigrationPage.xaml" />
+    <None Remove="Pages\NoteOverviewPage.xaml" />
+    <None Remove="Pages\ReadDurationPage.xaml" />
+    <None Remove="Pages\ReaderPage.xaml" />
+    <None Remove="Pages\SettingsPage.xaml" />
+    <None Remove="Pages\ShelfPage.xaml" />
+    <None Remove="Pages\StartupPage.xaml" />
+    <None Remove="Themes\Style.Dimensions.xaml" />
+    <None Remove="Themes\Themes.Dark.xaml" />
+    <None Remove="Themes\Themes.HighContrast.xaml" />
+    <None Remove="Themes\Themes.Light.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Remove="Controls\CardPanel.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Animations" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
+    <PackageReference Include="CommunityToolkit.WinUI.UI.Media" Version="7.1.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.2" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.197" />
+    <PackageReference Include="PInvoke.User32" Version="0.7.104" />
+    <Manifest Include="$(ApplicationManifest)" />
+  </ItemGroup>
+
+  <!-- Defining the "Msix" ProjectCapability here allows the Single-project MSIX Packaging
+       Tools extension to be activated for this project even if the Windows App SDK Nuget
+       package has not yet been restored -->
+  <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnablePreviewMsixTooling)'=='true'">
+    <ProjectCapability Include="Msix" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CleanReader.Core\CleanReader.Core.csproj" />
+    <ProjectReference Include="..\Models\Models.Resources\Models.Resources.csproj" />
+    <ProjectReference Include="..\Utilities\Generator\Generator.String\Generator.String.csproj" />
+    <ProjectReference Include="..\Utilities\Locator\Locator.Lib\Locator.Lib.csproj" />
+    <ProjectReference Include="..\Utilities\Toolkit\Toolkit.Desktop\Toolkit.Desktop.csproj" />
+    <ProjectReference Include="..\Utilities\Toolkit\Toolkit.Interfaces\Toolkit.Interfaces.csproj" />
+    <ProjectReference Include="..\ViewModels\ViewModels.Desktop\ViewModels.Desktop.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\App\CustomDialog\CustomDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\App\ExpanderEx.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\Popups\BookInformationDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\App\FileSystemErrorPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\App\TipPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <None Update="Controls\CardPanel\CardPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <Page Update="Themes\Style.Dimensions.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Popups\GithubUpdateDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <PackageReference Update="Microsoft.CodeAnalysis.Metrics" Version="3.3.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <Page Update="Controls\Settings\LanguageSettingItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Popups\ReplaceSourceDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\App\CoverImage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Reader\ReaderNotes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\ReadDurationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\MigrationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Popups\CreateBookSourceDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Settings\ShelfSettingItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Popups\CreateOrUpdateShelfDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Popups\ShelfTransferDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Settings\ContinueReadingSettingItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\NoteOverviewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Settings\ThemeSettingItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Settings\SpreadSettingItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Settings\LibrarySettingItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Popups\InternalSearchDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Popups\ReaderHighlightDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Popups\ReaderStyleOptionsDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Reader\ReaderMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Reader\ReaderCatalog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\ReaderPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Popups\ConfirmDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Reader\ShelfBookCard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\App\IconTextBlock.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Reader\OnlineBookCard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Popups\OnlineSearchDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Popups\ProgressDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Popups\TxtSplitDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Dialogs\ImportWayDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\App\ImportWayButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\StartupPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\BookSourceDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\BookSourceOverviewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\ExplorePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\ShelfPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Themes\Themes.HighContrast.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Themes\Themes.Dark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Pages\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Themes\Themes.Light.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\App\AppTitleBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+</Project>

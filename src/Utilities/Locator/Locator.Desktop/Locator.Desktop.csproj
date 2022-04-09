@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>Locator.Desktop</RootNamespace>
+    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <UseWinUI>true</UseWinUI>
+    <Platforms>AnyCPU;x64;x86</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+      <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
+      <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Models\Models.Constants\Models.Constants.csproj" />
+    <ProjectReference Include="..\..\Toolkit\Toolkit.Interfaces\Toolkit.Interfaces.csproj" />
+    <ProjectReference Include="..\Locator.Lib\Locator.Lib.csproj" />
+  </ItemGroup>
+</Project>

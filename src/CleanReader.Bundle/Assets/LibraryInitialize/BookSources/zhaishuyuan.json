@@ -1,0 +1,211 @@
+﻿{
+  "Id": "zhaishuyuan",
+  "Name": "斋书苑",
+  "WebUrl": "https://www.zhaishuyuan.org",
+  "IsBookDetailEnabled": false,
+  "IsExploreEnabled": true,
+  "Charset": "utf-8",
+  "Search": {
+    "SearchUrl": "https://www.zhaishuyuan.org/search/",
+    "DataType": "HTML",
+    "Request": {
+      "Method": "POST",
+      "Body": "searchkey={{keyword}}",
+      "DataType": "form" /*三种取值，form表示表格数据，raw表示文本数据，json表示JSON数据*/
+    },
+    "Range": "div[id='sitembox'] dl",
+    "Repair": [
+      {
+        "Field": 1,
+        "Position": "l",
+        "Value": "https://www.zhaishuyuan.org"
+      }
+    ],
+    "Replace": [],
+    "BookName": {
+      "Type": "text",
+      "Rule": "dd h3 a",
+      "Filter": ""
+    },
+    "BookUrl": {
+      "Type": "href",
+      "Rule": "dd h3 a",
+      "Filter": ""
+    },
+    "BookAuthor": {
+      "Type": "text",
+      "Rule": "dd[class='book_other'] span a",
+      "Filter": ""
+    },
+    "BookStatus": {
+      "Type": "text",
+      "Rule": "dd[class='book_other'] span:nth-child(2)",
+      "Filter": ""
+    },
+    "LastChapterTitle": {
+      "Type": "text",
+      "Rule": "dd[class='book_other']:nth-last-child(1) a",
+      "Filter": ""
+    },
+    "LastChapterUrl": {
+      "Type": "href",
+      "Rule": "dd[class='book_other']:nth-last-child(1) a",
+      "Filter": ""
+    },
+    "UpdateTime": {
+      "Type": "text",
+      "Rule": "dd[class='book_other']:nth-last-child(1) span",
+      "Filter": ""
+    },
+    "Category": {
+      "Type": "text",
+      "Rule": "dd[class='book_other'] span:nth-last-child(2)",
+      "Filter": ""
+    },
+    "BookDescription": {
+      "Type": "text",
+      "Rule": "dd[class='book_des']",
+      "Filter": ""
+    },
+    "BookCover": {
+      "Type": "src",
+      "Rule": "dt a img",
+      "Filter": ""
+    }
+  },
+  "Chapter": {
+    "Range": "div[id='readerlist'] ul li",
+    "Repair": [
+      {
+        "Field": 1,
+        "Position": "l",
+        "Value": "https://www.zhaishuyuan.org"
+      },
+      {
+        "Field": 7,
+        "Position": "l",
+        "Value": "https://www.zhaishuyuan.org"
+      }
+    ],
+    "Title": {
+      "Type": "text",
+      "Rule": "a",
+      "Filter": ""
+    },
+    "Url": {
+      "Type": "href",
+      "Rule": "a",
+      "Filter": ""
+    }
+  },
+  "ChapterContent": {
+    "Range": "div[id='center']",
+    "Content": {
+      "Type": "text",
+      "Rule": "div[id='content']",
+      "Filter": ""
+    },
+    "NextPage": {
+      "Range": "div[class='jump'] a[id='next_url']",
+      "Type": "href",
+      "Filter": "",
+      "Repair": [
+        {
+          "Field": 1,
+          "Position": "l",
+          "Value": "https://www.zhaishuyuan.org"
+        }
+      ],
+      "Match": {
+        "Type": "text",
+        "Rule": "div[class='jump'] a[id='next_url']",
+        "Filter": "\\s*",
+        "MatchRule": "下一页"
+      }
+    }
+  },
+  "Explore": {
+    "Categories": [
+      {
+        "Name": "玄幻小说",
+        "Url": "/category/xuanhuan_{{page}}.html"
+      },
+      {
+        "Name": "武侠仙侠",
+        "Url": "/category/wuxia_{{page}}.html"
+      },
+      {
+        "Name": "都市小说",
+        "Url": "/category/dushi_{{page}}.html"
+      },
+      {
+        "Name": "穿越小说",
+        "Url": "/category/chuanyue_{{page}}.html"
+      },
+      {
+        "Name": "网游小说",
+        "Url": "/category/wangyou_{{page}}.html"
+      },
+      {
+        "Name": "科幻小说",
+        "Url": "/category/kehuan_{{page}}.html"
+      },
+      {
+        "Name": "悬疑小说",
+        "Url": "/category/xuanyi_{{page}}.html"
+      },
+      {
+        "Name": "其它小说",
+        "Url": "/category/qita_{{page}}.html"
+      }
+    ],
+    "Range": "div[class=shulist] ul",
+    "Repair": [
+      {
+        "Field": 1,
+        "Position": "l",
+        "Value": "https://www.zhaishuyuan.org"
+      }
+    ],
+    "Replace": [
+      {
+        "Field": 2,
+        "Old": "/book/(\\d+)/(\\d+)",
+        "New": "https://img.zhaishuyuan.org/{{1}}/{{2}}/{{2}}s.jpg"
+      }
+    ],
+    "BookName": {
+      "Type": "text",
+      "Rule": "li[class='three'] a"
+    },
+    "BookUrl": {
+      "Type": "href",
+      "Rule": "li[class='three'] a"
+    },
+    "BookCover": {
+      "Type": "href",
+      "Rule": "li[class='three'] a"
+    },
+    "BookAuthor": {
+      "Type": "text",
+      "Rule": "li[class='four'] a"
+    },
+    "LastChapterTitle": {
+      "Type": "title",
+      "Rule": "li[class='three'] span a"
+    },
+    "LastChapterUrl": {
+      "Type": "href",
+      "Rule": "li[class='three'] span a"
+    },
+    "Category": {
+      "Type": "text",
+      "Rule": "li[class='two']",
+      "Filter": "\\[|\\]"
+    },
+    "UpdateTime": {
+      "Type": "text",
+      "Rule": "li[class='six']"
+    }
+  }
+}

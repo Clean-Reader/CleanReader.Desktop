@@ -1,0 +1,736 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>About Clean Reader</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="AddBook" xml:space="preserve">
+    <value>Add book</value>
+  </data>
+  <data name="AddToShelf" xml:space="preserve">
+    <value>Add to bookshelf</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="AllBookSources" xml:space="preserve">
+    <value>All sources</value>
+  </data>
+  <data name="AppDescription" xml:space="preserve">
+    <value>You can get content from the Internet, you can also read local TXT, EPUB books</value>
+  </data>
+  <data name="AppLanguage" xml:space="preserve">
+    <value>Application language</value>
+  </data>
+  <data name="AppLanguageDescription" xml:space="preserve">
+    <value>Select the interface language that the app will use, and it will take effect after restarting the app.</value>
+  </data>
+  <data name="ApplicationTheme" xml:space="preserve">
+    <value>Application theme</value>
+  </data>
+  <data name="ApplicationThemeDescription" xml:space="preserve">
+    <value>Choose which app theme to display</value>
+  </data>
+  <data name="AppName" xml:space="preserve">
+    <value>Clean Reader</value>
+  </data>
+  <data name="AppShouldUpdate" xml:space="preserve">
+    <value>This library was created by a later version of the app, you need to upgrade your app before accessing it</value>
+  </data>
+  <data name="Author" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Background" xml:space="preserve">
+    <value>Background</value>
+  </data>
+  <data name="BackToShelf" xml:space="preserve">
+    <value>Back to bookshelf</value>
+  </data>
+  <data name="BookInformation" xml:space="preserve">
+    <value>Book information</value>
+  </data>
+  <data name="BookInformationDescription" xml:space="preserve">
+    <value>You can view or modify the metadata of the book here, after clicking save, your modifications will be recorded in the database</value>
+  </data>
+  <data name="BookName" xml:space="preserve">
+    <value>Book name</value>
+  </data>
+  <data name="BookNameInputTip" xml:space="preserve">
+    <value>Please enter the title/author</value>
+  </data>
+  <data name="BookNotExist" xml:space="preserve">
+    <value>The book file does not exist or broken, you can go back to the shelf to remove the book entry and re-import</value>
+  </data>
+  <data name="BookSourceDoc" xml:space="preserve">
+    <value>Book source document</value>
+  </data>
+  <data name="BookSourceManagement" xml:space="preserve">
+    <value>Book source management</value>
+  </data>
+  <data name="BookSourceName" xml:space="preserve">
+    <value>Book source name</value>
+  </data>
+  <data name="BookSyncProgress" xml:space="preserve">
+    <value>Books synced: {0}/{1}</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CanNotAccessLibrary" xml:space="preserve">
+    <value>Failed to access the library, please make sure you have turned on the file system access permission of the application</value>
+  </data>
+  <data name="Catalog" xml:space="preserve">
+    <value>Catalog</value>
+  </data>
+  <data name="ChapterDownloadingProgress" xml:space="preserve">
+    <value>Downloading chapter {0}/{1} ...</value>
+  </data>
+  <data name="ChapterSplitDescription" xml:space="preserve">
+    <value>For TXT books, the application provides a default expression to split chapters. If the results below do not meet your needs, you can customize regular expressions to split chapters</value>
+  </data>
+  <data name="ChapterSplitTitle" xml:space="preserve">
+    <value>Chapter split</value>
+  </data>
+  <data name="ChooseImportWayDescription" xml:space="preserve">
+    <value>You can import books locally, or search for books online from the book source to add</value>
+  </data>
+  <data name="ChooseImportWayTitle" xml:space="preserve">
+    <value>The way you want to add the book</value>
+  </data>
+  <data name="Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="CloseLibrary" xml:space="preserve">
+    <value>Close library</value>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="ContinueReading" xml:space="preserve">
+    <value>Continue reading</value>
+  </data>
+  <data name="ContinueReadingDescription" xml:space="preserve">
+    <value>Continue reading books that were not closed when you last exit app</value>
+  </data>
+  <data name="ConvertingAndMovingFile" xml:space="preserve">
+    <value>Converting and moving file...</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="CoverUrl" xml:space="preserve">
+    <value>Cover url</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="CreateBookSource" xml:space="preserve">
+    <value>Create new source</value>
+  </data>
+  <data name="CreateBookSourceDescription" xml:space="preserve">
+    <value>Create a new book source with the specified content, after the configuration is complete, the file will be opened with your favorite editor</value>
+  </data>
+  <data name="CreateLibraryFolderDescription" xml:space="preserve">
+    <value>Choose an empty folder, the application will help you with some initialization work. The books you import later will be backed up in the library</value>
+  </data>
+  <data name="CreateLibraryFolderTitle" xml:space="preserve">
+    <value>Create a new library</value>
+  </data>
+  <data name="CreateNewShelf" xml:space="preserve">
+    <value>Create a new bookshelf</value>
+  </data>
+  <data name="CreateNewShelfTip" xml:space="preserve">
+    <value>Create a new bookshelf that cannot have the same name as an existing bookshelf</value>
+  </data>
+  <data name="Dark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="DatabaseMigrating" xml:space="preserve">
+    <value>Database structure updated, migrating...</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeleteBookSourceWarning" xml:space="preserve">
+    <value>Do you want to delete this book source? Books obtained from this source may not update properly after deletion</value>
+  </data>
+  <data name="DeleteBookWarning" xml:space="preserve">
+    <value>Do you want to delete this book?
+The book will be removed from your library, and the history / notes related to the book will also be deleted</value>
+  </data>
+  <data name="DeleteShelfWarning" xml:space="preserve">
+    <value>Do you want to delete the bookshelf: {0}? Books in the bookshelf will be moved to Uncategorized instead of being deleted</value>
+  </data>
+  <data name="DeletingBook" xml:space="preserve">
+    <value>Deleting book</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="DurationEmpty" xml:space="preserve">
+    <value>There is no recorded reading data, please check again after reading the book~</value>
+  </data>
+  <data name="EditAdditionalStyle" xml:space="preserve">
+    <value>Edit additional styles</value>
+  </data>
+  <data name="Explore" xml:space="preserve">
+    <value>Discovery &amp; exploration</value>
+  </data>
+  <data name="ExploreBookAdded" xml:space="preserve">
+    <value>A new book has been added, please return to the bookshelf to read</value>
+  </data>
+  <data name="FailedToDownload" xml:space="preserve">
+    <value>Download failed, please try again later</value>
+  </data>
+  <data name="FirstReplaceTip" xml:space="preserve">
+    <value>Please switch book source to search</value>
+  </data>
+  <data name="FirstSearchTip" xml:space="preserve">
+    <value>Please enter keywords to find books</value>
+  </data>
+  <data name="FollowSystem" xml:space="preserve">
+    <value>Follow system</value>
+  </data>
+  <data name="FontFamily" xml:space="preserve">
+    <value>Font family</value>
+  </data>
+  <data name="FontSize" xml:space="preserve">
+    <value>Font size</value>
+  </data>
+  <data name="Foreground" xml:space="preserve">
+    <value>Foreground</value>
+  </data>
+  <data name="FromGoogleTranslate" xml:space="preserve">
+    <value>From google translate</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>Full screen</value>
+  </data>
+  <data name="GettingChapters" xml:space="preserve">
+    <value>Fetching chapters...</value>
+  </data>
+  <data name="HasUpdate" xml:space="preserve">
+    <value>New version released</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Help &amp; Support</value>
+  </data>
+  <data name="Highlight" xml:space="preserve">
+    <value>Highlight</value>
+  </data>
+  <data name="HighlightNotes" xml:space="preserve">
+    <value>Highlight notes</value>
+  </data>
+  <data name="Hours" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="IdRepeat" xml:space="preserve">
+    <value>Id duplicates with existing book source</value>
+  </data>
+  <data name="IgnoreVersion" xml:space="preserve">
+    <value>Ignore</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="ImportFromLocal" xml:space="preserve">
+    <value>Import from local</value>
+  </data>
+  <data name="ImportFromLocalTip" xml:space="preserve">
+    <value>Support .txt, .epub books</value>
+  </data>
+  <data name="InitializeDatabase" xml:space="preserve">
+    <value>Data initialization...</value>
+  </data>
+  <data name="Interface" xml:space="preserve">
+    <value>Interface</value>
+  </data>
+  <data name="InternalSearchTip" xml:space="preserve">
+    <value>Please enter keywords to search, click the search result to jump to the corresponding page</value>
+  </data>
+  <data name="InvalidFilePath" xml:space="preserve">
+    <value>Invalid file path</value>
+  </data>
+  <data name="InvalidLibraryPath" xml:space="preserve">
+    <value>The library path is unavailable, please select the library again</value>
+  </data>
+  <data name="InvalidSource" xml:space="preserve">
+    <value>Invalid source</value>
+  </data>
+  <data name="JumpTo" xml:space="preserve">
+    <value>Jump</value>
+  </data>
+  <data name="JumpToNotePosition" xml:space="preserve">
+    <value>Jump to note location</value>
+  </data>
+  <data name="Keyword" xml:space="preserve">
+    <value>Keyword</value>
+  </data>
+  <data name="KeywordPlaceholder" xml:space="preserve">
+    <value>Please enter what you are looking for</value>
+  </data>
+  <data name="LanguageRestartTip" xml:space="preserve">
+    <value>You need to restart the app to apply the language change</value>
+  </data>
+  <data name="LastReadTime" xml:space="preserve">
+    <value>Last reading time</value>
+  </data>
+  <data name="LibraryDoNotHaveRequiredFiles" xml:space="preserve">
+    <value>The library is damaged and does not contain metadata necessary for the library</value>
+  </data>
+  <data name="LibraryLocation" xml:space="preserve">
+    <value>Library location</value>
+  </data>
+  <data name="LibraryLocationDescription" xml:space="preserve">
+    <value>You can view or close the current library</value>
+  </data>
+  <data name="Light" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="LineHeight" xml:space="preserve">
+    <value>Line height</value>
+  </data>
+  <data name="LoadBookFailed" xml:space="preserve">
+    <value>Failed to load book</value>
+  </data>
+  <data name="LoadingOnlineBooks" xml:space="preserve">
+    <value>Loading online books...</value>
+  </data>
+  <data name="LoadMore" xml:space="preserve">
+    <value>Load more</value>
+  </data>
+  <data name="LoadTocFailed" xml:space="preserve">
+    <value>Could not load valid catalog</value>
+  </data>
+  <data name="LocalBook" xml:space="preserve">
+    <value>Local books</value>
+  </data>
+  <data name="LocalPath" xml:space="preserve">
+    <value>Local path</value>
+  </data>
+  <data name="MiniView" xml:space="preserve">
+    <value>Mini view</value>
+  </data>
+  <data name="Modify" xml:space="preserve">
+    <value>Modify</value>
+  </data>
+  <data name="More" xml:space="preserve">
+    <value>More</value>
+  </data>
+  <data name="MoveToTop" xml:space="preserve">
+    <value>Move to top</value>
+  </data>
+  <data name="MovingFile" xml:space="preserve">
+    <value>Moving file...</value>
+  </data>
+  <data name="MyBookShelf" xml:space="preserve">
+    <value>My book shelf</value>
+  </data>
+  <data name="NextChapter" xml:space="preserve">
+    <value>Next chapter</value>
+  </data>
+  <data name="NoDescription" xml:space="preserve">
+    <value>No introduction to this book</value>
+  </data>
+  <data name="NoSelectedOnlineBook" xml:space="preserve">
+    <value>No suitable online book was selected</value>
+  </data>
+  <data name="NoShelf" xml:space="preserve">
+    <value>No bookshelf has been created yet~</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="NoteEmpty" xml:space="preserve">
+    <value>You haven't taken notes yet~</value>
+  </data>
+  <data name="NoteManagement" xml:space="preserve">
+    <value>Notes management</value>
+  </data>
+  <data name="NotStarted" xml:space="preserve">
+    <value>Not started</value>
+  </data>
+  <data name="OnlineBook" xml:space="preserve">
+    <value>Online books</value>
+  </data>
+  <data name="OnlineSearch" xml:space="preserve">
+    <value>Search online</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="OpenCurrentNotes" xml:space="preserve">
+    <value>Open book notes</value>
+  </data>
+  <data name="OpenDownloadPage" xml:space="preserve">
+    <value>Download now</value>
+  </data>
+  <data name="OpenInBroswer" xml:space="preserve">
+    <value>Open in browser</value>
+  </data>
+  <data name="OpenLibrary" xml:space="preserve">
+    <value>Open library</value>
+  </data>
+  <data name="OpenLibraryFolderDescription" xml:space="preserve">
+    <value>Choose an existing clean reading library, which contains the necessary clean reading metadata files</value>
+  </data>
+  <data name="OpenLibraryFolderTitle" xml:space="preserve">
+    <value>Open the library folder</value>
+  </data>
+  <data name="OpenSettings" xml:space="preserve">
+    <value>Open settings</value>
+  </data>
+  <data name="OpenWith" xml:space="preserve">
+    <value>Open with</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="OriginalSource" xml:space="preserve">
+    <value>Original source</value>
+  </data>
+  <data name="Personalization" xml:space="preserve">
+    <value>Personalization</value>
+  </data>
+  <data name="PlaceholderText" xml:space="preserve">
+    <value>Everyone is a genius. But if you judge a fish by its ability to climb a tree, it will live its whole life believing that it is stupid.</value>
+  </data>
+  <data name="PreRelease" xml:space="preserve">
+    <value>pre-release</value>
+  </data>
+  <data name="PreviousChapter" xml:space="preserve">
+    <value>Previous chapter</value>
+  </data>
+  <data name="Read" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="ReadTime" xml:space="preserve">
+    <value>Reading time</value>
+  </data>
+  <data name="Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="Regex" xml:space="preserve">
+    <value>Regular expression</value>
+  </data>
+  <data name="Reload" xml:space="preserve">
+    <value>Reload</value>
+  </data>
+  <data name="Replace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="ReplaceSource" xml:space="preserve">
+    <value>Replace book source</value>
+  </data>
+  <data name="ReplaceSourceDescription" xml:space="preserve">
+    <value>Replace the source of the online book with another source, which will re-download the book. It should be noted that although the progress and notes are retained, if the content of the book changes greatly, the progress and notes may deviate</value>
+  </data>
+  <data name="ReselectLibrary" xml:space="preserve">
+    <value>Reselect library</value>
+  </data>
+  <data name="Retry" xml:space="preserve">
+    <value>Retry</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchOnline" xml:space="preserve">
+    <value>Search online</value>
+  </data>
+  <data name="SearchOnlineDescription" xml:space="preserve">
+    <value>Search for books containing specified keywords from your existing book sources</value>
+  </data>
+  <data name="SearchOnlineTip" xml:space="preserve">
+    <value>Search for books from the book source</value>
+  </data>
+  <data name="SearchResultIsEmpty" xml:space="preserve">
+    <value>No search results containing the specified keywords were found</value>
+  </data>
+  <data name="SearchSomething" xml:space="preserve">
+    <value>Find what interests you</value>
+  </data>
+  <data name="SelectionModeOpen" xml:space="preserve">
+    <value>Text selection mode is on</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Share" xml:space="preserve">
+    <value>Share</value>
+  </data>
+  <data name="ShelfEmpty" xml:space="preserve">
+    <value>There are no designated books in the current bookshelf</value>
+  </data>
+  <data name="ShelfList" xml:space="preserve">
+    <value>Bookshelf list</value>
+  </data>
+  <data name="ShelfManagement" xml:space="preserve">
+    <value>Bookshelf management</value>
+  </data>
+  <data name="ShelfManagementDescription" xml:space="preserve">
+    <value>You can create or modify bookshelves here</value>
+  </data>
+  <data name="ShelfPlaceholder" xml:space="preserve">
+    <value>Please enter a shelf name</value>
+  </data>
+  <data name="ShelfSelection" xml:space="preserve">
+    <value>Select bookshelf</value>
+  </data>
+  <data name="ShelfSelectionDescription" xml:space="preserve">
+    <value>You can select an existing bookshelf or create a new one</value>
+  </data>
+  <data name="SignIn" xml:space="preserve">
+    <value>Sign in</value>
+  </data>
+  <data name="SigningIn" xml:space="preserve">
+    <value>Signing in...</value>
+  </data>
+  <data name="SmoothScrolling" xml:space="preserve">
+    <value>Smooth scrolling</value>
+  </data>
+  <data name="SortByLastRead" xml:space="preserve">
+    <value>Sort by recent reading</value>
+  </data>
+  <data name="SortByName" xml:space="preserve">
+    <value>Sort by book title</value>
+  </data>
+  <data name="SortByProgress" xml:space="preserve">
+    <value>Sort by progress</value>
+  </data>
+  <data name="SortByTimeAdded" xml:space="preserve">
+    <value>Sort by time added</value>
+  </data>
+  <data name="SortByType" xml:space="preserve">
+    <value>Sort by type</value>
+  </data>
+  <data name="SourceEmpty" xml:space="preserve">
+    <value>There are no book sources available in the current application, add one now~</value>
+  </data>
+  <data name="SplitChaptersIsEmpty" xml:space="preserve">
+    <value>No valid chapters have been split</value>
+  </data>
+  <data name="SpreadMinWidth" xml:space="preserve">
+    <value>Minimum separate reading width</value>
+  </data>
+  <data name="SpreadMinWidthDescription" xml:space="preserve">
+    <value>After the app window reaches this width, double-column reading will be used</value>
+  </data>
+  <data name="StartupBottomTip" xml:space="preserve">
+    <value>The application currently supports TXT, EPUB type local books, and you can customize the book source according to the agreement to obtain online books</value>
+  </data>
+  <data name="SupportBookDetail" xml:space="preserve">
+    <value>Support for getting book details</value>
+  </data>
+  <data name="SupportChapter" xml:space="preserve">
+    <value>Support get catalog</value>
+  </data>
+  <data name="SupportChapterContent" xml:space="preserve">
+    <value>Support get chapter content</value>
+  </data>
+  <data name="SupportExplore" xml:space="preserve">
+    <value>Support discovery module</value>
+  </data>
+  <data name="SupportSearch" xml:space="preserve">
+    <value>Support search module</value>
+  </data>
+  <data name="Sync" xml:space="preserve">
+    <value>Sync</value>
+  </data>
+  <data name="TargetFolderShouldEmpty" xml:space="preserve">
+    <value>The target folder used to create the library should be an empty folder</value>
+  </data>
+  <data name="ThemeRestartTip" xml:space="preserve">
+    <value>The theme has been changed, it will take effect after restarting the app</value>
+  </data>
+  <data name="TimeRatio" xml:space="preserve">
+    <value>Time ratio</value>
+  </data>
+  <data name="Tip" xml:space="preserve">
+    <value>Tip</value>
+  </data>
+  <data name="Tools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="TotalDuration" xml:space="preserve">
+    <value>Total duration</value>
+  </data>
+  <data name="TransferShelf" xml:space="preserve">
+    <value>Move to bookshelf</value>
+  </data>
+  <data name="Translate" xml:space="preserve">
+    <value>Translate</value>
+  </data>
+  <data name="TranslateError" xml:space="preserve">
+    <value>Attempt to translate selected statement failed</value>
+  </data>
+  <data name="TranslateResult" xml:space="preserve">
+    <value>Translation result</value>
+  </data>
+  <data name="Translating" xml:space="preserve">
+    <value>Translating...</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="UpdateApp" xml:space="preserve">
+    <value>Update the app</value>
+  </data>
+  <data name="UpdateShelf" xml:space="preserve">
+    <value>Update bookshelf</value>
+  </data>
+  <data name="UpdateShelfTip" xml:space="preserve">
+    <value>Use new bookshelf name</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="WebUrl" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="WelcomeDescription" xml:space="preserve">
+    <value>Clean Reader is now designed for Windows 11 and has become a fully localized reader. You can create a library locally or save the library in your cloud folder to obtain cloud synchronization. (OneDrive requires file access permission)</value>
+  </data>
+  <data name="WelcomeTitle" xml:space="preserve">
+    <value>Welcome to Clean Reader</value>
+  </data>
+  <data name="Words" xml:space="preserve">
+    <value>words</value>
+  </data>
+</root>

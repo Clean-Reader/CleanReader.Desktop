@@ -1,0 +1,93 @@
+﻿<local:CustomDialog
+    x:Class="CleanReader.App.Controls.ReaderHighlightDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:CleanReader.App.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="using:CleanReader.Models.Resources"
+    Title="{x:Bind res:StringResources.HighlightNotes}"
+    CloseButtonText="{x:Bind res:StringResources.Cancel}"
+    DefaultButton="Primary"
+    mc:Ignorable="d">
+
+    <local:CustomDialog.Resources>
+        <Flyout x:Name="ColorPickerFlyout">
+            <ColorPicker
+                x:Name="ColorPicker"
+                ColorChanged="OnColorChanged"
+                IsAlphaEnabled="False"
+                IsAlphaSliderVisible="False"
+                IsAlphaTextInputVisible="False" />
+        </Flyout>
+    </local:CustomDialog.Resources>
+
+    <StackPanel Width="320">
+        <Border
+            Margin="0,0,0,12"
+            Padding="12"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource ControlCornerRadius}">
+            <TextBlock
+                x:Name="SelectedTextBlock"
+                Style="{StaticResource TipTextBlockStyle}"
+                FontSize="10"
+                MaxLines="3" />
+        </Border>
+        <TextBlock
+            Margin="0,0,0,4"
+            HorizontalAlignment="Left"
+            Text="{x:Bind res:StringResources.Color}" />
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollMode="Disabled">
+            <ItemsRepeater Margin="0,4,0,0" ItemsSource="{x:Bind _viewModel.Colors}">
+                <ItemsRepeater.Layout>
+                    <StackLayout Orientation="Horizontal" Spacing="8" />
+                </ItemsRepeater.Layout>
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <local:CardPanel
+                            Width="32"
+                            Height="32"
+                            Background="{x:Bind Converter={StaticResource ColorConverter}}"
+                            BorderThickness="0"
+                            Click="OnColorClick"
+                            DataContext="{x:Bind}"
+                            IsEnableShadow="False"
+                            PointerOverBackground="{x:Bind Converter={StaticResource ColorConverter}}"
+                            PressedBackground="{x:Bind Converter={StaticResource ColorConverter}}" />
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
+        </ScrollViewer>
+
+        <Grid Margin="0,12" ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox
+                x:Name="ColorBox"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                IsReadOnly="True" />
+            <Rectangle
+                x:Name="ColorRect"
+                Grid.Column="1"
+                Width="80"
+                Height="32"
+                VerticalAlignment="Bottom"
+                RadiusX="4"
+                RadiusY="4"
+                Tapped="OnColorRectTapped" />
+        </Grid>
+        <TextBox
+            x:Name="NoteBox"
+            Height="120"
+            HorizontalAlignment="Stretch"
+            AcceptsReturn="True"
+            Header="{x:Bind res:StringResources.Note}"
+            TextWrapping="Wrap" />
+    </StackPanel>
+</local:CustomDialog>

@@ -1,0 +1,48 @@
+﻿<local:CustomDialog
+    x:Class="CleanReader.App.Controls.ShelfTransferDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:database="using:CleanReader.Models.DataBase"
+    xmlns:local="using:CleanReader.App.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="using:CleanReader.Models.Resources"
+    Title="{x:Bind res:StringResources.ShelfSelection}"
+    CloseButtonText="{x:Bind res:StringResources.Cancel}"
+    DefaultButton="Primary"
+    PrimaryButtonText="{x:Bind res:StringResources.Confirm}"
+    Subtitle="{x:Bind res:StringResources.ShelfSelectionDescription}"
+    mc:Ignorable="d">
+
+    <Grid Width="320" RowSpacing="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBox
+            x:Name="ShelfNameBox"
+            HorizontalAlignment="Stretch"
+            Header="{x:Bind res:StringResources.CreateNewShelf}"
+            KeyDown="OnShelfNameBoxKeyDown"
+            PlaceholderText="{x:Bind res:StringResources.ShelfPlaceholder}">
+            <TextBox.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Style="{StaticResource TipTextBlockStyle}" Text="{Binding}" />
+                </DataTemplate>
+            </TextBox.HeaderTemplate>
+        </TextBox>
+        <StackPanel Grid.Row="1" Spacing="4">
+            <TextBlock Style="{StaticResource TipTextBlockStyle}" Text="{x:Bind res:StringResources.ShelfList}" />
+            <ListView
+                x:Name="ShelfView"
+                ItemsSource="{x:Bind _shelfPageViewModel.Shelves}"
+                SelectionChanged="OnShelfViewSelectionChanged">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="database:Shelf">
+                        <TextBlock Text="{x:Bind Name}" TextTrimming="CharacterEllipsis" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</local:CustomDialog>

@@ -1,0 +1,112 @@
+﻿<UserControl
+    x:Class="CleanReader.App.Controls.ShelfSettingItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:CleanReader.App.Converters"
+    xmlns:core="using:CleanReader.Core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:database="using:CleanReader.Models.DataBase"
+    xmlns:local="using:CleanReader.App.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="using:CleanReader.Models.Resources"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:FirstShelfVisibilityConverter x:Key="FirstShelfConverter" />
+    </UserControl.Resources>
+
+    <core:ExpanderEx>
+        <core:ExpanderEx.Header>
+            <core:ExpanderExWrapper Style="{StaticResource WrapperInExpanderHeaderStyle}">
+                <core:ExpanderExWrapper.MainContent>
+                    <core:ExpanderExDescriptor Title="{x:Bind res:StringResources.ShelfManagement}" Description="{x:Bind res:StringResources.ShelfManagementDescription}">
+                        <core:ExpanderExDescriptor.Icon>
+                            <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE61F;" />
+                        </core:ExpanderExDescriptor.Icon>
+                    </core:ExpanderExDescriptor>
+                </core:ExpanderExWrapper.MainContent>
+                <core:ExpanderExWrapper.WrapContent>
+                    <Button
+                        MinWidth="120"
+                        Command="{x:Bind _settingsPageViewModel.ShowCreateOrUpdateShelfDialogCommand}"
+                        Content="{x:Bind res:StringResources.CreateNewShelf}" />
+                </core:ExpanderExWrapper.WrapContent>
+            </core:ExpanderExWrapper>
+        </core:ExpanderEx.Header>
+        <core:ExpanderEx.Content>
+            <core:ExpanderExMenuPanel MenuItemInlineWidePadding="48,2,60,8">
+                <ItemsRepeater ItemsSource="{x:Bind _shelfPageViewModel.Shelves}">
+                    <ItemsRepeater.Layout>
+                        <StackLayout Spacing="8" />
+                    </ItemsRepeater.Layout>
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="database:Shelf">
+                            <StackPanel>
+                                <core:ExpanderExWrapper Style="{StaticResource WrapperInExpanderContentStyle}" InlineWidePadding="48,0,60,0">
+                                    <core:ExpanderExWrapper.MainContent>
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Text="{x:Bind Name}"
+                                            TextTrimming="CharacterEllipsis" />
+                                    </core:ExpanderExWrapper.MainContent>
+                                    <core:ExpanderExWrapper.WrapContent>
+                                        <StackPanel
+                                            MinHeight="32"
+                                            Orientation="Horizontal"
+                                            Spacing="8">
+                                            <Button
+                                                Click="OnItemUpdateButtonClick"
+                                                DataContext="{x:Bind}"
+                                                Visibility="{x:Bind Converter={StaticResource FirstShelfConverter}}">
+                                                <local:IconTextBlock
+                                                    Icon="&#xE70F;"
+                                                    IconFontSize="14"
+                                                    Spacing="8"
+                                                    Text="{x:Bind res:StringResources.Update}" />
+                                            </Button>
+                                            <Button
+                                                Padding="12,9"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Content="&#xE10C;"
+                                                FontFamily="{StaticResource SymbolThemeFontFamily}"
+                                                ToolTipService.ToolTip="{x:Bind res:StringResources.More}"
+                                                Visibility="{x:Bind Converter={StaticResource FirstShelfConverter}}">
+                                                <Button.Flyout>
+                                                    <MenuFlyout>
+                                                        <MenuFlyoutItem
+                                                            Click="OnItemMoveToTopButtonClick"
+                                                            DataContext="{x:Bind}"
+                                                            IsEnabled="{x:Bind Converter={StaticResource FirstShelfConverter}}"
+                                                            Text="{x:Bind res:StringResources.MoveToTop}">
+                                                            <MenuFlyoutItem.Icon>
+                                                                <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xF0AD;" />
+                                                            </MenuFlyoutItem.Icon>
+                                                        </MenuFlyoutItem>
+                                                        <MenuFlyoutItem
+                                                            Click="OnItemDeleteButtonClick"
+                                                            DataContext="{x:Bind}"
+                                                            Text="{x:Bind res:StringResources.Delete}">
+                                                            <MenuFlyoutItem.Icon>
+                                                                <FontIcon
+                                                                    Style="{StaticResource SymbolFontIconStyle}"
+                                                                    Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                                                    Glyph="&#xE107;" />
+                                                            </MenuFlyoutItem.Icon>
+                                                        </MenuFlyoutItem>
+                                                    </MenuFlyout>
+                                                </Button.Flyout>
+                                            </Button>
+                                        </StackPanel>
+                                    </core:ExpanderExWrapper.WrapContent>
+                                </core:ExpanderExWrapper>
+                                <core:ExpanderExItemSeparator />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+            </core:ExpanderExMenuPanel>
+        </core:ExpanderEx.Content>
+    </core:ExpanderEx>
+</UserControl>

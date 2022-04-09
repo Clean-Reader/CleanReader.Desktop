@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Clean Reader Light",
+    "fontSize": 22,
+    "fontFamily": "Segoe UI Variable Display",
+    "lineHeight": 1.8,
+    "background": "#F7F7F7",
+    "foreground": "#161616"
+  },
+  {
+    "name": "Clean Reader Dark",
+    "fontSize": 22,
+    "fontFamily": "Segoe UI Variable Display",
+    "lineHeight": 1.8,
+    "background": "#1F1F1F",
+    "foreground": "#C4C4C4",
+    "additionalStyle": "{\"a\": {\"color\":\"#1fd6ee !important\"}}"
+  },
+  {
+    "name": "Grassland",
+    "fontSize": 22,
+    "fontFamily": "Microsoft YaHei UI",
+    "lineHeight": 1.8,
+    "background": "#CCDDC1",
+    "foreground": "#2E2E2E"
+  },
+  {
+    "name": "Magazine",
+    "fontSize": 22,
+    "fontFamily": "黑体",
+    "lineHeight": 1.8,
+    "background": "#FFF0E7",
+    "foreground": "#0D0D0D"
+  },
+  {
+    "name": "Quiet",
+    "fontSize": 22,
+    "fontFamily": "Segoe UI Variable Display",
+    "lineHeight": 1.8,
+    "background": "#3B3B49",
+    "foreground": "#EAEBF7",
+    "additionalStyle": "{\"a\": {\"color\":\"#1fd6ee !important\"}}"
+  }
+]

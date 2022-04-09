@@ -1,0 +1,109 @@
+{
+  "Id": "biquge",
+  "Name": "笔趣阁",
+  "WebUrl": "https://www.52bqg.net",
+  "IsBookDetailEnabled": true,
+  "Charset": "gb2312",
+  "Search": {
+    "SearchUrl": "https://www.52bqg.net/modules/article/search.php?searchkey=",
+    "Range": "div[class='novelslistss'] li",
+    "Repair": [
+      {
+        "Field": 1,
+        "Position": "l",
+        "Value": "https://www.52bqg.net"
+      }
+    ],
+    "Replace": [
+      {
+        "Field": 4,
+        "Old": "&nbsp;",
+        "New": " "
+      }
+    ],
+    "BookName": {
+      "Type": "text",
+      "Rule": "span[class='s2'] a",
+      "Filter": ""
+    },
+    "BookUrl": {
+      "Type": "href",
+      "Rule": "span[class='s2'] a",
+      "Filter": ""
+    },
+    "BookAuthor": {
+      "Type": "text",
+      "Rule": "span[class='s4']",
+      "Filter": ""
+    },
+    "LastChapterTitle": {
+      "Type": "text",
+      "Rule": "span[class='s3'] a",
+      "Filter": ""
+    },
+    "LastChapterUrl": {
+      "Type": "href",
+      "Rule": "span[class='s3'] a",
+      "Filter": ""
+    },
+    "Category": {
+      "Type": "text",
+      "Rule": "span[class='s1']",
+      "Filter": ""
+    },
+    "NeedDetail": true
+  },
+  "BookDetail": {
+    "Range": "div[id='maininfo']",
+    "Replace": [
+      {
+        "Field": 4,
+        "Old": "&nbsp;",
+        "New": " "
+      }
+    ],
+    "UpdateTime": {
+      "Type": "text",
+      "Rule": "div[id='info'] p:nth-child(4)",
+      "Filter": "(更新时间：)|\\[(.*)\\]"
+    },
+    "BookDescription": {
+      "Type": "text",
+      "Rule": "div[id='intro']",
+      "Filter": ""
+    },
+    "BookCover": {
+      "Type": "src",
+      "Rule": "div[id='fmimg'] img",
+      "Filter": ""
+    }
+  },
+  "Chapter": {
+    "Range": "div[id='list'] dl dd",
+    "Repair": [
+      {
+        "Field": 1,
+        "Position": "",
+        "Value": "ORIGIN_URL"
+      }
+    ],
+    "Title": {
+      "Type": "text",
+      "Rule": "a",
+      "Filter": ""
+    },
+    "Url": {
+      "Type": "href",
+      "Rule": "a",
+      "Filter": ""
+    }
+  },
+  "ChapterContent": {
+    "Range": "div[id='box_con']",
+    "Content": {
+      "Type": "text",
+      "Rule": "div[id='content']",
+      "Filter": ""
+    }
+  }
+}

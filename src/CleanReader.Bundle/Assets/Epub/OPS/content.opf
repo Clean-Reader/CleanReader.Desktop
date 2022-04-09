@@ -1,0 +1,31 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://www.idpf.org/2007/opf" version="2.0" unique-identifier="uuid_id">
+    <metadata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:opf="http://www.idpf.org/2007/opf" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:calibre="http://calibre.kovidgoyal.net/2009/metadata" xmlns:dc="http://purl.org/dc/elements/1.1/">
+        <dc:title>{{title}}</dc:title>
+        <dc:language>{{language}}</dc:language>
+        <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">{{author}}</dc:publisher>
+        <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/"></dc:description>
+        <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">{{language}}</dc:language>
+        <dc:creator opf:role="aut" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">{{author}}</dc:creator>
+        <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">{{title}}</dc:title>
+        <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">{{date}}</dc:date>
+        <dc:contributor opf:role="bkp">calibre (0.9.22) [http://calibre-ebook.com]</dc:contributor>
+        <dc:identifier opf:scheme="MOBI-ASIN">B001I45UF2</dc:identifier>
+        <dc:identifier opf:scheme="AMAZON">B001I45UF2</dc:identifier>
+        <dc:identifier id="uuid_id" opf:scheme="uuid">724fc375-282c-4241-9122-ff0db8d1a928</dc:identifier>
+        <dc:identifier opf:scheme="calibre">724fc375-282c-4241-9122-ff0db8d1a928</dc:identifier>
+        <meta name="cover" content="cover" />
+    </metadata>
+        <manifest>
+            <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+            <item id="css" href="Style/main.css" media-type="text/css" />
+            <item id="titlepage" href="{{titlePage}}" media-type="application/xhtml+xml"/>
+{{manifest}}
+        </manifest>
+        <spine toc="ncx">
+{{spine}}
+        </spine>
+    <guide>
+        <reference href="{{titlePage}}" title="Cover" type="cover" />
+    </guide>
+</package>

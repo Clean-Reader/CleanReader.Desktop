@@ -1,0 +1,66 @@
+name: Release Builder
+
+on:
+  workflow_dispatch:
+    inputs:
+      version: 
+        description: '版本号（不含v）'
+        required: true
+        default: '0.0.0.0'
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    env:
+      SigningCertificate: CleanReader.Bundle_TemporaryKey.pfx
+      Solution_Path: .\CleanReader.Desktop.sln
+      Desktop_Project_Directory: src\CleanReader.Bundle
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+    
+    - name: Configure Pagefile
+      uses: al-cheb/configure-pagefile-action@v1.2
+      with:
+        minimum-size: 32GB
+        maximum-size: 32GB
+        disk-root: "C:"
+
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - uses: release-drafter/release-drafter@v5
+      name: Create release draft
+      id: release-drafter
+
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1.0.3
+
+    - name: Update manifest version
+      run: |
+        [xml]$manifest = get-content ".\$env:Desktop_Project_Directory\Package.appxmanifest"
+        $manifest.Package.Identity.Version = "${{github.event.inputs.version}}"
+        $manifest.save(".\$env:Desktop_Project_Directory\Package.appxmanifest")
+        
+    - name: Build x64
+      run: msbuild $env:Solution_Path /p:Platform=x64 /p:AppxBundlePlatforms="x64" /p:AppxPackageDir=C:\Package\x64 /p:PackageCertificateKeyFile=$env:SigningCertificate /p:PackageCertificatePassword="123456" /restore
+      env:
+        BuildMode: SideloadOnly
+        Configuration: Release
+   
+    - name: Create x64 archive
+      run: Compress-Archive -Path C:\Package\x64\CleanReader.Bundle_${{github.event.inputs.version}}_Test -DestinationPath C:\Package\CleanReader.Desktop_${{github.event.inputs.version}}_x64.zip
+      
+    - name: Update x64 release asset
+      id: upload-release-asset-x64
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.release-drafter.outputs.upload_url }}
+        asset_path: C:\Package\CleanReader.Desktop_${{github.event.inputs.version}}_x64.zip
+        asset_name: CleanReader.Desktop_${{github.event.inputs.version}}_x64.zip
+        asset_content_type: application/zip

@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>CleanReader.ViewModels.Desktop</RootNamespace>
+    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <UseWinUI>true</UseWinUI>
+    <Platforms>AnyCPU;x64;x86;ARM64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+      <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.2" />
+      <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.197" />
+      <PackageReference Include="ReactiveUI" Version="17.1.50" />
+      <PackageReference Include="ReactiveUI.Fody" Version="17.1.50" />
+      <PackageReference Include="ReactiveUI.WinUI" Version="17.1.50" />
+      <PackageReference Include="VersOne.Epub" Version="3.0.3.1" />
+      <PackageReference Include="Wadereye.GoogleTranslateFreeApi" Version="1.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Models\Models.App\Models.App.csproj" />
+    <ProjectReference Include="..\..\Models\Models.DataBase\Models.DataBase.csproj" />
+    <ProjectReference Include="..\..\Models\Models.Resources\Models.Resources.csproj" />
+    <ProjectReference Include="..\..\Services\EpubService\EpubService.csproj" />
+    <ProjectReference Include="..\..\Services\NovelService\NovelService.csproj" />
+    <ProjectReference Include="..\..\Utilities\Locator\Locator.Lib\Locator.Lib.csproj" />
+    <ProjectReference Include="..\..\Utilities\Toolkit\Toolkit.Desktop\Toolkit.Desktop.csproj" />
+    <ProjectReference Include="..\..\Utilities\Toolkit\Toolkit.Interfaces\Toolkit.Interfaces.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.CodeAnalysis.Metrics" Version="3.3.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>

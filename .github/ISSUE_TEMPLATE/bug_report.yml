@@ -1,0 +1,101 @@
+name: Bug Report / Bug 报告
+description: Submit bugs to help us improve the app experience / 提交 Bug 以帮助我们提高应用体验
+title: "[Bug] My title"
+assignees: Richasy
+labels:
+  - "bug"
+body:
+- type: markdown
+  attributes: 
+    value: |
+      ## 写在开头
+      🚨 请务必完整填写下面的内容，如果缺少必要的信息，开发者可能会在未调查的情况下直接关闭问题 🚨
+      
+- type: textarea
+  id: description
+  validations:
+    required: true
+  attributes:
+     label: Bug description / Bug 描述
+     description: Please briefly describe the problem you encountered / 请简短的描述你遇到的问题
+- type: textarea
+  id: repro-steps
+  validations:
+    required: true
+  attributes:
+     label: Reproduce steps / 复现问题的步骤
+     render: plain text
+     description: Please provide steps to reproduce the problem, if not, please specify the reason / 请提供复现问题的步骤，如果不能，请写明原因
+     placeholder: |
+        干净清晰的复现步骤有助于开发者更快定位问题所在，你所遇到的问题也会获得更高的优先级.
+
+        示例步骤:
+        1. 打开应用
+        2. 进入 '...'
+        3. 点击 '....'
+        4. 滚动至 '....'
+        5. 发现问题
+- type: textarea
+  id: expected-behavior
+  validations:
+    required: true
+  attributes:
+     label: Expected behavior / 预期行为
+     description: Briefly describe what results you would like to see / 简要描述你希望看到什么样的结果
+- type: textarea
+  id: screenshots
+  attributes:
+     label: Screenshot / 截图
+     description: If possible, submitting screenshots will help us analyze the problem / 如果可以，提交截图更有助于我们分析问题
+- type: checkboxes
+  id: environment-package-source
+  attributes:
+     label: Application source / 应用来源
+     description: Where did you download clean reader from? / 你是从哪里下载的干净阅读呢？
+     options:
+       - label: Microsoft Store
+       - label: Github
+       - label: Others / 其它
+- type: input
+  id: environment-package-other-source
+  attributes:
+     label: Other sources
+     description: If you downloaded Clean Reader from elsewhere, please cite the source / 如果你是从其它地方下载的干净阅读，请注明来源
+- type: checkboxes
+  id: environment-app-target-version
+  attributes:
+     label: System version
+     description: Choose a system version where you found the problem / 选择一个你发现问题的系统版本
+     options:
+       - label: Windows 11 21H2 (Build 22000)
+       - label: Others / 其它
+- type: input
+  id: environment-app-target-other-version
+  attributes:
+     label: Other system versions / 其它系统版本
+     description: If you are running the application on a specific system version, please write it / 如果你是在特别的系统版本中运行应用，请注明系统版本
+- type: dropdown
+  id: form-factor
+  attributes: 
+     multiple: true
+     label: Device / 运行设备
+     description: Select the type of device you are currently running clean reader on / 选择你当前运行干净阅读的设备类型
+     options:
+       - Desktop/桌面/台式机
+       - Tablet/平板或笔记本
+       - Xbox
+       - ARM64 device
+- type: textarea
+  id: additional-context
+  attributes:
+     label: Remark / 备注
+     description: Add the information you think is necessary / 添加你认为有必要的信息
+
+- type: dropdown
+  id: contribution
+  attributes:
+     label: We are the world / 人人为我，我为人人
+     description: Would you be willing to help with this if you could? / 如果可以的话，你是否愿意帮忙解决这个问题？
+     options:
+       - 'Yes'
+       - I'm better at spotting problems

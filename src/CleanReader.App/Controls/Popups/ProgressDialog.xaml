@@ -1,0 +1,39 @@
+﻿<local:CustomDialog
+    x:Class="CleanReader.App.Controls.ProgressDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:CleanReader.App.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="using:CleanReader.Models.Resources"
+    MinHeight="0"
+    mc:Ignorable="d">
+
+    <StackPanel
+        Width="300"
+        Margin="-20"
+        Spacing="8">
+        <ProgressBar
+            x:Name="ProgressBar"
+            HorizontalAlignment="Stretch"
+            IsIndeterminate="True" />
+        <Grid ColumnSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                x:Name="TipString"
+                Style="{StaticResource TipTextBlockStyle}"
+                VerticalAlignment="Top" />
+            <HyperlinkButton
+                x:Name="CancelButton"
+                Grid.Column="1"
+                VerticalAlignment="Top"
+                Click="OnCancelButtonClick"
+                Content="{x:Bind res:StringResources.Cancel}"
+                FontSize="10" />
+        </Grid>
+
+    </StackPanel>
+</local:CustomDialog>

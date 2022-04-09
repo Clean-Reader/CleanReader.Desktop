@@ -1,0 +1,39 @@
+﻿<UserControl
+    x:Class="CleanReader.App.Controls.IconTextBlock"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:CleanReader.App.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid ColumnSpacing="{x:Bind Spacing, Mode=OneWay}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <FontIcon
+            Style="{StaticResource SymbolFontIconStyle}"
+            Margin="0,2,0,0"
+            VerticalAlignment="Top"
+            FontSize="{x:Bind IconFontSize, Mode=OneWay}"
+            Foreground="{x:Bind Foreground, Mode=OneWay}"
+            Glyph="{x:Bind Icon, Mode=OneWay}" />
+        <TextBlock
+            x:Name="Block"
+            Grid.Column="1"
+            FontSize="{x:Bind FontSize, Mode=OneWay}"
+            Foreground="{x:Bind Foreground, Mode=OneWay}"
+            MaxLines="{x:Bind MaxLines, Mode=OneWay}"
+            Text="{x:Bind Text, Mode=OneWay}"
+            TextTrimming="CharacterEllipsis"
+            TextWrapping="Wrap">
+            <ToolTipService.ToolTip>
+                <ToolTip
+                    x:Name="Tip"
+                    Content="{x:Bind Text, Mode=OneWay}"
+                    IsEnabled="{Binding ElementName=Block, Path=IsTextTrimmed}" />
+            </ToolTipService.ToolTip>
+        </TextBlock>
+    </Grid>
+</UserControl>

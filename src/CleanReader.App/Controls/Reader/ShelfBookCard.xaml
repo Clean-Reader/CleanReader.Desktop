@@ -1,0 +1,100 @@
+﻿<UserControl
+    x:Class="CleanReader.App.Controls.ShelfBookCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:CleanReader.App.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="using:CleanReader.Models.Resources"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <MenuFlyout x:Name="BookContextMenu">
+            <MenuFlyoutItem Command="{x:Bind Data.ReadCommand, Mode=OneWay}" Text="{x:Bind res:StringResources.Read}">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE736;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem Command="{x:Bind Data.ShowInformationCommand, Mode=OneWay}" Text="{x:Bind res:StringResources.BookInformation}">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE946;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem Command="{x:Bind Data.ShowShelfTransferDialogCommand, Mode=OneWay}" Text="{x:Bind res:StringResources.TransferShelf}">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE148;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem
+                Command="{x:Bind Data.ShowReplaceSourceDialogCommand, Mode=OneWay}"
+                Text="{x:Bind res:StringResources.ReplaceSource}"
+                Visibility="{x:Bind Data.IsOnlineBook, Mode=OneWay}">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE1CD;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem
+                Command="{x:Bind Data.OpenBookUrlCommand, Mode=OneWay}"
+                Text="{x:Bind res:StringResources.OpenInBroswer}"
+                Visibility="{x:Bind Data.IsOnlineBook, Mode=OneWay}">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE12B;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem Command="{x:Bind Data.OpenWithCommand, Mode=OneWay}" Text="{x:Bind res:StringResources.OpenWith}">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE71D;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+            <MenuFlyoutSeparator />
+            <MenuFlyoutItem Command="{x:Bind Data.DeleteCommand, Mode=OneWay}" Text="{x:Bind res:StringResources.Delete}">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon
+                        Style="{StaticResource SymbolFontIconStyle}"
+                        Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                        Glyph="&#xE107;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
+        </MenuFlyout>
+    </UserControl.Resources>
+
+    <local:CardPanel
+        Background="Transparent"
+        BorderThickness="0"
+        Command="{x:Bind Data.ReadCommand, Mode=OneWay}"
+        ContextFlyout="{StaticResource BookContextMenu}"
+        IsEnableShadow="False">
+        <Grid Margin="12" RowSpacing="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <local:CoverImage
+                x:Name="CoverImage"
+                Title="{x:Bind Data.Book.Title, Mode=OneWay}"
+                Width="132"
+                Height="180"
+                IsShowCover="{x:Bind Data.IsShowCover, Mode=OneWay}"
+                Source="{x:Bind Data.Cover, Mode=OneWay}"
+                StatusIcon="{x:Bind Data.StatusIcon, Mode=OneWay}" />
+            <TextBlock
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                FontWeight="Bold"
+                Text="{x:Bind Data.Book.Title, Mode=OneWay}"
+                TextAlignment="Center"
+                TextTrimming="CharacterEllipsis"
+                ToolTipService.ToolTip="{x:Bind Data.Book.Title, Mode=OneWay}" />
+            <TextBlock
+                x:Name="ProgressBlock"
+                Style="{StaticResource TipTextBlockStyle}"
+                Grid.Row="2"
+                Margin="0,-4,0,0"
+                HorizontalAlignment="Center"
+                Text="{x:Bind Data.Progress, Mode=OneWay}"
+                TextAlignment="Center" />
+        </Grid>
+    </local:CardPanel>
+</UserControl>

@@ -1,0 +1,48 @@
+name: Feature request / 功能需求
+description: Provide suggestions or ideas for projects / 给项目提供建议或点子
+title: "[Feature] My title"
+labels:
+  - "enhancement"
+assignees: Richasy
+body:
+- type: markdown
+  attributes: 
+    value: |
+      ## 写在开头
+      🚨 请务必完整填写下面的内容，如果缺少必要的信息，开发者可能会在未调查的情况下直接关闭问题  🚨
+
+- type: textarea
+  id: problem-description
+  validations: 
+    required: true
+  attributes: 
+    label: Description / 问题描述
+    description: Describe the problem you want to solve or the use case for the feature / 描述你想要解决的问题或者功能的使用场景
+    placeholder: |
+      请描述你遇到的问题或者链接到已存在的 issue.
+      从用户故事 (User Story) 开始, 简明扼要的说明该功能的适用场景。
+      说明当前应用在没有该功能情况下对你造成了哪些困扰，而有了这项功能后又能为用户创造怎样的价值
+
+- type: textarea
+  id: solution-description
+  validations: 
+    required: true
+  attributes: 
+    label: Solution / 描述解决方案
+    description: Tell us what your expected solution to this problem is / 说说对于该问题, 你预期的解决方案是怎样的
+    placeholder: |
+      尽量清晰地描述你所预期的解决方案，它会以怎样的方式解决你所遇到的问题，这有助于开发者做出符合你预期的更新
+
+- type: textarea
+  id: alternatives
+  attributes: 
+    label: Plan B / 备选方案
+    description: There is more than one solution to the problem, maybe you have a second best solution / 问题的解决方法不止一种，也许你有一个退而求其次的方案
+    placeholder: |
+      当前一种解决方案难以实现时，你是否考虑了其他的替代方案？是否有一个最低的，可接受的实现目标？
+
+- type: textarea
+  id: additional-info
+  attributes:
+    label: Additional / 附加信息
+    description: Add some notes you think are necessary, or show some sketches that show your ideas / 添加一些你认为有必要的备注信息，或者展示一些能表现你思路的草图

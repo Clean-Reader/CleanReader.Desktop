@@ -1,0 +1,112 @@
+﻿<Page
+    x:Class="CleanReader.App.Pages.StartupPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:CleanReader.App.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="using:CleanReader.Models.Resources"
+    Background="{ThemeResource WindowHostBrush}"
+    mc:Ignorable="d">
+
+    <Grid Padding="68,12,68,32" ColumnSpacing="64">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel
+            Margin="0,-40,0,0"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Spacing="20">
+            <Image
+                Width="200"
+                HorizontalAlignment="Center"
+                Source="ms-appx:///Assets/logo.png" />
+            <TextBlock
+                x:Name="VersionBlock"
+                Style="{StaticResource TipTextBlockStyle}"
+                HorizontalAlignment="Center" />
+        </StackPanel>
+
+        <Grid Grid.Column="1" RowSpacing="16">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Style="{StaticResource TitleTextBlockStyle}"
+                Text="{x:Bind res:StringResources.WelcomeTitle}"
+                TextWrapping="Wrap" />
+            <TextBlock
+                Style="{StaticResource TipTextBlockStyle}"
+                Grid.Row="1"
+                Text="{x:Bind res:StringResources.WelcomeDescription}" />
+            <StackPanel
+                Grid.Row="2"
+                Spacing="20"
+                Visibility="{x:Bind _viewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
+                <InfoBar
+                    HorizontalAlignment="Stretch"
+                    IsClosable="True"
+                    IsOpen="{x:Bind _viewModel.IsShowException, Mode=TwoWay}"
+                    Message="{x:Bind _viewModel.ExceptionMessage, Mode=OneWay}"
+                    Severity="Error" />
+                <Button
+                    MinHeight="80"
+                    Padding="16,12"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Top"
+                    Command="{x:Bind _viewModel.OpenLibraryFolderCommand}">
+                    <StackPanel Spacing="4">
+                        <TextBlock
+                            HorizontalAlignment="Left"
+                            FontWeight="Bold"
+                            Text="{x:Bind res:StringResources.OpenLibraryFolderTitle}" />
+                        <TextBlock Style="{StaticResource TipTextBlockStyle}" Text="{x:Bind res:StringResources.OpenLibraryFolderDescription}" />
+                    </StackPanel>
+                </Button>
+                <Button
+                    MinHeight="80"
+                    Padding="16,12"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Left"
+                    VerticalContentAlignment="Top"
+                    Command="{x:Bind _viewModel.CreateLibraryFolderCommand}">
+                    <StackPanel Spacing="4">
+                        <TextBlock FontWeight="Bold" Text="{x:Bind res:StringResources.CreateLibraryFolderTitle}" />
+                        <TextBlock Style="{StaticResource TipTextBlockStyle}" Text="{x:Bind res:StringResources.CreateLibraryFolderDescription}" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+            <ProgressRing
+                Grid.Row="2"
+                Width="64"
+                Height="64"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="0,-40,0,0"
+                IsActive="{x:Bind _viewModel.IsLoading, Mode=OneWay}" />
+            <Grid Grid.Row="3" ColumnSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <FontIcon
+                    Style="{StaticResource SymbolFontIconStyle}"
+                    VerticalAlignment="Top"
+                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                    Glyph="&#xE946;" />
+                <TextBlock
+                    Style="{StaticResource TipTextBlockStyle}"
+                    Grid.Column="1"
+                    VerticalAlignment="Top"
+                    Text="{x:Bind res:StringResources.StartupBottomTip}" />
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
