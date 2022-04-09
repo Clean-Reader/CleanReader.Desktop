@@ -5,7 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>CleanReader.$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
-    <Platforms>AnyCPU;x64;x86;ARM64</Platforms>
+    <Platforms>x64</Platforms>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
   </PropertyGroup>
 
   <ItemGroup>
