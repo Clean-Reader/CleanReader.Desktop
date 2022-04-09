@@ -19,7 +19,7 @@ namespace CleanReader.ViewModels.Desktop
     /// </summary>
     public sealed partial class AppViewModel
     {
-        private const string LatestReleaseUrl = "https://api.github.com/repos/Clean-Reader/CleanReader.Uwp/releases/latest";
+        private const string LatestReleaseUrl = "https://api.github.com/repos/Clean-Reader/CleanReader.Desktop/releases/latest";
         private readonly IAppToolkit _appToolkit;
         private readonly ISettingsToolkit _settingsToolkit;
 

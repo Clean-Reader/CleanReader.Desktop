@@ -115,6 +115,10 @@ namespace CleanReader.App.Pages
             {
                 await _libraryViewModel.CheckOpenFileOrImportAsync();
             }
+
+#if !DEBUG
+            _viewModel.CheckGithubUpdateCommand.Execute().Subscribe();
+#endif
         }
 
         private void OnMainNavViewItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
