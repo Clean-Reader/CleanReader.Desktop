@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
@@ -105,12 +106,20 @@ namespace CleanReader.ViewModels.Desktop
                     IsFirstLoading = true;
                 }
 
-                var books = await _novelService.GetBooksWithCategoryAsync(SelectedBookSource.Id, SelectedCategory.Name, _pageIndex, _exploreTokenSource);
-                foreach (var book in books)
+                var books = new List<Book>();
+                await Task.Run(async () =>
                 {
-                    if (!Books.Any(p => p.Book.Equals(book)))
+                    books = await _novelService.GetBooksWithCategoryAsync(SelectedBookSource.Id, SelectedCategory.Name, _pageIndex, _exploreTokenSource);
+                });
+
+                if (books.Count > 0)
+                {
+                    foreach (var book in books)
                     {
-                        Books.Add(new OnlineBookViewModel(book));
+                        if (!Books.Any(p => p.Book.Equals(book)))
+                        {
+                            Books.Add(new OnlineBookViewModel(book));
+                        }
                     }
                 }
 
