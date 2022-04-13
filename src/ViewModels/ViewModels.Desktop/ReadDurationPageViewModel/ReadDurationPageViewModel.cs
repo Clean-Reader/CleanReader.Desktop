@@ -21,7 +21,7 @@ namespace CleanReader.ViewModels.Desktop
         /// <summary>
         /// Initializes a new instance of the <see cref="ReadDurationPageViewModel"/> class.
         /// </summary>
-        private ReadDurationPageViewModel()
+        public ReadDurationPageViewModel()
         {
             ReaderDurations = new ObservableCollection<ReaderDuration>();
             InitializeCommand = ReactiveCommand.CreateFromTask(InitializeAsync, outputScheduler: RxApp.MainThreadScheduler);
@@ -52,7 +52,8 @@ namespace CleanReader.ViewModels.Desktop
 
             await Task.Run(async () =>
             {
-                histories = await _dbContext.Histories.ToListAsync();
+                await HistoriesSelfCheckAsync();
+                histories = await _dbContext.Histories.Include(p => p.ReadSections).ToListAsync();
             });
 
             if (histories.Count > 0)
@@ -79,6 +80,34 @@ namespace CleanReader.ViewModels.Desktop
                         ReaderDurations.Add(durationItem);
                     }
                 }
+
+                await Task.Run(async () =>
+                {
+                    _dbContext.Histories.UpdateRange(histories);
+                    await _dbContext.SaveChangesAsync();
+                });
+            }
+        }
+
+        private async Task HistoriesSelfCheckAsync()
+        {
+            var hasChange = false;
+            var histories = await _dbContext.Histories.Include(p => p.ReadSections).ToListAsync();
+            foreach (var history in histories)
+            {
+                var count = history.ReadSections.RemoveAll(p => p.EndTime - p.StartTime > TimeSpan.FromDays(3));
+                history.ReadDuration = history.ReadSections.Sum(p => (p.EndTime - p.StartTime).TotalSeconds);
+
+                if (count > 0)
+                {
+                    hasChange = true;
+                }
+            }
+
+            if (hasChange)
+            {
+                _dbContext.Histories.UpdateRange(histories);
+                await _dbContext.SaveChangesAsync();
             }
         }
 

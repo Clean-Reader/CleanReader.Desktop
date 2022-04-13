@@ -24,7 +24,7 @@ namespace CleanReader.ViewModels.Desktop
         /// <summary>
         /// Initializes a new instance of the <see cref="NoteOverviewPageViewModel"/> class.
         /// </summary>
-        private NoteOverviewPageViewModel()
+        public NoteOverviewPageViewModel()
         {
             _allHighlights = new List<Highlight>();
             Books = new ObservableCollection<Book>();

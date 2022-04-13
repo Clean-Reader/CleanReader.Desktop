@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 
-using System;
 using System.Collections.ObjectModel;
 using System.Reactive;
 using CleanReader.Models.App;
@@ -18,11 +17,6 @@ namespace CleanReader.ViewModels.Desktop
         private readonly ObservableAsPropertyHelper<bool> _isInitializing;
         private LibraryDbContext _dbContext;
         private bool _disposedValue;
-
-        /// <summary>
-        /// 单例.
-        /// </summary>
-        public static ReadDurationPageViewModel Instance { get; } = new Lazy<ReadDurationPageViewModel>(() => new ReadDurationPageViewModel()).Value;
 
         /// <summary>
         /// 初始化命令.

@@ -11,7 +11,7 @@ namespace CleanReader.App.Pages
     /// </summary>
     public sealed partial class ReadDurationPage : Page
     {
-        private readonly ReadDurationPageViewModel _viewModel = ReadDurationPageViewModel.Instance;
+        private readonly ReadDurationPageViewModel _viewModel = new ReadDurationPageViewModel();
         private readonly LibraryViewModel _libraryViewModel = LibraryViewModel.Instance;
 
         /// <summary>

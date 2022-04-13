@@ -181,6 +181,11 @@ namespace CleanReader.ViewModels.Desktop
         {
             if (source != null)
             {
+                if (_startTime == DateTime.MinValue)
+                {
+                    _startTime = endTime.AddSeconds(-1);
+                }
+
                 source.ReadDuration += (endTime - _startTime).TotalSeconds;
                 var isSectionAdded = false;
                 if (source.ReadSections?.Any() ?? false)

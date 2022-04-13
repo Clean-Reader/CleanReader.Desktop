@@ -13,7 +13,7 @@ namespace CleanReader.App.Pages
     /// </summary>
     public sealed partial class NoteOverviewPage : Page
     {
-        private readonly NoteOverviewPageViewModel _viewModel = NoteOverviewPageViewModel.Instance;
+        private readonly NoteOverviewPageViewModel _viewModel = new NoteOverviewPageViewModel();
         private readonly LibraryViewModel _libraryViewModel = LibraryViewModel.Instance;
 
         /// <summary>

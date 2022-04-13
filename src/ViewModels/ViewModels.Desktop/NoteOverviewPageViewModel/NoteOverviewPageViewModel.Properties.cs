@@ -23,11 +23,6 @@ namespace CleanReader.ViewModels.Desktop
         private LibraryDbContext _libraryDbContext;
 
         /// <summary>
-        /// 单例.
-        /// </summary>
-        public static NoteOverviewPageViewModel Instance { get; } = new Lazy<NoteOverviewPageViewModel>(() => new NoteOverviewPageViewModel()).Value;
-
-        /// <summary>
         /// 显示高亮对话框命令.
         /// </summary>
         public ReactiveCommand<Highlight, Unit> ShowHighlightDialogCommand { get; }
