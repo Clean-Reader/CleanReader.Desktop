@@ -87,7 +87,13 @@
                 HorizontalAlignment="Stretch"
                 Header="{x:Bind res:StringResources.FontFamily}"
                 ItemsSource="{x:Bind _viewModel.Fonts}"
-                SelectedItem="{x:Bind _viewModel.FontFamily, Mode=OneWay}" />
+                SelectedItem="{x:Bind _viewModel.FontFamily, Mode=OneWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <TextBlock FontFamily="{x:Bind}" Text="{x:Bind}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <NumberBox
                 x:Name="FontSizeBox"
                 HorizontalAlignment="Stretch"
