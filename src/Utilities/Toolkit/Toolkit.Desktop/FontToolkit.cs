@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Linq;
 using CleanReader.Toolkit.Interfaces;
-using Microsoft.Graphics.Canvas.Text;
 
 namespace CleanReader.Toolkit.Desktop
 {
@@ -17,11 +17,8 @@ namespace CleanReader.Toolkit.Desktop
         {
             try
             {
-                var localeList = new List<string>
-                {
-                    "zh-cn",
-                };
-                return CanvasTextFormat.GetSystemFontFamilies(localeList).OrderBy(x => x).ToList();
+                using var col = new InstalledFontCollection();
+                return col.Families.Select(p => p.Name).ToList();
             }
             catch (System.Exception)
             {

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -156,8 +157,14 @@ namespace CleanReader.ViewModels.Desktop
 
             if (Fonts.Count == 0)
             {
-                var list = _fontToolkit.GetSystemFontList();
-                list.ForEach(p => Fonts.Add(p));
+                var fonts = new List<string>();
+
+                await Task.Run(() =>
+                {
+                    fonts = _fontToolkit.GetSystemFontList();
+                });
+
+                fonts.ForEach(p => Fonts.Add(p));
             }
 
             book.LastOpenTime = DateTime.Now;
