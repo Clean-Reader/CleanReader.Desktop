@@ -160,17 +160,9 @@ namespace CleanReader.Services.Novel
                 return string.Empty;
             }
 
-            if (needCheck)
+            if (needCheck && IsBase64String(text))
             {
-                try
-                {
-                    // 已经是Base64字符串，不要二次转换.
-                    Convert.FromBase64String(text);
-                    return text;
-                }
-                catch (Exception)
-                {
-                }
+                return text;
             }
 
             var bytes = Encoding.Default.GetBytes(text);
@@ -182,5 +174,11 @@ namespace CleanReader.Services.Novel
 
         private static string NormalizeContent(string html)
             => Regex.Replace(html.Replace("</p>", "\n").Replace("<br>", "\n"), "<[^>]+>", string.Empty);
+
+        private static bool IsBase64String(string str)
+        {
+            str = str.Trim();
+            return (str.Length % 4 == 0) && Regex.IsMatch(str, @"^[a-zA-Z0-9\+/]*={0,3}$", RegexOptions.None);
+        }
     }
 }

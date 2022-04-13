@@ -38,15 +38,14 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <NavigationView
+        <TabView
             x:Name="TopNavView"
             Margin="{StaticResource DefaultContainerPadding}"
-            IsBackButtonVisible="Collapsed"
-            IsSettingsVisible="False"
-            MenuItemsSource="{x:Bind _viewModel.Categories}"
-            PaneDisplayMode="Top"
-            SelectedItem="{x:Bind _viewModel.SelectedCategory, Mode=TwoWay}">
-            <NavigationView.PaneHeader>
+            IsAddTabButtonVisible="False"
+            SelectedItem="{x:Bind _viewModel.SelectedCategory, Mode=TwoWay}"
+            TabItemsSource="{x:Bind _viewModel.Categories}"
+            TabWidthMode="Equal">
+            <TabView.TabStripHeader>
                 <ComboBox
                     MinWidth="128"
                     VerticalAlignment="Center"
@@ -58,14 +57,19 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-            </NavigationView.PaneHeader>
-            <NavigationView.MenuItemTemplate>
+            </TabView.TabStripHeader>
+            <TabView.TabItemTemplate>
                 <DataTemplate x:DataType="models:Category">
-                    <TextBlock Text="{x:Bind Name}" />
+                    <TabViewItem
+                        HorizontalContentAlignment="Center"
+                        Header="{x:Bind Name}"
+                        IsClosable="False" />
                 </DataTemplate>
-            </NavigationView.MenuItemTemplate>
-        </NavigationView>
-
+            </TabView.TabItemTemplate>
+            <TabView.Resources>
+                <StaticResource x:Key="TabViewItemHeaderForegroundSelected" ResourceKey="AccentTextFillColorPrimaryBrush" />
+            </TabView.Resources>
+        </TabView>
         <Grid Grid.Row="1" Visibility="{x:Bind _libraryViewModel.IsFileSystemLimited, Mode=OneWay, Converter={StaticResource BoolToVisibilityReverseConverter}}">
             <ScrollViewer
                 x:Name="DetailViewer"
