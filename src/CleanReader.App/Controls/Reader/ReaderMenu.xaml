@@ -22,138 +22,198 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid>
-        <Grid>
-            <StackPanel
-                Margin="20"
-                Padding="12,8"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
-                Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
-                BorderBrush="{ThemeResource CardStrokeColorDefaultSolidBrush}"
-                BorderThickness="1"
-                CornerRadius="{StaticResource ControlCornerRadius}"
-                Orientation="Horizontal"
-                Spacing="8"
-                Visibility="{x:Bind _viewModel.IsMenuShown, Mode=OneWay}">
-                <animations:Implicit.ShowAnimations>
-                    <animations:OpacityAnimation
-                        From="0"
-                        To="1"
-                        Duration="0:0:0.3" />
-                    <animations:ScaleAnimation
-                        From="0.5"
-                        To="1"
-                        Duration="0:0:0.3" />
-                </animations:Implicit.ShowAnimations>
-                <animations:Implicit.HideAnimations>
-                    <animations:OpacityAnimation
-                        From="1"
-                        To="0"
-                        Duration="0:0:0.2" />
-                    <animations:ScaleAnimation
-                        From="1"
-                        To="0.5"
-                        Duration="0:0:0.2" />
-                </animations:Implicit.HideAnimations>
-                <Button
-                    x:Name="BackButton"
-                    AutomationProperties.Name="{x:Bind res:StringResources.Back}"
-                    Style="{StaticResource CommandButtonStyle}"
-                    Padding="12,8"
-                    Command="{x:Bind _viewModel.BackCommand}"
-                    ToolTipService.ToolTip="{x:Bind res:StringResources.Back}">
-                    <FontIcon FontSize="14" Glyph="&#xE0A6;" />
-                </Button>
-                <StackPanel
-                    Width="1"
-                    VerticalAlignment="Stretch"
-                    Background="{ThemeResource ControlStrokeColorDefaultBrush}" />
-                <Button
-                    x:Name="CatalogButton"
-                    AutomationProperties.Name="{x:Bind res:StringResources.Catalog}"
-                    Style="{StaticResource CommandButtonStyle}"
-                    Command="{x:Bind _viewModel.ToggleCatalogCommand}">
-                    <local:IconTextBlock
-                        Style="{StaticResource BasicIconTextStyle}"
-                        Icon="&#xE15C;"
-                        Text="{x:Bind res:StringResources.Catalog}" />
-                </Button>
-                <Button
-                    x:Name="InterfaceButton"
-                    AutomationProperties.Name="{x:Bind res:StringResources.Interface}"
-                    Style="{StaticResource CommandButtonStyle}"
-                    Command="{x:Bind _viewModel.ShowInterfaceSettingsCommand}">
-                    <local:IconTextBlock
-                        Style="{StaticResource BasicIconTextStyle}"
-                        Icon="&#xE185;"
-                        Text="{x:Bind res:StringResources.Interface}" />
-                </Button>
-                <Button
-                    x:Name="SearchButton"
-                    AutomationProperties.Name="{x:Bind res:StringResources.Search}"
-                    Style="{StaticResource CommandButtonStyle}"
-                    Command="{x:Bind _viewModel.ShowSearchDailogCommand}">
-                    <local:IconTextBlock
-                        Style="{StaticResource BasicIconTextStyle}"
-                        Icon="&#xE721;"
-                        Text="{x:Bind res:StringResources.Search}" />
-                </Button>
-                <Button
-                    x:Name="MoreButton"
-                    AutomationProperties.Name="{x:Bind res:StringResources.More}"
-                    Style="{StaticResource CommandButtonStyle}">
-                    <local:IconTextBlock
-                        Style="{StaticResource BasicIconTextStyle}"
-                        Icon="&#xE10C;"
-                        Text="{x:Bind res:StringResources.More}" />
-                    <Button.Flyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem
-                                Command="{x:Bind _viewModel.PreviousChapterCommand}"
-                                KeyboardAcceleratorTextOverride="Ctrl + ←"
-                                Text="{x:Bind res:StringResources.PreviousChapter}">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE100;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                            <MenuFlyoutItem
-                                Command="{x:Bind _viewModel.NextChapterCommand}"
-                                KeyboardAcceleratorTextOverride="Ctrl + →"
-                                Text="{x:Bind res:StringResources.NextChapter}">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE101;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                            <MenuFlyoutSeparator />
-                            <MenuFlyoutItem
-                                Command="{x:Bind _viewModel.ShowNotesCommand}"
-                                KeyboardAcceleratorTextOverride="Ctrl + N"
-                                Text="{x:Bind res:StringResources.OpenCurrentNotes}">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xEE56;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                            <MenuFlyoutItem
-                                Command="{x:Bind _viewModel.ToggleMiniViewCommand}"
-                                KeyboardAcceleratorTextOverride="Ctrl + M"
-                                Text="{x:Bind res:StringResources.MiniView}">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE8D1;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                            <MenuFlyoutItem
-                                Command="{x:Bind _viewModel.ToggleFullScreenCommand}"
-                                KeyboardAcceleratorTextOverride="F11"
-                                Text="{x:Bind res:StringResources.FullScreen}">
-                                <MenuFlyoutItem.Icon>
-                                    <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE1D9;" />
-                                </MenuFlyoutItem.Icon>
-                            </MenuFlyoutItem>
-                        </MenuFlyout>
-                    </Button.Flyout>
-                </Button>
-            </StackPanel>
-        </Grid>
-    </Grid>
+    <StackPanel
+        Margin="20"
+        Padding="12,8"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Bottom"
+        Background="{ThemeResource ControlSolidFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultSolidBrush}"
+        BorderThickness="1"
+        CornerRadius="{StaticResource ControlCornerRadius}"
+        Orientation="Horizontal"
+        Spacing="8"
+        Visibility="{x:Bind _viewModel.IsMenuShown, Mode=OneWay}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="DefaultState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="460" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="CatelogIconText.Visibility" Value="Collapsed" />
+                        <Setter Target="CatelogIcon.Visibility" Value="Visible" />
+                        <Setter Target="InterfaceIconText.Visibility" Value="Collapsed" />
+                        <Setter Target="InterfaceIcon.Visibility" Value="Visible" />
+                        <Setter Target="SearchIconText.Visibility" Value="Collapsed" />
+                        <Setter Target="SearchIcon.Visibility" Value="Visible" />
+                        <Setter Target="MoreIconText.Visibility" Value="Collapsed" />
+                        <Setter Target="MoreIcon.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <animations:Implicit.ShowAnimations>
+            <animations:OpacityAnimation
+                From="0"
+                To="1"
+                Duration="0:0:0.3" />
+            <animations:ScaleAnimation
+                From="0.5"
+                To="1"
+                Duration="0:0:0.3" />
+        </animations:Implicit.ShowAnimations>
+        <animations:Implicit.HideAnimations>
+            <animations:OpacityAnimation
+                From="1"
+                To="0"
+                Duration="0:0:0.2" />
+            <animations:ScaleAnimation
+                From="1"
+                To="0.5"
+                Duration="0:0:0.2" />
+        </animations:Implicit.HideAnimations>
+        <Button
+            x:Name="BackButton"
+            AutomationProperties.Name="{x:Bind res:StringResources.Back}"
+            Style="{StaticResource CommandButtonStyle}"
+            Padding="12,8"
+            Command="{x:Bind _viewModel.BackCommand}"
+            ToolTipService.ToolTip="{x:Bind res:StringResources.Back}">
+            <FontIcon FontSize="14" Glyph="&#xE0A6;" />
+        </Button>
+        <StackPanel
+            Width="1"
+            VerticalAlignment="Stretch"
+            Background="{ThemeResource ControlStrokeColorDefaultBrush}" />
+        <Button
+            x:Name="CatalogButton"
+            AutomationProperties.Name="{x:Bind res:StringResources.Catalog}"
+            Style="{StaticResource CommandButtonStyle}"
+            Command="{x:Bind _viewModel.ToggleCatalogCommand}"
+            ToolTipService.ToolTip="{x:Bind res:StringResources.Catalog}">
+            <Grid>
+                <local:IconTextBlock
+                    x:Name="CatelogIconText"
+                    Style="{StaticResource BasicIconTextStyle}"
+                    Icon="&#xE15C;"
+                    Text="{x:Bind res:StringResources.Catalog}" />
+                <FontIcon
+                    x:Name="CatelogIcon"
+                    Style="{StaticResource SymbolFontIconStyle}"
+                    Margin="0,4"
+                    Glyph="&#xE15C;"
+                    Visibility="Collapsed" />
+            </Grid>
+        </Button>
+        <Button
+            x:Name="InterfaceButton"
+            AutomationProperties.Name="{x:Bind res:StringResources.Interface}"
+            Style="{StaticResource CommandButtonStyle}"
+            Command="{x:Bind _viewModel.ShowInterfaceSettingsCommand}"
+            ToolTipService.ToolTip="{x:Bind res:StringResources.Interface}">
+            <Grid>
+                <local:IconTextBlock
+                    x:Name="InterfaceIconText"
+                    Style="{StaticResource BasicIconTextStyle}"
+                    Icon="&#xE185;"
+                    Text="{x:Bind res:StringResources.Interface}" />
+                <FontIcon
+                    x:Name="InterfaceIcon"
+                    Style="{StaticResource SymbolFontIconStyle}"
+                    Margin="0,4"
+                    Glyph="&#xE185;"
+                    Visibility="Collapsed" />
+            </Grid>
+        </Button>
+        <Button
+            x:Name="SearchButton"
+            AutomationProperties.Name="{x:Bind res:StringResources.Search}"
+            Style="{StaticResource CommandButtonStyle}"
+            Command="{x:Bind _viewModel.ShowSearchDailogCommand}"
+            ToolTipService.ToolTip="{x:Bind res:StringResources.Search}">
+            <Grid>
+                <local:IconTextBlock
+                    x:Name="SearchIconText"
+                    Style="{StaticResource BasicIconTextStyle}"
+                    Icon="&#xE721;"
+                    Text="{x:Bind res:StringResources.Search}" />
+                <FontIcon
+                    x:Name="SearchIcon"
+                    Style="{StaticResource SymbolFontIconStyle}"
+                    Margin="0,4"
+                    Glyph="&#xE721;"
+                    Visibility="Collapsed" />
+            </Grid>
+        </Button>
+        <Button
+            x:Name="MoreButton"
+            AutomationProperties.Name="{x:Bind res:StringResources.More}"
+            Style="{StaticResource CommandButtonStyle}"
+            ToolTipService.ToolTip="{x:Bind res:StringResources.More}">
+            <Grid>
+                <local:IconTextBlock
+                    x:Name="MoreIconText"
+                    Style="{StaticResource BasicIconTextStyle}"
+                    Icon="&#xE10C;"
+                    Text="{x:Bind res:StringResources.More}" />
+                <FontIcon
+                    x:Name="MoreIcon"
+                    Style="{StaticResource SymbolFontIconStyle}"
+                    Margin="0,4"
+                    Glyph="&#xE10C;"
+                    Visibility="Collapsed" />
+            </Grid>
+            <Button.Flyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem
+                        Command="{x:Bind _viewModel.PreviousChapterCommand}"
+                        KeyboardAcceleratorTextOverride="Ctrl + ←"
+                        Text="{x:Bind res:StringResources.PreviousChapter}">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE100;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem
+                        Command="{x:Bind _viewModel.NextChapterCommand}"
+                        KeyboardAcceleratorTextOverride="Ctrl + →"
+                        Text="{x:Bind res:StringResources.NextChapter}">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE101;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem
+                        Command="{x:Bind _viewModel.ShowNotesCommand}"
+                        KeyboardAcceleratorTextOverride="Ctrl + N"
+                        Text="{x:Bind res:StringResources.OpenCurrentNotes}">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xEE56;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem
+                        Command="{x:Bind _viewModel.ToggleMiniViewCommand}"
+                        KeyboardAcceleratorTextOverride="Ctrl + M"
+                        Text="{x:Bind res:StringResources.MiniView}">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE8D1;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                    <MenuFlyoutItem
+                        Command="{x:Bind _viewModel.ToggleFullScreenCommand}"
+                        KeyboardAcceleratorTextOverride="F11"
+                        Text="{x:Bind res:StringResources.FullScreen}">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE1D9;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
+                </MenuFlyout>
+            </Button.Flyout>
+        </Button>
+    </StackPanel>
 </UserControl>

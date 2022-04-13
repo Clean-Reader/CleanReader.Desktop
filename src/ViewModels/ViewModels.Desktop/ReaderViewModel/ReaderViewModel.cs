@@ -99,6 +99,16 @@ namespace CleanReader.ViewModels.Desktop
             this.WhenAnyValue(x => x.AdditionalStyle).Subscribe(p => WriteSetting(SettingNames.AdditionalStyle, p));
             this.WhenAnyValue(x => x.IsSmoothScroll).Subscribe(p => WriteSetting(SettingNames.IsSmoothScroll, p));
 
+            AppViewModel.Instance.WhenAnyValue(x => x.IsMiniView)
+                .Subscribe(p =>
+                {
+                    FontSize = p
+                            ? _settingsToolkit.ReadLocalSetting(SettingNames.MiniFontSize, 13d)
+                            : _settingsToolkit.ReadLocalSetting(SettingNames.FontSize, 22d);
+
+                    MiniViewRequested?.Invoke(this, EventArgs.Empty);
+                });
+
             Themes.CollectionChanged += OnThemesCollectionChanged;
             SearchResult.CollectionChanged += OnSearchResultCollectionChanged;
             Highlights.CollectionChanged += OnHighlightsCollectionChanged;
@@ -327,10 +337,6 @@ namespace CleanReader.ViewModels.Desktop
 
             _isEnableToggleMiniView = false;
             AppViewModel.Instance.IsMiniView = !AppViewModel.Instance.IsMiniView;
-            FontSize = AppViewModel.Instance.IsMiniView
-                ? _settingsToolkit.ReadLocalSetting(SettingNames.MiniFontSize, 13d)
-                : _settingsToolkit.ReadLocalSetting(SettingNames.FontSize, 22d);
-            MiniViewRequested?.Invoke(this, EventArgs.Empty);
             await Task.Delay(300);
             _isEnableToggleMiniView = true;
         }
