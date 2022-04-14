@@ -57,6 +57,7 @@
                     <controls:ShelfSettingItem IsEnabled="{x:Bind _libraryViewModel.IsFileSystemLimited, Mode=OneWay, Converter={StaticResource BoolReverseConverter}}" />
                     <controls:SpreadSettingItem />
                     <controls:ContinueReadingSettingItem />
+                    <controls:AmbieSettingItem />
                 </StackPanel>
                 <TextBlock
                     Style="{StaticResource BodyTextBlockStyle}"

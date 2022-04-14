@@ -32,5 +32,8 @@ namespace CleanReader.Models.Constants
         AppLanguage,
         IsBookPathTransfered,
         IgnoreVersion,
+        AmbieCompact,
+        AmbieAutoPlay,
+        IsAutoPlayBackgroundMusic,
     }
 }

@@ -31,6 +31,7 @@
     <DefineConstants>DISABLE_XAML_GENERATED_MAIN</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Controls\AmbieSettingItem.xaml" />
     <None Remove="Controls\AppTitleBar.xaml" />
     <None Remove="Controls\App\CustomDialog\CustomDialog.xaml" />
     <None Remove="Controls\App\ExpanderEx.xaml" />
@@ -126,6 +127,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\App\TipPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Settings\AmbieSettingItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <None Update="Controls\CardPanel\CardPanel.xaml">

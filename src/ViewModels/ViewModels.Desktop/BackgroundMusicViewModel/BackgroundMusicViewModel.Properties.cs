@@ -2,6 +2,7 @@
 
 using System;
 using System.Reactive;
+using CleanReader.Toolkit.Interfaces;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -12,6 +13,8 @@ namespace CleanReader.ViewModels.Desktop;
 /// </summary>
 public sealed partial class BackgroundMusicViewModel
 {
+    private readonly ISettingsToolkit _settingsToolkit;
+
     /// <summary>
     /// 单例.
     /// </summary>
@@ -32,4 +35,22 @@ public sealed partial class BackgroundMusicViewModel
     /// </summary>
     [Reactive]
     public bool IsAmbieInstalled { get; set; }
+
+    /// <summary>
+    /// 背景音乐自动播放.
+    /// </summary>
+    [Reactive]
+    public bool IsBackgroundMusicAutoPlay { get; set; }
+
+    /// <summary>
+    /// Ambie启动时是否自动播放.
+    /// </summary>
+    [Reactive]
+    public bool IsAmbieAutoPlay { get; set; }
+
+    /// <summary>
+    /// Ambie启动时是否进入小窗模式.
+    /// </summary>
+    [Reactive]
+    public bool IsAmbieCompact { get; set; }
 }
