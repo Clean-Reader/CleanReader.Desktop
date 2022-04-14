@@ -45,6 +45,13 @@ namespace CleanReader.Models.Constants
             public const string Toc = "Toc";
             public const string Book = "Book";
         }
+
+        public static class Service
+        {
+            public const string AmbieServiceName = "com.jeniusapps.ambie";
+            public const string AmbiePackageId = "43891JeniusApps.Ambie_jaj7tphbgjeh8";
+            public const string AmbieShellId = "43891JeniusApps.Ambie_jaj7tphbgjeh8!App";
+        }
 #pragma warning restore SA1600 // Elements should be documented
     }
 }

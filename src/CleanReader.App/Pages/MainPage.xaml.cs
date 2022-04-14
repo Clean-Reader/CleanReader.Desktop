@@ -91,6 +91,8 @@ namespace CleanReader.App.Pages
             {
                 _viewModel.IsInitializing = true;
                 await LibraryViewModel.Instance.InitializeLibraryAsync();
+
+                // BackgroundMusicViewModel.Instance.OpenConnectionCommand.Execute().Subscribe();
                 _viewModel.IsInitializing = false;
             }
             catch (LibraryInitializeException le)
