@@ -23,6 +23,14 @@ namespace CleanReader.Toolkit.Interfaces
         Task<string> ReadFileAsync(string filePath);
 
         /// <summary>
+        /// Open file save picker and return path.
+        /// </summary>
+        /// <param name="windowHandle">Window handle.</param>
+        /// <param name="fileName">Suggest file name.</param>
+        /// <returns>Target file path.</returns>
+        Task<string> SaveFileAsync(IntPtr windowHandle, string fileName);
+
+        /// <summary>
         /// Open the file chooser and read the selected file.
         /// </summary>
         /// <param name="windowHandle">Window handle.</param>

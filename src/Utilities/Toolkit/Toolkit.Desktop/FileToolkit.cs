@@ -40,6 +40,19 @@ namespace CleanReader.Toolkit.Desktop
         }
 
         /// <inheritdoc/>
+        public async Task<string> SaveFileAsync(IntPtr windowHandle, string fileName)
+        {
+            var picker = new FileSavePicker();
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, windowHandle);
+            picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+            picker.FileTypeChoices.Add("Epub file", new string[] { ".epub" });
+            picker.DefaultFileExtension = ".epub";
+            picker.SuggestedFileName = fileName;
+            var file = await picker.PickSaveFileAsync().AsTask();
+            return file?.Path;
+        }
+
+        /// <inheritdoc/>
         public Task<string> ReadFileAsync(string filePath)
         {
             EnsureCorrectFileSystemPath(filePath);

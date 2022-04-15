@@ -183,6 +183,9 @@
   <data name="BookNotExist" xml:space="preserve">
     <value>The book file does not exist or broken, you can go back to the shelf to remove the book entry and re-import</value>
   </data>
+  <data name="BookSaved" xml:space="preserve">
+    <value>Book has been saved</value>
+  </data>
   <data name="BookSourceDoc" xml:space="preserve">
     <value>Book source document</value>
   </data>
@@ -564,6 +567,9 @@ The book will be removed from your library, and the history / notes related to t
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
+  </data>
+  <data name="SaveCopy" xml:space="preserve">
+    <value>Save copy</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>

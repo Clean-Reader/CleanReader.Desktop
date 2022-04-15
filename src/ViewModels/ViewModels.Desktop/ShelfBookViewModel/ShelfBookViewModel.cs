@@ -40,6 +40,7 @@ namespace CleanReader.ViewModels.Desktop
             ShowShelfTransferDialogCommand = ReactiveCommand.CreateFromTask(ShowShelfTransferDialogAsync, outputScheduler: RxApp.MainThreadScheduler);
             ShowReplaceSourceDialogCommand = ReactiveCommand.Create(ShowReplaceSourceDialog, outputScheduler: RxApp.MainThreadScheduler);
             OpenBookUrlCommand = ReactiveCommand.CreateFromTask(OpenBookUrlAsync, outputScheduler: RxApp.MainThreadScheduler);
+            SaveBookCommand = ReactiveCommand.CreateFromTask(SaveBookAsync, outputScheduler: RxApp.MainThreadScheduler);
 
             Initialize();
         }
@@ -158,6 +159,20 @@ namespace CleanReader.ViewModels.Desktop
             catch (Exception)
             {
                 return;
+            }
+        }
+
+        private async Task SaveBookAsync()
+        {
+            if (File.Exists(LocalPath))
+            {
+                var path = await _fileToolkit.SaveFileAsync(AppViewModel.Instance.MainWindowHandle, Path.GetFileName(LocalPath));
+
+                if (!string.IsNullOrEmpty(path))
+                {
+                    await _fileToolkit.CopyAsync(LocalPath, path, true);
+                    AppViewModel.Instance.ShowTip(StringResources.BookSaved, InfoType.Success);
+                }
             }
         }
 

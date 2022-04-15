@@ -183,6 +183,9 @@
   <data name="BookNotExist" xml:space="preserve">
     <value>书籍文件不存在或已损坏，您可以返回书架后移除书籍条目并重新导入</value>
   </data>
+  <data name="BookSaved" xml:space="preserve">
+    <value>书籍已经保存</value>
+  </data>
   <data name="BookSourceDoc" xml:space="preserve">
     <value>书源文档</value>
   </data>
@@ -564,6 +567,9 @@
   </data>
   <data name="Save" xml:space="preserve">
     <value>保存</value>
+  </data>
+  <data name="SaveCopy" xml:space="preserve">
+    <value>另存为</value>
   </data>
   <data name="Search" xml:space="preserve">
     <value>搜索</value>
