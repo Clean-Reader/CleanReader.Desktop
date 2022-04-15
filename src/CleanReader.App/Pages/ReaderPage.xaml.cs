@@ -175,7 +175,7 @@ namespace CleanReader.App.Pages
                 _viewModel.Background,
                 _viewModel.Foreground,
                 _viewModel.AdditionalStyle);
-            await Reader.SetOptionsAsync(isSmoothScroll: _viewModel.IsSmoothScroll);
+            await Reader.SetOptionsAsync(minSpreadWidth: _viewModel.SpreadMinWidth, isSmoothScroll: _viewModel.IsSmoothScroll);
         }
 
         private async void OnRequestChangeChapterAsync(object sender, Models.App.ReaderChapter e)
