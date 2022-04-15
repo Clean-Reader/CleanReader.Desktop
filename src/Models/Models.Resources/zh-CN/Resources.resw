@@ -445,6 +445,9 @@
   <data name="MiniView" xml:space="preserve">
     <value>迷你视图</value>
   </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>分钟</value>
+  </data>
   <data name="Modify" xml:space="preserve">
     <value>修改</value>
   </data>
@@ -465,6 +468,9 @@
   </data>
   <data name="NoDescription" xml:space="preserve">
     <value>此书暂无简介</value>
+  </data>
+  <data name="NoReadRecord" xml:space="preserve">
+    <value>该书籍没有阅读记录</value>
   </data>
   <data name="NoSelectedOnlineBook" xml:space="preserve">
     <value>没有合适的在线书籍被选中</value>
@@ -538,6 +544,9 @@
   <data name="Read" xml:space="preserve">
     <value>阅读</value>
   </data>
+  <data name="ReadRecord" xml:space="preserve">
+    <value>阅读记录</value>
+  </data>
   <data name="ReadTime" xml:space="preserve">
     <value>阅读时长</value>
   </data>
@@ -588,6 +597,9 @@
   </data>
   <data name="SearchSomething" xml:space="preserve">
     <value>找找你感兴趣的内容吧</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>秒</value>
   </data>
   <data name="SelectionModeOpen" xml:space="preserve">
     <value>文本选择模式已开启</value>

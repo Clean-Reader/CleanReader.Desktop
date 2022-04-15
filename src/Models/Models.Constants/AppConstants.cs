@@ -42,6 +42,7 @@ namespace CleanReader.Models.Constants
         public const string CreateOrUpdateShelfDialog = "CreateOrUpdateShelfDialog";
         public const string CreateBookSourceDialog = "CreateBookSourceDialog";
         public const string GithubUpdateDialog = "GithubUpdateDialog";
+        public const string ReadDurationDetailDialog = "ReadDurationDetailDialog";
 
         public const string LogFolderName = "Logger";
     }
