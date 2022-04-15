@@ -203,9 +203,9 @@ namespace CleanReader.ViewModels.Desktop
                 books = books.Where(p => p.Type == BookType.Online).ToList();
             }
 
-            DispatcherQueue.TryEnqueue(() =>
+            DispatcherQueue.TryEnqueue(async () =>
             {
-                SortBooks(books);
+                await SortBooksAsync(books);
             });
 
             _settingsToolkit.WriteLocalSetting(SettingNames.SortType, CurrentSort);
@@ -213,7 +213,7 @@ namespace CleanReader.ViewModels.Desktop
             _settingsToolkit.WriteLocalSetting(SettingNames.ShelfId, CurrentShelf?.Id ?? string.Empty);
         }
 
-        private void SortBooks(List<Book> source)
+        private async Task SortBooksAsync(List<Book> source)
         {
             var list = source.Select(p => new ShelfBookViewModel(p, _dbContextRef)).ToList();
             if (CurrentSort == VMConstants.Shelf.SortType)
@@ -238,6 +238,7 @@ namespace CleanReader.ViewModels.Desktop
             }
 
             DisplayBooks.Clear();
+            await Task.CompletedTask;
             list.ForEach(p => DisplayBooks.Add(p));
         }
 

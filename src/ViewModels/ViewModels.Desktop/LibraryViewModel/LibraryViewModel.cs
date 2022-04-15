@@ -58,8 +58,8 @@ namespace CleanReader.ViewModels.Desktop
             ShowReplaceSourceDialogCommand = ReactiveCommand.CreateFromTask<Book>(ShowReplaceSourceDialogAsync, outputScheduler: RxApp.MainThreadScheduler);
             OnlineSearchCommand = ReactiveCommand.CreateFromTask<string>(s => SearchOnlineBooksAsync(s), outputScheduler: RxApp.MainThreadScheduler);
             SelectOnlineSearchResultCommand = ReactiveCommand.Create<OnlineBookViewModel>(vm => SetSelectedSearchItem(vm), outputScheduler: RxApp.MainThreadScheduler);
-            InsertOrUpdateBookEntryFromOnlineBookCommand = ReactiveCommand.CreateFromTask<OnlineBookViewModel, Book>(
-                p => GenerateBookEntryFromOnlineBookAsync(p?.Book),
+            InsertOrUpdateBookEntryFromOnlineBookCommand = ReactiveCommand.CreateFromObservable<OnlineBookViewModel, Book>(
+                p => GenerateBookEntryFromOnlineBook(p?.Book),
                 this.WhenAnyValue(x => x.SelectedSearchBook).Select(p => p != null),
                 RxApp.MainThreadScheduler);
 

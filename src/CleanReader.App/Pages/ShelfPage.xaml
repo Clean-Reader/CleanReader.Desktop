@@ -156,7 +156,11 @@
                     Padding="{StaticResource DefaultContainerPadding}"
                     HorizontalScrollMode="Disabled"
                     VerticalScrollBarVisibility="Auto">
-                    <ItemsRepeater Margin="0,12" ItemsSource="{x:Bind _viewModel.DisplayBooks}">
+                    <ItemsRepeater
+                        Margin="0,12"
+                        HorizontalCacheLength="100"
+                        ItemsSource="{x:Bind _viewModel.DisplayBooks}"
+                        VerticalCacheLength="100">
                         <ItemsRepeater.ItemTemplate>
                             <DataTemplate x:DataType="desktop:ShelfBookViewModel">
                                 <controls:ShelfBookCard Data="{x:Bind}" />
