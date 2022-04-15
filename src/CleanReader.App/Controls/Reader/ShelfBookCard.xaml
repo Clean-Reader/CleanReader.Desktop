@@ -47,6 +47,11 @@
                     <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE71D;" />
                 </MenuFlyoutItem.Icon>
             </MenuFlyoutItem>
+            <MenuFlyoutItem Command="{x:Bind Data.SaveBookCommand, Mode=OneWay}" Text="{x:Bind res:StringResources.SaveCopy}">
+                <MenuFlyoutItem.Icon>
+                    <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xEA35;" />
+                </MenuFlyoutItem.Icon>
+            </MenuFlyoutItem>
             <MenuFlyoutSeparator />
             <MenuFlyoutItem Command="{x:Bind Data.DeleteCommand, Mode=OneWay}" Text="{x:Bind res:StringResources.Delete}">
                 <MenuFlyoutItem.Icon>
