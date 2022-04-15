@@ -53,7 +53,9 @@
     <None Remove="Controls\Popups\ConfirmDialog.xaml" />
     <None Remove="Controls\Popups\GithubUpdateDialog.xaml" />
     <None Remove="Controls\ProgressDialog.xaml" />
+    <None Remove="Controls\ReadDurationDetailDialog.xaml" />
     <None Remove="Controls\ReaderCatalog.xaml" />
+    <None Remove="Controls\ReaderDurationCard.xaml" />
     <None Remove="Controls\ReaderHighlightDialog.xaml" />
     <None Remove="Controls\ReaderMenu.xaml" />
     <None Remove="Controls\ReaderNotes.xaml" />
@@ -131,6 +133,12 @@
     <None Update="Controls\CardPanel\CardPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <Page Update="Controls\Reader\ReaderDurationCard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Popups\ReadDurationDetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Themes\Style.Dimensions.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

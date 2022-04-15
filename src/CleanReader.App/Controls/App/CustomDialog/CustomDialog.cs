@@ -39,6 +39,7 @@ namespace CleanReader.App.Controls
             _taskSource = new TaskCompletionSource<int>();
             ((MainWindow)AppViewModel.Instance.MainWindow).ShowOnHolder(this);
 
+            OnShow();
             return _taskSource.Task;
         }
 
@@ -47,6 +48,7 @@ namespace CleanReader.App.Controls
             _taskSource.SetResult(_hideCode);
             VisualStateManager.GoToState(this, "DialogHidden", true);
             ((MainWindow)AppViewModel.Instance.MainWindow).RemoveFromHolder(this);
+            OnHide();
         }
 
         public virtual void InjectData(object data)
@@ -68,6 +70,20 @@ namespace CleanReader.App.Controls
         /// 次要按钮被点击时触发.
         /// </summary>
         public virtual void OnSecondaryButtonClick()
+        {
+        }
+
+        /// <summary>
+        /// 在隐藏时触发.
+        /// </summary>
+        public virtual void OnHide()
+        {
+        }
+
+        /// <summary>
+        /// 在显示时触发.
+        /// </summary>
+        public virtual void OnShow()
         {
         }
 

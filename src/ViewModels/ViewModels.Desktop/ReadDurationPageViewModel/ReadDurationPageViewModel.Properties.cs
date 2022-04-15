@@ -24,6 +24,11 @@ namespace CleanReader.ViewModels.Desktop
         public ReactiveCommand<Unit, Unit> InitializeCommand { get; }
 
         /// <summary>
+        /// 显示详情对话框的命令.
+        /// </summary>
+        public ReactiveCommand<ReaderDuration, Unit> ShowDetailCommand { get; }
+
+        /// <summary>
         /// 总阅读小时数.
         /// </summary>
         [Reactive]

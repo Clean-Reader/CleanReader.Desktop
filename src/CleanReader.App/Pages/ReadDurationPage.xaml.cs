@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 
 using System;
+using CleanReader.Models.App;
 using CleanReader.ViewModels.Desktop;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace CleanReader.App.Pages
@@ -19,7 +21,13 @@ namespace CleanReader.App.Pages
         /// </summary>
         public ReadDurationPage() => InitializeComponent();
 
-        private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private void OnLoaded(object sender, RoutedEventArgs e)
             => _viewModel.InitializeCommand.Execute().Subscribe();
+
+        private void OnDurationCardClick(object sender, RoutedEventArgs e)
+        {
+            var context = (sender as FrameworkElement).DataContext as ReaderDuration;
+            _viewModel.ShowDetailCommand.Execute(context).Subscribe();
+        }
     }
 }
