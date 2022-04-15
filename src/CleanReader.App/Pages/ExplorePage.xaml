@@ -48,6 +48,7 @@
             <TabView.TabStripHeader>
                 <ComboBox
                     MinWidth="128"
+                    Margin="0,8,0,0"
                     VerticalAlignment="Center"
                     ItemsSource="{x:Bind _viewModel.BookSources}"
                     SelectedItem="{x:Bind _viewModel.SelectedBookSource, Mode=TwoWay}">
