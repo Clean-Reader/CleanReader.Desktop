@@ -176,9 +176,9 @@
     <Content Include="Assets\Logo\Wide310x150Logo.scale-400.png" />
     <Content Include="Assets\noteempty-Dark.png" />
     <Content Include="Assets\noteempty-Light.png" />
-    <Content Include="Assets\Reader\assets\index.17961559.css" />
-    <Content Include="Assets\Reader\assets\index.6550967d.js" />
-    <Content Include="Assets\Reader\assets\vendor.6d0256a6.js" />
+    <Content Include="Assets\Reader\assets\index.0765d6f3.css" />
+    <Content Include="Assets\Reader\assets\index.89e9dc67.js" />
+    <Content Include="Assets\Reader\assets\vendor.fe4b0185.js" />
     <Content Include="Assets\Reader\favicon.ico" />
     <Content Include="Assets\Reader\index.html" />
     <Content Include="Assets\shelfempty-Dark.png" />
@@ -202,9 +202,9 @@
   </ItemGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.targets" />
   <ItemGroup>
-    <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.0.30" />
+    <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.1" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.197" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.2" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CleanReader.App\CleanReader.App.csproj" />
