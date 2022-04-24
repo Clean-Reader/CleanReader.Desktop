@@ -2,7 +2,6 @@
 
 using System;
 using System.Reactive.Linq;
-using CleanReader.Models.Resources;
 using CleanReader.ViewModels.Desktop;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
