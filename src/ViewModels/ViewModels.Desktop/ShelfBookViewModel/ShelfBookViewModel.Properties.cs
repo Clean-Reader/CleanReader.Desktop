@@ -53,6 +53,11 @@ namespace CleanReader.ViewModels.Desktop
         public ReactiveCommand<Unit, Unit> OpenBookUrlCommand { get; }
 
         /// <summary>
+        /// 书籍另存为.
+        /// </summary>
+        public ReactiveCommand<Unit, Unit> SaveBookCommand { get; }
+
+        /// <summary>
         /// 封面.
         /// </summary>
         [Reactive]

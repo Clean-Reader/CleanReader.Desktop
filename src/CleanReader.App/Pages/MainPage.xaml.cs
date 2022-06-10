@@ -112,10 +112,6 @@ namespace CleanReader.App.Pages
             {
                 await _libraryViewModel.CheckContinueReadingAsync();
             }
-            else
-            {
-                await _libraryViewModel.CheckOpenFileOrImportAsync();
-            }
 
 #if !DEBUG
             _viewModel.CheckGithubUpdateCommand.Execute().Subscribe();

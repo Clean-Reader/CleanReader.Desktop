@@ -6,7 +6,9 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Threading.Tasks;
+using CleanReader.Locator.Lib;
 using CleanReader.Models.App;
+using CleanReader.Models.Constants;
 using CleanReader.Models.DataBase;
 using Microsoft.EntityFrameworkCore;
 using ReactiveUI;
@@ -25,6 +27,7 @@ namespace CleanReader.ViewModels.Desktop
         {
             ReaderDurations = new ObservableCollection<ReaderDuration>();
             InitializeCommand = ReactiveCommand.CreateFromTask(InitializeAsync, outputScheduler: RxApp.MainThreadScheduler);
+            ShowDetailCommand = ReactiveCommand.CreateFromTask<ReaderDuration>(ShowDetailDialogAsync, outputScheduler: RxApp.MainThreadScheduler);
 
             _isInitializing = InitializeCommand.IsExecuting.ToProperty(this, x => x.IsInitializing, scheduler: RxApp.MainThreadScheduler);
 
@@ -109,6 +112,13 @@ namespace CleanReader.ViewModels.Desktop
                 _dbContext.Histories.UpdateRange(histories);
                 await _dbContext.SaveChangesAsync();
             }
+        }
+
+        private async Task ShowDetailDialogAsync(ReaderDuration duration)
+        {
+            var dialog = ServiceLocator.Instance.GetService<ICustomDialog>(AppConstants.ReadDurationDetailDialog);
+            dialog.InjectData(duration);
+            await dialog.ShowAsync();
         }
 
         private void OnReaderDurationsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)

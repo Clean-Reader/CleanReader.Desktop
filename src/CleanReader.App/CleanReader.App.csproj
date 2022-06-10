@@ -6,7 +6,7 @@
     <RootNamespace>CleanReader.App</RootNamespace>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <Platforms>x64</Platforms>
-    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
     <SupportedOSPlatformVersion>10.0.22000.0</SupportedOSPlatformVersion>
   </PropertyGroup>
@@ -54,7 +54,9 @@
     <None Remove="Controls\Popups\ConfirmDialog.xaml" />
     <None Remove="Controls\Popups\GithubUpdateDialog.xaml" />
     <None Remove="Controls\ProgressDialog.xaml" />
+    <None Remove="Controls\ReadDurationDetailDialog.xaml" />
     <None Remove="Controls\ReaderCatalog.xaml" />
+    <None Remove="Controls\ReaderDurationCard.xaml" />
     <None Remove="Controls\ReaderHighlightDialog.xaml" />
     <None Remove="Controls\ReaderMenu.xaml" />
     <None Remove="Controls\ReaderNotes.xaml" />
@@ -91,7 +93,7 @@
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Media" Version="7.1.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.2" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.0" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.197" />
     <PackageReference Include="PInvoke.User32" Version="0.7.104" />
     <Manifest Include="$(ApplicationManifest)" />
@@ -135,6 +137,12 @@
     <None Update="Controls\CardPanel\CardPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </None>
+    <Page Update="Controls\Reader\ReaderDurationCard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\Popups\ReadDurationDetailDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Themes\Style.Dimensions.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

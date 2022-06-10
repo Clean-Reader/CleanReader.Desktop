@@ -22,6 +22,8 @@
         <Grid x:Name="CoverContainer" CornerRadius="{StaticResource ControlCornerRadius}">
             <controls:ImageEx
                 x:Name="Image"
+                EnableLazyLoading="True"
+                IsCacheEnabled="True"
                 PlaceholderSource="{StaticResource CoverPlaceholder}"
                 PlaceholderStretch="UniformToFill"
                 Stretch="UniformToFill" />

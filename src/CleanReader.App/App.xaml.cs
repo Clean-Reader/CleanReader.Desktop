@@ -78,6 +78,7 @@ namespace CleanReader.App
                 .AddTransient<ICustomDialog, CreateBookSourceDialog>()
                 .AddTransient<ICustomDialog, ReplaceSourceDialog>()
                 .AddTransient<ICustomDialog, GithubUpdateDialog>()
+                .AddTransient<ICustomDialog, ReadDurationDetailDialog>()
                 .RebuildServiceProvider();
         }
 

@@ -48,7 +48,7 @@ namespace CleanReader.Services.Epub
                                              .Replace("{{body}}", string.Join(string.Empty, lines.Select(p => $"<p>{p}</p>")));
             if (_chapterNames == null)
             {
-                _chapterNames = new System.Collections.Generic.Dictionary<string, string>();
+                _chapterNames = new Dictionary<string, string>();
             }
 
             _chapterNames.Add(index.ToString("0000"), title);

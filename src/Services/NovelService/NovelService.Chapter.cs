@@ -14,7 +14,9 @@ namespace CleanReader.Services.Novel
     {
         private static void InitializeChapter(Chapter chapter, ChapterConfig chapterConfig, HtmlNode node)
         {
-            var titleNode = node.QuerySelector(chapterConfig.Title?.Rule);
+            var titleNode = string.IsNullOrEmpty(chapterConfig.Title?.Rule)
+                ? node
+                : node.QuerySelector(chapterConfig.Title?.Rule);
 
             if (titleNode != null)
             {

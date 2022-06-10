@@ -58,8 +58,8 @@ namespace CleanReader.ViewModels.Desktop
             ShowReplaceSourceDialogCommand = ReactiveCommand.CreateFromTask<Book>(ShowReplaceSourceDialogAsync, outputScheduler: RxApp.MainThreadScheduler);
             OnlineSearchCommand = ReactiveCommand.CreateFromTask<string>(s => SearchOnlineBooksAsync(s), outputScheduler: RxApp.MainThreadScheduler);
             SelectOnlineSearchResultCommand = ReactiveCommand.Create<OnlineBookViewModel>(vm => SetSelectedSearchItem(vm), outputScheduler: RxApp.MainThreadScheduler);
-            InsertOrUpdateBookEntryFromOnlineBookCommand = ReactiveCommand.CreateFromTask<OnlineBookViewModel, Book>(
-                p => GenerateBookEntryFromOnlineBookAsync(p?.Book),
+            InsertOrUpdateBookEntryFromOnlineBookCommand = ReactiveCommand.CreateFromObservable<OnlineBookViewModel, Book>(
+                p => GenerateBookEntryFromOnlineBook(p?.Book),
                 this.WhenAnyValue(x => x.SelectedSearchBook).Select(p => p != null),
                 RxApp.MainThreadScheduler);
 
@@ -257,19 +257,23 @@ namespace CleanReader.ViewModels.Desktop
                 {
                     book = await LibraryContext.Books.FirstOrDefaultAsync(p => p.Path.Equals(Path.GetFileName(path)));
                 });
-                AppViewModel.Instance.RequestRead(book);
+
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    AppViewModel.Instance.RequestRead(book);
+                });
             }
             else
             {
                 if (Path.GetExtension(path).Equals(".epub", StringComparison.OrdinalIgnoreCase))
                 {
                     GetBookEntryFromEpubFileCommand.Execute(path)
-                        .Subscribe(async b =>
+                        .ObserveOn(RxApp.MainThreadScheduler)
+                        .Subscribe(b =>
                         {
-                            await InsertBookEntryAsync(b);
-
-                            DispatcherQueue.TryEnqueue(() =>
+                            DispatcherQueue.TryEnqueue(async () =>
                             {
+                                await InsertBookEntryAsync(b);
                                 AppViewModel.Instance.RequestRead(b);
                             });
                         });
@@ -277,6 +281,7 @@ namespace CleanReader.ViewModels.Desktop
                 else if (Path.GetExtension(path).Equals(".txt", StringComparison.OrdinalIgnoreCase))
                 {
                     GetBookEntryFromTxtFileCommand.Execute(path)
+                        .ObserveOn(RxApp.MainThreadScheduler)
                         .Subscribe(async b =>
                         {
                             await InsertBookEntryAsync(b);

@@ -58,6 +58,11 @@ namespace CleanReader.Services.Epub
             foreach (var file in _files.Where(p => !p.Equals(Configuration.TitlePagePath, StringComparison.OrdinalIgnoreCase)))
             {
                 var pathName = Path.GetFileNameWithoutExtension(file);
+                if (!_chapterNames.ContainsKey(pathName))
+                {
+                    continue;
+                }
+
                 var fileName = NormalizeTitle(_chapterNames[pathName]);
                 manifestBuilder.AppendLine(new string(' ', 12) + $"<item id=\"ch{pathName}\" href=\"Pages/{pathName}.html\" media-type=\"application/xhtml+xml\"/>");
                 spineBuilder.AppendLine(new string(' ', 12) + $"<itemref idref=\"ch{pathName}\"/>");

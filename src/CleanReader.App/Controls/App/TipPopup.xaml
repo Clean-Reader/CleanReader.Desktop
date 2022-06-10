@@ -62,7 +62,7 @@
         </animations:Implicit.HideAnimations>
         <Grid
             x:Name="PopupRootGrid"
-            Padding="12,2,12,4"
+            Padding="16,-4"
             Background="{ThemeResource AppMaskAcrylicBrush}"
             CornerRadius="{StaticResource OverlayCornerRadius}">
             <Grid.ColumnDefinitions>
@@ -94,6 +94,7 @@
                 Grid.Column="1"
                 MaxWidth="300"
                 VerticalAlignment="Center"
+                FontSize="12"
                 Text="{x:Bind Text, Mode=OneWay}"
                 TextTrimming="CharacterEllipsis"
                 TextWrapping="Wrap" />

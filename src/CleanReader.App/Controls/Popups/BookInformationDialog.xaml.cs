@@ -38,10 +38,7 @@ namespace CleanReader.App.Controls
                 _viewModel.Book.Author = AuthorBox.Text;
             }
 
-            if (string.IsNullOrEmpty(CoverBox.Text))
-            {
-                _viewModel.Book.Cover = CoverBox.Text;
-            }
+            _viewModel.Cover = CoverBox.Text;
 
             if (!string.IsNullOrEmpty(DescriptionBox.Text))
             {

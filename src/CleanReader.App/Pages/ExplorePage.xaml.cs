@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 
 using System;
-using CleanReader.Models.Resources;
+using System.Reactive.Linq;
 using CleanReader.ViewModels.Desktop;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -27,20 +27,7 @@ namespace CleanReader.App.Pages
         {
             var dispatcher = DispatcherQueue;
             var vm = (sender as FrameworkElement).DataContext as OnlineBookViewModel;
-            LibraryViewModel.Instance.InsertOrUpdateBookEntryFromOnlineBookCommand.Execute(vm).Subscribe(book =>
-            {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    if (book != null)
-                    {
-                        AppViewModel.Instance.ShowTip(StringResources.ExploreBookAdded, Models.Constants.InfoType.Success);
-                    }
-                    else
-                    {
-                        AppViewModel.Instance.ShowTip(StringResources.FailedToDownload, Models.Constants.InfoType.Error);
-                    }
-                });
-            });
+            LibraryViewModel.Instance.InsertOrUpdateBookEntryFromOnlineBookCommand.Execute(vm).Subscribe();
         }
 
 #pragma warning disable CA1822 // 将成员标记为 static

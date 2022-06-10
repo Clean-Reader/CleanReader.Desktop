@@ -192,6 +192,9 @@
   <data name="BookNotExist" xml:space="preserve">
     <value>The book file does not exist or broken, you can go back to the shelf to remove the book entry and re-import</value>
   </data>
+  <data name="BookSaved" xml:space="preserve">
+    <value>Book has been saved</value>
+  </data>
   <data name="BookSourceDoc" xml:space="preserve">
     <value>Book source document</value>
   </data>
@@ -457,6 +460,9 @@ The book will be removed from your library, and the history / notes related to t
   <data name="MiniView" xml:space="preserve">
     <value>Mini view</value>
   </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>minutes</value>
+  </data>
   <data name="Modify" xml:space="preserve">
     <value>Modify</value>
   </data>
@@ -477,6 +483,9 @@ The book will be removed from your library, and the history / notes related to t
   </data>
   <data name="NoDescription" xml:space="preserve">
     <value>No introduction to this book</value>
+  </data>
+  <data name="NoReadRecord" xml:space="preserve">
+    <value>This book has no reading record</value>
   </data>
   <data name="NoSelectedOnlineBook" xml:space="preserve">
     <value>No suitable online book was selected</value>
@@ -553,6 +562,9 @@ The book will be removed from your library, and the history / notes related to t
   <data name="Read" xml:space="preserve">
     <value>Read</value>
   </data>
+  <data name="ReadRecord" xml:space="preserve">
+    <value>Reading record</value>
+  </data>
   <data name="ReadTime" xml:space="preserve">
     <value>Reading time</value>
   </data>
@@ -583,6 +595,9 @@ The book will be removed from your library, and the history / notes related to t
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SaveCopy" xml:space="preserve">
+    <value>Save copy</value>
+  </data>
   <data name="Search" xml:space="preserve">
     <value>Search</value>
   </data>
@@ -600,6 +615,9 @@ The book will be removed from your library, and the history / notes related to t
   </data>
   <data name="SearchSomething" xml:space="preserve">
     <value>Find what interests you</value>
+  </data>
+  <data name="Seconds" xml:space="preserve">
+    <value>seconds</value>
   </data>
   <data name="SelectionModeOpen" xml:space="preserve">
     <value>Text selection mode is on</value>

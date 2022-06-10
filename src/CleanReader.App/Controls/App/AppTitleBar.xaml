@@ -10,7 +10,6 @@
     <Grid
         MinHeight="48"
         Padding="16,0,0,0"
-        Background="{ThemeResource WindowHostBrush}"
         ColumnSpacing="8">
         <Grid.ColumnDefinitions>
             <!-- Logo -->
