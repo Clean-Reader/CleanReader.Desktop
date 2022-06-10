@@ -20,7 +20,10 @@
                     </core:ExpanderExDescriptor>
                 </core:ExpanderExWrapper.MainContent>
                 <core:ExpanderExWrapper.WrapContent>
-                    <ToggleSwitch MinWidth="0" IsOn="{x:Bind _viewModel.IsBackgroundMusicAutoPlay, Mode=TwoWay}" />
+                    <ToggleSwitch
+                        MinWidth="0"
+                        IsEnabled="{x:Bind _viewModel.IsAmbieInstalled, Mode=OneWay}"
+                        IsOn="{x:Bind _viewModel.IsBackgroundMusicAutoPlay, Mode=TwoWay}" />
                 </core:ExpanderExWrapper.WrapContent>
             </core:ExpanderExWrapper>
         </core:ExpanderEx.Header>

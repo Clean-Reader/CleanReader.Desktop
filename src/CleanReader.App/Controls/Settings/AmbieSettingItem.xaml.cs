@@ -22,9 +22,19 @@ namespace CleanReader.App.Controls
         {
             InitializeComponent();
             Loaded += OnLoadedAsync;
+            Unloaded += OnUnloaded;
         }
 
         private async void OnLoadedAsync(object sender, RoutedEventArgs e)
+        {
+            await _viewModel.CheckAmbieInstalledAsync();
+            AppViewModel.Instance.MainWindow.Activated += OnWindowActivatedAsync;
+        }
+
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+            => AppViewModel.Instance.MainWindow.Activated -= OnWindowActivatedAsync;
+
+        private async void OnWindowActivatedAsync(object sender, WindowActivatedEventArgs args)
             => await _viewModel.CheckAmbieInstalledAsync();
 
 #pragma warning disable CA1822 // 将成员标记为 static
