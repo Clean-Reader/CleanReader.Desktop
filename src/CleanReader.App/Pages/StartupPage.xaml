@@ -6,7 +6,6 @@
     xmlns:local="using:CleanReader.App.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:res="using:CleanReader.Models.Resources"
-    Background="{ThemeResource WindowHostBrush}"
     mc:Ignorable="d">
 
     <Grid Padding="68,12,68,32" ColumnSpacing="64">
@@ -87,9 +86,9 @@
                 Grid.Row="2"
                 Width="64"
                 Height="64"
+                Margin="0,-40,0,0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
-                Margin="0,-40,0,0"
                 IsActive="{x:Bind _viewModel.IsLoading, Mode=OneWay}" />
             <Grid Grid.Row="3" ColumnSpacing="8">
                 <Grid.ColumnDefinitions>
