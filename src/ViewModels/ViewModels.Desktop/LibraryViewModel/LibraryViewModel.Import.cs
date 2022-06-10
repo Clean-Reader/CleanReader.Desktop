@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -129,8 +130,8 @@ namespace CleanReader.ViewModels.Desktop
             var progressDialog = ServiceLocator.Instance.GetService<ICustomDialog>(AppConstants.ProgressDialog);
             progressDialog.InjectData(StringResources.MovingFile);
             progressDialog.InjectTask(_fileToolkit.CopyAsync(path, destPath));
-            await progressDialog.ShowAsync();
 
+            await progressDialog.ShowAsync();
             var book = GetBookEntryFromLocalPath(destPath);
 
             try

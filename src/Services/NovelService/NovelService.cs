@@ -83,7 +83,9 @@ namespace CleanReader.Services.Novel
                 }
                 else
                 {
-                    var keyword = HttpUtility.UrlEncode(bookName, encoding);
+                    var keyword = searchConfig.EncodingKeyword
+                        ? HttpUtility.UrlEncode(bookName, encoding)
+                        : bookName;
                     var searchUrl = searchConfig.SearchUrl + keyword;
                     doc = await GetHtmlDocumentAsync(searchUrl, encoding);
                 }
