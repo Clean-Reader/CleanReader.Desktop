@@ -1,11 +1,15 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using CleanReader.ViewModels.Desktop;
 using Microsoft.UI.Dispatching;
 using Microsoft.Windows.AppLifecycle;
+using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 
 namespace CleanReader.App;
 
@@ -41,7 +45,6 @@ internal class Program
         var isRedirect = false;
 
         var args = AppInstance.GetCurrent().GetActivatedEventArgs();
-        var kind = args.Kind;
 
         try
         {
@@ -49,7 +52,7 @@ internal class Program
 
             if (keyInstance.IsCurrent)
             {
-                keyInstance.Activated += OnActivated;
+                keyInstance.Activated += OnActivatedAsync;
             }
             else
             {
@@ -59,6 +62,7 @@ internal class Program
         }
         catch (Exception)
         {
+            isRedirect = true;
         }
 
         return isRedirect;
@@ -78,9 +82,9 @@ internal class Program
     private static void RedirectActivationTo(AppActivationArguments args, AppInstance keyInstance)
     {
         redirectEventHandle = CreateEvent(IntPtr.Zero, true, false, null);
-        Task.Run(() =>
+        Task.Run(async () =>
         {
-            keyInstance.RedirectActivationToAsync(args).AsTask().Wait();
+            await keyInstance.RedirectActivationToAsync(args);
             SetEvent(redirectEventHandle);
         });
         uint cWMO_DEFAULT = 0;
@@ -93,6 +97,17 @@ internal class Program
            out var handleIndex);
     }
 
-    private static void OnActivated(object sender, AppActivationArguments args)
-        => _ = args.Kind;
+    private static async void OnActivatedAsync(object sender, AppActivationArguments args)
+    {
+        if (args.Kind == ExtendedActivationKind.File)
+        {
+            var fileArgs = args.Data as FileActivatedEventArgs;
+            var file = fileArgs.Files.FirstOrDefault();
+            if (file is StorageFile f)
+            {
+                AppViewModel.Instance.InitializeFilePath = f.Path;
+                await LibraryViewModel.Instance.CheckOpenFileOrImportAsync();
+            }
+        }
+    }
 }

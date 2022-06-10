@@ -257,19 +257,23 @@ namespace CleanReader.ViewModels.Desktop
                 {
                     book = await LibraryContext.Books.FirstOrDefaultAsync(p => p.Path.Equals(Path.GetFileName(path)));
                 });
-                AppViewModel.Instance.RequestRead(book);
+
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    AppViewModel.Instance.RequestRead(book);
+                });
             }
             else
             {
                 if (Path.GetExtension(path).Equals(".epub", StringComparison.OrdinalIgnoreCase))
                 {
                     GetBookEntryFromEpubFileCommand.Execute(path)
-                        .Subscribe(async b =>
+                        .ObserveOn(RxApp.MainThreadScheduler)
+                        .Subscribe(b =>
                         {
-                            await InsertBookEntryAsync(b);
-
-                            DispatcherQueue.TryEnqueue(() =>
+                            DispatcherQueue.TryEnqueue(async () =>
                             {
+                                await InsertBookEntryAsync(b);
                                 AppViewModel.Instance.RequestRead(b);
                             });
                         });
@@ -277,6 +281,7 @@ namespace CleanReader.ViewModels.Desktop
                 else if (Path.GetExtension(path).Equals(".txt", StringComparison.OrdinalIgnoreCase))
                 {
                     GetBookEntryFromTxtFileCommand.Execute(path)
+                        .ObserveOn(RxApp.MainThreadScheduler)
                         .Subscribe(async b =>
                         {
                             await InsertBookEntryAsync(b);

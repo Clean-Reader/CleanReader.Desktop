@@ -21,5 +21,10 @@ namespace CleanReader.Services.Novel.Models
         /// 是否需要进一步请求书籍详情.
         /// </summary>
         public bool NeedDetail { get; set; }
+
+        /// <summary>
+        /// 是否需要对关键词进行Url编码.
+        /// </summary>
+        public bool EncodingKeyword { get; set; }
     }
 }

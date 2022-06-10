@@ -134,6 +134,11 @@ namespace CleanReader.ViewModels.Desktop
             await InitializeShelvesAsync();
             CurrentBookType = _settingsToolkit.ReadLocalSetting(SettingNames.BookType, VMConstants.Shelf.AllType);
             CurrentSort = _settingsToolkit.ReadLocalSetting(SettingNames.SortType, VMConstants.Shelf.SortRead);
+
+            if (!string.IsNullOrEmpty(AppViewModel.Instance.InitializeFilePath))
+            {
+                await LibraryViewModel.Instance.CheckOpenFileOrImportAsync();
+            }
         }
 
         private async Task InitializeShelvesAsync()
