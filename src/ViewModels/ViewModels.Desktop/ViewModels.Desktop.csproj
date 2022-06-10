@@ -3,13 +3,13 @@
     <TargetFramework>net6.0-windows10.0.22000.0</TargetFramework>
     <TargetPlatformMinVersion>10.0.22000.0</TargetPlatformMinVersion>
     <RootNamespace>CleanReader.ViewModels.Desktop</RootNamespace>
-    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
     <UseWinUI>true</UseWinUI>
     <Platforms>x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
-      <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.3" />
+      <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.0" />
       <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.197" />
       <PackageReference Include="ReactiveUI" Version="18.0.7" />
       <PackageReference Include="ReactiveUI.Fody" Version="18.0.7" />
