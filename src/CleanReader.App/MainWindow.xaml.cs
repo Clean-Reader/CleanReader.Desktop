@@ -10,9 +10,11 @@ using CleanReader.Models.App;
 using CleanReader.Models.Constants;
 using CleanReader.Toolkit.Interfaces;
 using CleanReader.ViewModels.Desktop;
+using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
+using WinRT;
 using WinRT.Interop;
 
 namespace CleanReader.App
@@ -23,8 +25,11 @@ namespace CleanReader.App
     public sealed partial class MainWindow : Window
     {
         private readonly AppViewModel _viewModel;
+        private readonly WindowsSystemDispatcherQueueHelper _wsdqHelper;
         private WinProc _newWndProc = null;
         private IntPtr _oldWndProc = IntPtr.Zero;
+        private MicaController _micaController;
+        private SystemBackdropConfiguration _configurationSource;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -32,12 +37,17 @@ namespace CleanReader.App
         public MainWindow()
         {
             InitializeComponent();
+
+            _wsdqHelper = new WindowsSystemDispatcherQueueHelper();
+            _wsdqHelper.EnsureWindowsSystemDispatcherQueueController();
+
             _viewModel = AppViewModel.Instance;
             _viewModel.ReadRequested += OnReadRequested;
             _viewModel.StartupRequested += OnStartupRequested;
             _viewModel.MigrationRequested += OnMigrationRequested;
             _viewModel.RequestShowTip += OnRequestShowTip;
             SubClassing();
+            TrySetMicaBackdrop();
         }
 
         private delegate IntPtr WinProc(IntPtr hWnd, PInvoke.User32.WindowMessage msg, IntPtr wParam, IntPtr lParam);
@@ -161,5 +171,72 @@ namespace CleanReader.App
 
         private void OnRequestShowTip(object sender, AppTipNotificationEventArgs e)
             => new TipPopup(e.Message).ShowAsync(e.Type);
+
+        private bool TrySetMicaBackdrop()
+        {
+            if (MicaController.IsSupported())
+            {
+                // Hooking up the policy object
+                _configurationSource = new SystemBackdropConfiguration();
+                this.Activated += OnActivated;
+                this.Closed += OnClosed;
+                ((FrameworkElement)this.Content).ActualThemeChanged += OnThemeChanged;
+
+                // Initial configuration state.
+                _configurationSource.IsInputActive = true;
+                SetConfigurationSourceTheme();
+
+                _micaController = new Microsoft.UI.Composition.SystemBackdrops.MicaController();
+
+                // Enable the system backdrop.
+                // Note: Be sure to have "using WinRT;" to support the Window.As<...>() call.
+                _micaController.AddSystemBackdropTarget(this.As<Microsoft.UI.Composition.ICompositionSupportsSystemBackdrop>());
+                _micaController.SetSystemBackdropConfiguration(_configurationSource);
+                return true; // succeeded
+            }
+
+            return false; // Mica is not supported on this system
+        }
+
+        private void OnActivated(object sender, WindowActivatedEventArgs args)
+            => _configurationSource.IsInputActive = args.WindowActivationState != WindowActivationState.Deactivated;
+
+        private void OnClosed(object sender, WindowEventArgs args)
+        {
+            // Make sure any Mica/Acrylic controller is disposed so it doesn't try to
+            // use this closed window.
+            if (_micaController != null)
+            {
+                _micaController.Dispose();
+                _micaController = null;
+            }
+
+            Activated -= OnActivated;
+            _configurationSource = null;
+        }
+
+        private void OnThemeChanged(FrameworkElement sender, object args)
+        {
+            if (_configurationSource != null)
+            {
+                SetConfigurationSourceTheme();
+            }
+        }
+
+        private void SetConfigurationSourceTheme()
+        {
+            switch (((FrameworkElement)Content).ActualTheme)
+            {
+                case ElementTheme.Dark:
+                    _configurationSource.Theme = SystemBackdropTheme.Dark;
+                    break;
+                case ElementTheme.Light:
+                    _configurationSource.Theme = SystemBackdropTheme.Light;
+                    break;
+                case ElementTheme.Default:
+                    _configurationSource.Theme = SystemBackdropTheme.Default;
+                    break;
+            }
+        }
     }
 }
