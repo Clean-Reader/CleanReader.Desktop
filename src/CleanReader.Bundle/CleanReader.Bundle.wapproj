@@ -47,7 +47,6 @@
   </ItemGroup>
   <PropertyGroup>
     <WapProjPath Condition="'$(WapProjPath)'==''">$(MSBuildExtensionsPath)\Microsoft\DesktopBridge\</WapProjPath>
-    <PathToXAMLWinRTImplementations>CleanReader.App\</PathToXAMLWinRTImplementations>
   </PropertyGroup>
   <Import Project="$(WapProjPath)\Microsoft.DesktopBridge.props" />
   <PropertyGroup>
@@ -208,9 +207,6 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="[1.1.0]" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CleanReader.App\CleanReader.App.csproj">
-      <SkipGetTargetFrameworkProperties>True</SkipGetTargetFrameworkProperties>
-      <PublishProfile>Properties\PublishProfiles\win10-$(Platform).pubxml</PublishProfile>
-    </ProjectReference>
+    <ProjectReference Include="..\CleanReader.App\CleanReader.App.csproj" />
   </ItemGroup>
 </Project>
