@@ -135,6 +135,12 @@
   <data name="AllBookSources" xml:space="preserve">
     <value>All sources</value>
   </data>
+  <data name="AmbieIntegration" xml:space="preserve">
+    <value>Ambie integration</value>
+  </data>
+  <data name="AmbieIntegrationDescription" xml:space="preserve">
+    <value>App will start Ambie when you read, play the preset white noise for you, and create a comfortable reading atmosphere</value>
+  </data>
   <data name="AppDescription" xml:space="preserve">
     <value>You can get content from the Internet, you can also read local TXT, EPUB books</value>
   </data>
@@ -158,6 +164,9 @@
   </data>
   <data name="Author" xml:space="preserve">
     <value>Author</value>
+  </data>
+  <data name="AutoPlayAfterLaunch" xml:space="preserve">
+    <value>Autoplay after startup</value>
   </data>
   <data name="Back" xml:space="preserve">
     <value>Back</value>
@@ -231,6 +240,9 @@
   <data name="Color" xml:space="preserve">
     <value>Color</value>
   </data>
+  <data name="CompactAfterLaunch" xml:space="preserve">
+    <value>Small window on top after startup</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
@@ -297,6 +309,9 @@ The book will be removed from your library, and the history / notes related to t
   </data>
   <data name="Detail" xml:space="preserve">
     <value>Details</value>
+  </data>
+  <data name="DownloadAmbie" xml:space="preserve">
+    <value>Download Ambie</value>
   </data>
   <data name="DurationEmpty" xml:space="preserve">
     <value>There is no recorded reading data, please check again after reading the book~</value>
@@ -486,6 +501,9 @@ The book will be removed from your library, and the history / notes related to t
   </data>
   <data name="NoteManagement" xml:space="preserve">
     <value>Notes management</value>
+  </data>
+  <data name="NotInstallAmbie" xml:space="preserve">
+    <value>You have not downloaded Ambie, please go to the app store to download</value>
   </data>
   <data name="NotStarted" xml:space="preserve">
     <value>Not started</value>

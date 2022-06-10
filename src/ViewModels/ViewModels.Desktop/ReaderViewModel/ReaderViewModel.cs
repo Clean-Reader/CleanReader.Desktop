@@ -182,6 +182,7 @@ namespace CleanReader.ViewModels.Desktop
             await _libraryDbContext.SaveChangesAsync();
 
             InitializeThemes();
+            BackgroundMusicViewModel.Instance.PlayCommand.Execute().Subscribe();
         }
 
         /// <summary>
@@ -241,6 +242,11 @@ namespace CleanReader.ViewModels.Desktop
             BookTitle = Progresss = CurrentChapterTitle = "--";
             Chapters.Clear();
             _settingsToolkit.DeleteLocalSetting(SettingNames.LastReadBookId);
+
+            if (_settingsToolkit.ReadLocalSetting(SettingNames.IsAutoPlayBackgroundMusic, true))
+            {
+                BackgroundMusicViewModel.Instance.StopCommand.Execute().Subscribe();
+            }
         }
 
         private void SetChapterSelection()

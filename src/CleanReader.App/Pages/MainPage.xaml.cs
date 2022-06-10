@@ -91,6 +91,7 @@ namespace CleanReader.App.Pages
             {
                 _viewModel.IsInitializing = true;
                 await LibraryViewModel.Instance.InitializeLibraryAsync();
+                await BackgroundMusicViewModel.Instance.CheckAmbieInstalledAsync();
                 _viewModel.IsInitializing = false;
             }
             catch (LibraryInitializeException le)

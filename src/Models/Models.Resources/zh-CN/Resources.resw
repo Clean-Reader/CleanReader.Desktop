@@ -135,6 +135,12 @@
   <data name="AllBookSources" xml:space="preserve">
     <value>全部书源</value>
   </data>
+  <data name="AmbieIntegration" xml:space="preserve">
+    <value>Ambie 集成</value>
+  </data>
+  <data name="AmbieIntegrationDescription" xml:space="preserve">
+    <value>开启 Ambie 集成，应用将会在你阅读时启动 Ambie，为您播放预设的白噪音，营造一个舒适的阅读氛围</value>
+  </data>
   <data name="AppDescription" xml:space="preserve">
     <value>既可以从网络获取内容，也可以阅读本地TXT，EPUB书籍</value>
   </data>
@@ -158,6 +164,9 @@
   </data>
   <data name="Author" xml:space="preserve">
     <value>作者</value>
+  </data>
+  <data name="AutoPlayAfterLaunch" xml:space="preserve">
+    <value>启动后自动播放</value>
   </data>
   <data name="Back" xml:space="preserve">
     <value>返回</value>
@@ -231,6 +240,9 @@
   <data name="Color" xml:space="preserve">
     <value>颜色</value>
   </data>
+  <data name="CompactAfterLaunch" xml:space="preserve">
+    <value>启动后小窗置顶</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>确认</value>
   </data>
@@ -297,6 +309,9 @@
   </data>
   <data name="Detail" xml:space="preserve">
     <value>详情</value>
+  </data>
+  <data name="DownloadAmbie" xml:space="preserve">
+    <value>下载 Ambie</value>
   </data>
   <data name="DurationEmpty" xml:space="preserve">
     <value>还没有记录的阅读数据，请阅读书籍后再来查看~</value>
@@ -486,6 +501,9 @@
   </data>
   <data name="NoteManagement" xml:space="preserve">
     <value>笔记管理</value>
+  </data>
+  <data name="NotInstallAmbie" xml:space="preserve">
+    <value>您还没有下载 Ambie，请前往应用商店下载</value>
   </data>
   <data name="NotStarted" xml:space="preserve">
     <value>未开始</value>
