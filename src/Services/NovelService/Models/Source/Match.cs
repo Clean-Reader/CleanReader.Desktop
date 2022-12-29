@@ -1,15 +1,14 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 
-namespace CleanReader.Services.Novel.Models
+namespace CleanReader.Services.Novel.Models;
+
+/// <summary>
+/// 匹配项.
+/// </summary>
+public class Match : Attribute
 {
     /// <summary>
-    /// 匹配项.
+    /// 匹配表达式. 如果筛选出的文本和该表达式匹配，则表示符合要求.
     /// </summary>
-    public class Match : Attribute
-    {
-        /// <summary>
-        /// 匹配表达式. 如果筛选出的文本和该表达式匹配，则表示符合要求.
-        /// </summary>
-        public string MatchRule { get; set; }
-    }
+    public string MatchRule { get; set; }
 }

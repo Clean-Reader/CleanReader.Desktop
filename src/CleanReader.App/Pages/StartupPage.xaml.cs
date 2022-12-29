@@ -11,54 +11,53 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Foundation;
 
-namespace CleanReader.App.Pages
+namespace CleanReader.App.Pages;
+
+/// <summary>
+/// 首次启动页面.
+/// </summary>
+public sealed partial class StartupPage : Page
 {
+    private readonly LibraryViewModel _viewModel = LibraryViewModel.Instance;
+
     /// <summary>
-    /// 首次启动页面.
+    /// Initializes a new instance of the <see cref="StartupPage"/> class.
     /// </summary>
-    public sealed partial class StartupPage : Page
+    public StartupPage()
     {
-        private readonly LibraryViewModel _viewModel = LibraryViewModel.Instance;
+        InitializeComponent();
+        Loaded += OnLoaded;
+        _viewModel.LibraryInitialized += OnLibraryInitialized;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="StartupPage"/> class.
-        /// </summary>
-        public StartupPage()
+    private static void Resize(double width, double height)
+    {
+        var f = ServiceLocator.Instance.GetService<IAppToolkit>().GetScalePixel;
+        var h = AppViewModel.Instance.MainWindowHandle;
+        var aW = f(width, h);
+        var aH = f(height, h);
+        AppViewModel.Instance.AppWindow.Resize(new Windows.Graphics.SizeInt32(aW, aH));
+        var screen = Screen.FromHandle(AppViewModel.Instance.MainWindowHandle).Bounds;
+        var pt = new Point(screen.Left + (screen.Width / 2) - (aW / 2), screen.Top + (screen.Height / 2) - (aH / 2));
+        PInvoke.User32.SetWindowPos(AppViewModel.Instance.MainWindowHandle, PInvoke.User32.SpecialWindowHandles.HWND_NOTOPMOST, Convert.ToInt32(pt.X), Convert.ToInt32(pt.Y), aW, aH, PInvoke.User32.SetWindowPosFlags.SWP_SHOWWINDOW);
+    }
+
+    private void OnLibraryInitialized(object sender, EventArgs e)
+    {
+        Resize(AppConstants.AppWideWidth, AppConstants.AppWideHeight);
+        Frame.Navigate(typeof(MainPage));
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        var toolkit = ServiceLocator.Instance.GetService<ISettingsToolkit>();
+        if (!string.IsNullOrEmpty(toolkit.ReadLocalSetting(SettingNames.LibraryPath, string.Empty)))
         {
-            InitializeComponent();
-            Loaded += OnLoaded;
-            _viewModel.LibraryInitialized += OnLibraryInitialized;
+            _viewModel.ExceptionMessage = StringResources.InvalidLibraryPath;
+            toolkit.DeleteLocalSetting(SettingNames.LibraryPath);
         }
 
-        private static void Resize(double width, double height)
-        {
-            var f = ServiceLocator.Instance.GetService<IAppToolkit>().GetScalePixel;
-            var h = AppViewModel.Instance.MainWindowHandle;
-            var aW = f(width, h);
-            var aH = f(height, h);
-            AppViewModel.Instance.AppWindow.Resize(new Windows.Graphics.SizeInt32(aW, aH));
-            var screen = Screen.FromHandle(AppViewModel.Instance.MainWindowHandle).Bounds;
-            var pt = new Point(screen.Left + (screen.Width / 2) - (aW / 2), screen.Top + (screen.Height / 2) - (aH / 2));
-            PInvoke.User32.SetWindowPos(AppViewModel.Instance.MainWindowHandle, PInvoke.User32.SpecialWindowHandles.HWND_NOTOPMOST, Convert.ToInt32(pt.X), Convert.ToInt32(pt.Y), aW, aH, PInvoke.User32.SetWindowPosFlags.SWP_SHOWWINDOW);
-        }
-
-        private void OnLibraryInitialized(object sender, EventArgs e)
-        {
-            Resize(AppConstants.AppWideWidth, AppConstants.AppWideHeight);
-            Frame.Navigate(typeof(MainPage));
-        }
-
-        private void OnLoaded(object sender, RoutedEventArgs e)
-        {
-            var toolkit = ServiceLocator.Instance.GetService<ISettingsToolkit>();
-            if (!string.IsNullOrEmpty(toolkit.ReadLocalSetting(SettingNames.LibraryPath, string.Empty)))
-            {
-                _viewModel.ExceptionMessage = StringResources.InvalidLibraryPath;
-                toolkit.DeleteLocalSetting(SettingNames.LibraryPath);
-            }
-
-            Resize(AppConstants.AppMediumWidth, AppConstants.AppMediumHeight);
-            VersionBlock.Text = "v." + AppViewModel.GetVersioNumber();
-        }
+        Resize(AppConstants.AppMediumWidth, AppConstants.AppMediumHeight);
+        VersionBlock.Text = "v." + AppViewModel.GetVersioNumber();
     }
 }

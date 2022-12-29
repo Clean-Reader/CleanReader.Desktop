@@ -7,62 +7,61 @@ using CleanReader.ViewModels.Desktop;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace CleanReader.App.Pages
+namespace CleanReader.App.Pages;
+
+/// <summary>
+/// 书架页面.
+/// </summary>
+public sealed partial class ShelfPage : Page
 {
+    private readonly ShelfPageViewModel _viewModel = ShelfPageViewModel.Instance;
+    private readonly LibraryViewModel _libraryViewModel = LibraryViewModel.Instance;
+
     /// <summary>
-    /// 书架页面.
+    /// Initializes a new instance of the <see cref="ShelfPage"/> class.
     /// </summary>
-    public sealed partial class ShelfPage : Page
+    public ShelfPage()
     {
-        private readonly ShelfPageViewModel _viewModel = ShelfPageViewModel.Instance;
-        private readonly LibraryViewModel _libraryViewModel = LibraryViewModel.Instance;
+        InitializeComponent();
+        NavigationCacheMode = Microsoft.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
+        Loaded += OnLoaded;
+        Unloaded += OnUnloaded;
+    }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ShelfPage"/> class.
-        /// </summary>
-        public ShelfPage()
+    private void OnUnloaded(object sender, RoutedEventArgs e)
+        => _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
+        _viewModel.PropertyChanged += OnViewModelPropertyChanged;
+        _viewModel.InitializeViewModelCommand.Execute().Subscribe();
+    }
+
+    private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(_viewModel.CurrentSort))
         {
-            InitializeComponent();
-            NavigationCacheMode = Microsoft.UI.Xaml.Navigation.NavigationCacheMode.Enabled;
-            Loaded += OnLoaded;
-            Unloaded += OnUnloaded;
+            InitializeSortType();
         }
+    }
 
-        private void OnUnloaded(object sender, RoutedEventArgs e)
-            => _viewModel.PropertyChanged -= OnViewModelPropertyChanged;
+    private void InitializeSortType()
+        => SortFlyout.Items
+        .OfType<ToggleMenuFlyoutItem>()
+        .ToList()
+        .ForEach(p => p.IsChecked = p.Tag.ToString() == _viewModel.CurrentSort);
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+    private void OnSortItemClick(object sender, RoutedEventArgs e)
+    {
+        var item = sender as ToggleMenuFlyoutItem;
+        var type = item.Tag.ToString();
+        if (type == _viewModel.CurrentSort)
         {
-            _viewModel.PropertyChanged += OnViewModelPropertyChanged;
-            _viewModel.InitializeViewModelCommand.Execute().Subscribe();
+            item.IsChecked = true;
         }
-
-        private void OnViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        else
         {
-            if (e.PropertyName == nameof(_viewModel.CurrentSort))
-            {
-                InitializeSortType();
-            }
-        }
-
-        private void InitializeSortType()
-            => SortFlyout.Items
-            .OfType<ToggleMenuFlyoutItem>()
-            .ToList()
-            .ForEach(p => p.IsChecked = p.Tag.ToString() == _viewModel.CurrentSort);
-
-        private void OnSortItemClick(object sender, RoutedEventArgs e)
-        {
-            var item = sender as ToggleMenuFlyoutItem;
-            var type = item.Tag.ToString();
-            if (type == _viewModel.CurrentSort)
-            {
-                item.IsChecked = true;
-            }
-            else
-            {
-                _viewModel.CurrentSort = type;
-            }
+            _viewModel.CurrentSort = type;
         }
     }
 }

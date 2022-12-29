@@ -1,20 +1,19 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 
-namespace CleanReader.Models.DataBase
+namespace CleanReader.Models.DataBase;
+
+/// <summary>
+/// 书籍类型.
+/// </summary>
+public enum BookType
 {
     /// <summary>
-    /// 书籍类型.
+    /// 本地书籍.
     /// </summary>
-    public enum BookType
-    {
-        /// <summary>
-        /// 本地书籍.
-        /// </summary>
-        Local,
+    Local,
 
-        /// <summary>
-        /// 在线书籍.
-        /// </summary>
-        Online,
-    }
+    /// <summary>
+    /// 在线书籍.
+    /// </summary>
+    Online,
 }

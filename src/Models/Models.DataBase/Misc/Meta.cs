@@ -2,22 +2,21 @@
 
 using System.ComponentModel.DataAnnotations;
 
-namespace CleanReader.Models.DataBase
+namespace CleanReader.Models.DataBase;
+
+/// <summary>
+/// 元数据.
+/// </summary>
+public class Meta
 {
     /// <summary>
-    /// 元数据.
+    /// 键.
     /// </summary>
-    public class Meta
-    {
-        /// <summary>
-        /// 键.
-        /// </summary>
-        [Key]
-        public string Key { get; set; }
+    [Key]
+    public string Key { get; set; }
 
-        /// <summary>
-        /// 值.
-        /// </summary>
-        public string Value { get; set; }
-    }
+    /// <summary>
+    /// 值.
+    /// </summary>
+    public string Value { get; set; }
 }

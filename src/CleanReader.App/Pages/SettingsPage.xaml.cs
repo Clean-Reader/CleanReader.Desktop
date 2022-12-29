@@ -5,23 +5,22 @@ using CleanReader.ViewModels.Desktop;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
-namespace CleanReader.App.Pages
+namespace CleanReader.App.Pages;
+
+/// <summary>
+/// 设置页面.
+/// </summary>
+public sealed partial class SettingsPage : Page
 {
+    private readonly SettingsPageViewModel _viewModel = SettingsPageViewModel.Instance;
+    private readonly LibraryViewModel _libraryViewModel = LibraryViewModel.Instance;
+
     /// <summary>
-    /// 设置页面.
+    /// Initializes a new instance of the <see cref="SettingsPage"/> class.
     /// </summary>
-    public sealed partial class SettingsPage : Page
-    {
-        private readonly SettingsPageViewModel _viewModel = SettingsPageViewModel.Instance;
-        private readonly LibraryViewModel _libraryViewModel = LibraryViewModel.Instance;
+    public SettingsPage() => InitializeComponent();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SettingsPage"/> class.
-        /// </summary>
-        public SettingsPage() => InitializeComponent();
-
-        /// <inheritdoc/>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-            => _viewModel.InitializeCommand.Execute().Subscribe();
-    }
+    /// <inheritdoc/>
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+        => _viewModel.InitializeCommand.Execute().Subscribe();
 }

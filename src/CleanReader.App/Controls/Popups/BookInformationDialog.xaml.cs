@@ -2,48 +2,47 @@
 
 using CleanReader.ViewModels.Desktop;
 
-namespace CleanReader.App.Controls
+namespace CleanReader.App.Controls;
+
+/// <summary>
+/// 书籍信息对话框.
+/// </summary>
+public sealed partial class BookInformationDialog : CustomDialog
 {
+    private ShelfBookViewModel _viewModel;
+
     /// <summary>
-    /// 书籍信息对话框.
+    /// Initializes a new instance of the <see cref="BookInformationDialog"/> class.
     /// </summary>
-    public sealed partial class BookInformationDialog : CustomDialog
+    public BookInformationDialog() => InitializeComponent();
+
+    /// <inheritdoc/>
+    public override void InjectData(object data)
     {
-        private ShelfBookViewModel _viewModel;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BookInformationDialog"/> class.
-        /// </summary>
-        public BookInformationDialog() => InitializeComponent();
-
-        /// <inheritdoc/>
-        public override void InjectData(object data)
+        if (data is ShelfBookViewModel vm)
         {
-            if (data is ShelfBookViewModel vm)
-            {
-                _viewModel = vm;
-            }
+            _viewModel = vm;
+        }
+    }
+
+    /// <inheritdoc/>
+    public override void OnPrimaryButtonClick()
+    {
+        if (!string.IsNullOrEmpty(BookNameBox.Text))
+        {
+            _viewModel.Book.Title = BookNameBox.Text;
         }
 
-        /// <inheritdoc/>
-        public override void OnPrimaryButtonClick()
+        if (!string.IsNullOrEmpty(AuthorBox.Text))
         {
-            if (!string.IsNullOrEmpty(BookNameBox.Text))
-            {
-                _viewModel.Book.Title = BookNameBox.Text;
-            }
+            _viewModel.Book.Author = AuthorBox.Text;
+        }
 
-            if (!string.IsNullOrEmpty(AuthorBox.Text))
-            {
-                _viewModel.Book.Author = AuthorBox.Text;
-            }
+        _viewModel.Cover = CoverBox.Text;
 
-            _viewModel.Cover = CoverBox.Text;
-
-            if (!string.IsNullOrEmpty(DescriptionBox.Text))
-            {
-                _viewModel.Book.Description = DescriptionBox.Text;
-            }
+        if (!string.IsNullOrEmpty(DescriptionBox.Text))
+        {
+            _viewModel.Book.Description = DescriptionBox.Text;
         }
     }
 }

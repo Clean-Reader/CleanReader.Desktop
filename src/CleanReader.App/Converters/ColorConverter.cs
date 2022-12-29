@@ -6,30 +6,29 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media;
 
-namespace CleanReader.App.Converters
-{
-    /// <summary>
-    /// 颜色转换器.
-    /// </summary>
-    public class ColorConverter : IValueConverter
-    {
-        /// <inheritdoc/>
-        public object Convert(object value, Type targetType, object parameter, string language)
-        {
-            Windows.UI.Color color;
-            if (string.IsNullOrEmpty(value?.ToString()))
-            {
-                color = Colors.Transparent;
-            }
-            else
-            {
-                color = ((string)value).ToColor();
-            }
+namespace CleanReader.App.Converters;
 
-            return targetType == typeof(Brush) ? new SolidColorBrush(color) : color;
+/// <summary>
+/// 颜色转换器.
+/// </summary>
+public class ColorConverter : IValueConverter
+{
+    /// <inheritdoc/>
+    public object Convert(object value, Type targetType, object parameter, string language)
+    {
+        Windows.UI.Color color;
+        if (string.IsNullOrEmpty(value?.ToString()))
+        {
+            color = Colors.Transparent;
+        }
+        else
+        {
+            color = ((string)value).ToColor();
         }
 
-        /// <inheritdoc/>
-        public object ConvertBack(object value, Type targetType, object parameter, string language) => throw new NotImplementedException();
+        return targetType == typeof(Brush) ? new SolidColorBrush(color) : color;
     }
+
+    /// <inheritdoc/>
+    public object ConvertBack(object value, Type targetType, object parameter, string language) => throw new NotImplementedException();
 }

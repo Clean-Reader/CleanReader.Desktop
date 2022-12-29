@@ -2,23 +2,22 @@
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CleanReader.Locator.Lib
+namespace CleanReader.Locator.Lib;
+
+/// <summary>
+/// <see cref="ServiceLocator"/> extension.
+/// </summary>
+public static class ServiceLocatorExtension
 {
     /// <summary>
-    /// <see cref="ServiceLocator"/> extension.
+    /// Rebuild <see cref="ServiceProvider"/> and assign it to <see cref="ServiceLocator.ServiceProvider"/>.
     /// </summary>
-    public static class ServiceLocatorExtension
+    /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/>.</param>
+    public static void RebuildServiceProvider(this IServiceCollection serviceCollection)
     {
-        /// <summary>
-        /// Rebuild <see cref="ServiceProvider"/> and assign it to <see cref="ServiceLocator.ServiceProvider"/>.
-        /// </summary>
-        /// <param name="serviceCollection">Instance of <see cref="IServiceCollection"/>.</param>
-        public static void RebuildServiceProvider(this IServiceCollection serviceCollection)
+        if (ServiceLocator.Instance != null)
         {
-            if (ServiceLocator.Instance != null)
-            {
-                ServiceLocator.Instance.ServiceProvider = serviceCollection.BuildServiceProvider();
-            }
+            ServiceLocator.Instance.ServiceProvider = serviceCollection.BuildServiceProvider();
         }
     }
 }

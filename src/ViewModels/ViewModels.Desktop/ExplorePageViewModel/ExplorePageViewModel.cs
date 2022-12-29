@@ -10,134 +10,133 @@ using System.Threading.Tasks;
 using CleanReader.Services.Novel.Models;
 using ReactiveUI;
 
-namespace CleanReader.ViewModels.Desktop
+namespace CleanReader.ViewModels.Desktop;
+
+/// <summary>
+/// 探索与发现页面视图模型.
+/// </summary>
+public sealed partial class ExplorePageViewModel : ReactiveObject
 {
     /// <summary>
-    /// 探索与发现页面视图模型.
+    /// Initializes a new instance of the <see cref="ExplorePageViewModel"/> class.
     /// </summary>
-    public sealed partial class ExplorePageViewModel : ReactiveObject
+    private ExplorePageViewModel()
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ExplorePageViewModel"/> class.
-        /// </summary>
-        private ExplorePageViewModel()
+        BookSources = new ObservableCollection<BookSource>();
+        Categories = new ObservableCollection<Category>();
+        Books = new ObservableCollection<OnlineBookViewModel>();
+        _novelService = LibraryViewModel.Instance.GetNovelService();
+        _pageIndex = 0;
+        LibraryViewModel.Instance.BookSources.CollectionChanged += OnLibraryBookSourcesCollectionChanged;
+
+        var canLoadExcute = this.WhenAnyValue(x => x.IsFirstLoading, x => x.IsPagerLoading)
+            .Select(p => !p.Item1 && !p.Item2);
+        LoadCategoryDetailCommand = ReactiveCommand.CreateFromTask(LoadCategoryDetailAsync, canLoadExcute, RxApp.MainThreadScheduler);
+
+        this.WhenAnyValue(x => x.ErrorMessage)
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(p => IsShowError = !string.IsNullOrEmpty(p));
+
+        this.WhenAnyValue(x => x.SelectedBookSource)
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(_ => InitializeCategories());
+
+        this.WhenAnyValue(x => x.SelectedCategory)
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(x =>
+            {
+                _pageIndex = 1;
+                Books.Clear();
+                LoadCategoryDetailCommand.Execute().Subscribe();
+            });
+
+        LoadCategoryDetailCommand.ThrownExceptions
+            .Subscribe(DisplayException);
+
+        InitializeBookSources();
+    }
+
+    private void InitializeBookSources()
+    {
+        BookSources.Clear();
+        LibraryViewModel.Instance.BookSources.Where(p => p.IsExploreEnabled && p.Explore != null && (p.Explore?.Categories?.Any() ?? false))
+            .ToList()
+            .ForEach(p => BookSources.Add(p));
+
+        if (SelectedBookSource == null || !BookSources.Contains(SelectedBookSource))
         {
-            BookSources = new ObservableCollection<BookSource>();
-            Categories = new ObservableCollection<Category>();
-            Books = new ObservableCollection<OnlineBookViewModel>();
-            _novelService = LibraryViewModel.Instance.GetNovelService();
-            _pageIndex = 0;
-            LibraryViewModel.Instance.BookSources.CollectionChanged += OnLibraryBookSourcesCollectionChanged;
-
-            var canLoadExcute = this.WhenAnyValue(x => x.IsFirstLoading, x => x.IsPagerLoading)
-                .Select(p => !p.Item1 && !p.Item2);
-            LoadCategoryDetailCommand = ReactiveCommand.CreateFromTask(LoadCategoryDetailAsync, canLoadExcute, RxApp.MainThreadScheduler);
-
-            this.WhenAnyValue(x => x.ErrorMessage)
-                .ObserveOn(RxApp.MainThreadScheduler)
-                .Subscribe(p => IsShowError = !string.IsNullOrEmpty(p));
-
-            this.WhenAnyValue(x => x.SelectedBookSource)
-                .ObserveOn(RxApp.MainThreadScheduler)
-                .Subscribe(_ => InitializeCategories());
-
-            this.WhenAnyValue(x => x.SelectedCategory)
-                .ObserveOn(RxApp.MainThreadScheduler)
-                .Subscribe(x =>
-                {
-                    _pageIndex = 1;
-                    Books.Clear();
-                    LoadCategoryDetailCommand.Execute().Subscribe();
-                });
-
-            LoadCategoryDetailCommand.ThrownExceptions
-                .Subscribe(DisplayException);
-
-            InitializeBookSources();
+            SelectedBookSource = BookSources.FirstOrDefault();
         }
 
-        private void InitializeBookSources()
+        IsNotSupportExplore = SelectedBookSource == null;
+    }
+
+    private void InitializeCategories()
+    {
+        Categories.Clear();
+        SelectedCategory = null;
+        if (SelectedBookSource != null)
         {
-            BookSources.Clear();
-            LibraryViewModel.Instance.BookSources.Where(p => p.IsExploreEnabled && p.Explore != null && (p.Explore?.Categories?.Any() ?? false))
-                .ToList()
-                .ForEach(p => BookSources.Add(p));
+            SelectedBookSource.Explore.Categories.ForEach(p => Categories.Add(p));
+            SelectedCategory = Categories.FirstOrDefault();
+        }
+    }
 
-            if (SelectedBookSource == null || !BookSources.Contains(SelectedBookSource))
-            {
-                SelectedBookSource = BookSources.FirstOrDefault();
-            }
-
-            IsNotSupportExplore = SelectedBookSource == null;
+    private async Task LoadCategoryDetailAsync()
+    {
+        ErrorMessage = string.Empty;
+        if (_exploreTokenSource != null && _exploreTokenSource.Token.CanBeCanceled)
+        {
+            _exploreTokenSource.Cancel();
+            _exploreTokenSource.Dispose();
+            _exploreTokenSource = null;
         }
 
-        private void InitializeCategories()
+        if (SelectedBookSource != null && SelectedCategory != null)
         {
-            Categories.Clear();
-            SelectedCategory = null;
-            if (SelectedBookSource != null)
+            _exploreTokenSource = new System.Threading.CancellationTokenSource();
+            if (Books.Count > 0)
             {
-                SelectedBookSource.Explore.Categories.ForEach(p => Categories.Add(p));
-                SelectedCategory = Categories.FirstOrDefault();
+                IsPagerLoading = true;
             }
-        }
-
-        private async Task LoadCategoryDetailAsync()
-        {
-            ErrorMessage = string.Empty;
-            if (_exploreTokenSource != null && _exploreTokenSource.Token.CanBeCanceled)
+            else
             {
-                _exploreTokenSource.Cancel();
-                _exploreTokenSource.Dispose();
-                _exploreTokenSource = null;
+                await Task.Delay(100);
+                IsFirstLoading = false;
+                IsFirstLoading = true;
             }
 
-            if (SelectedBookSource != null && SelectedCategory != null)
+            var books = new List<Book>();
+            await Task.Run(async () =>
             {
-                _exploreTokenSource = new System.Threading.CancellationTokenSource();
-                if (Books.Count > 0)
-                {
-                    IsPagerLoading = true;
-                }
-                else
-                {
-                    await Task.Delay(100);
-                    IsFirstLoading = false;
-                    IsFirstLoading = true;
-                }
+                books = await _novelService.GetBooksWithCategoryAsync(SelectedBookSource.Id, SelectedCategory.Name, _pageIndex, _exploreTokenSource);
+            });
 
-                var books = new List<Book>();
-                await Task.Run(async () =>
+            if (books.Count > 0)
+            {
+                foreach (var book in books)
                 {
-                    books = await _novelService.GetBooksWithCategoryAsync(SelectedBookSource.Id, SelectedCategory.Name, _pageIndex, _exploreTokenSource);
-                });
-
-                if (books.Count > 0)
-                {
-                    foreach (var book in books)
+                    if (!Books.Any(p => p.Book.Equals(book)))
                     {
-                        if (!Books.Any(p => p.Book.Equals(book)))
-                        {
-                            Books.Add(new OnlineBookViewModel(book));
-                        }
+                        Books.Add(new OnlineBookViewModel(book));
                     }
                 }
-
-                _pageIndex++;
-                IsFirstLoading = IsPagerLoading = false;
             }
-        }
 
-        private void DisplayException(Exception e)
-        {
+            _pageIndex++;
             IsFirstLoading = IsPagerLoading = false;
-            if (e is not TaskCanceledException)
-            {
-                ErrorMessage = e.Message;
-            }
         }
-
-        private void OnLibraryBookSourcesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-            => InitializeBookSources();
     }
+
+    private void DisplayException(Exception e)
+    {
+        IsFirstLoading = IsPagerLoading = false;
+        if (e is not TaskCanceledException)
+        {
+            ErrorMessage = e.Message;
+        }
+    }
+
+    private void OnLibraryBookSourcesCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        => InitializeBookSources();
 }

@@ -3,22 +3,21 @@
 using System;
 using Microsoft.UI.Xaml.Data;
 
-namespace CleanReader.App.Converters
-{
-    internal class DurationConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, string language)
-        {
-            var duration = (TimeSpan)value;
-            var type = parameter.ToString();
-            if (type == "Hour")
-            {
-                return Math.Round(duration.TotalHours, 2).ToString();
-            }
+namespace CleanReader.App.Converters;
 
-            return string.Empty;
+internal class DurationConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, string language)
+    {
+        var duration = (TimeSpan)value;
+        var type = parameter.ToString();
+        if (type == "Hour")
+        {
+            return Math.Round(duration.TotalHours, 2).ToString();
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language) => throw new NotImplementedException();
+        return string.Empty;
     }
+
+    public object ConvertBack(object value, Type targetType, object parameter, string language) => throw new NotImplementedException();
 }

@@ -52,14 +52,11 @@ public sealed partial class BackgroundMusicViewModel : ReactiveObject
         IsAmbieInstalled = info.Count > 0;
     }
 
-    private static AppServiceConnection GetAmbieServiceConnection()
+    private static AppServiceConnection GetAmbieServiceConnection() => new AppServiceConnection
     {
-        return new AppServiceConnection
-        {
-            AppServiceName = VMConstants.Service.AmbieServiceName,
-            PackageFamilyName = VMConstants.Service.AmbiePackageId,
-        };
-    }
+        AppServiceName = VMConstants.Service.AmbieServiceName,
+        PackageFamilyName = VMConstants.Service.AmbiePackageId,
+    };
 
     private async Task PlayAsync()
     {

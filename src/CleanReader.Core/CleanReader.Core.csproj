@@ -7,6 +7,7 @@
     <UseWinUI>true</UseWinUI>
     <Platforms>x64</Platforms>
   </PropertyGroup>
+  
   <ItemGroup>
     <None Remove="Reader.xaml" />
   </ItemGroup>

@@ -1,25 +1,24 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 
-namespace CleanReader.Models.DataBase
+namespace CleanReader.Models.DataBase;
+
+/// <summary>
+/// 书籍状态.
+/// </summary>
+public enum BookStatus
 {
     /// <summary>
-    /// 书籍状态.
+    /// 未开始.
     /// </summary>
-    public enum BookStatus
-    {
-        /// <summary>
-        /// 未开始.
-        /// </summary>
-        NotStart,
+    NotStart,
 
-        /// <summary>
-        /// 阅读中.
-        /// </summary>
-        Reading,
+    /// <summary>
+    /// 阅读中.
+    /// </summary>
+    Reading,
 
-        /// <summary>
-        /// 已读完.
-        /// </summary>
-        Finish,
-    }
+    /// <summary>
+    /// 已读完.
+    /// </summary>
+    Finish,
 }

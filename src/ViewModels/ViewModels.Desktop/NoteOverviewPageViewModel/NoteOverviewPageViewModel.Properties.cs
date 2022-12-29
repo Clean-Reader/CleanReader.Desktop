@@ -8,66 +8,65 @@ using Microsoft.UI.Dispatching;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
-namespace CleanReader.ViewModels.Desktop
+namespace CleanReader.ViewModels.Desktop;
+
+/// <summary>
+/// 笔记概览页面视图模型.
+/// </summary>
+public sealed partial class NoteOverviewPageViewModel
 {
+    private readonly List<Highlight> _allHighlights;
+    private readonly ObservableAsPropertyHelper<bool> _isInitializing;
+
+    private bool _disposedValue;
+    private LibraryDbContext _libraryDbContext;
+
     /// <summary>
-    /// 笔记概览页面视图模型.
+    /// 显示高亮对话框命令.
     /// </summary>
-    public sealed partial class NoteOverviewPageViewModel
-    {
-        private readonly List<Highlight> _allHighlights;
-        private readonly ObservableAsPropertyHelper<bool> _isInitializing;
+    public ReactiveCommand<Highlight, Unit> ShowHighlightDialogCommand { get; }
 
-        private bool _disposedValue;
-        private LibraryDbContext _libraryDbContext;
+    /// <summary>
+    /// 删除高亮命令.
+    /// </summary>
+    public ReactiveCommand<Highlight, Unit> DeleteHighlightCommand { get; }
 
-        /// <summary>
-        /// 显示高亮对话框命令.
-        /// </summary>
-        public ReactiveCommand<Highlight, Unit> ShowHighlightDialogCommand { get; }
+    /// <summary>
+    /// 跳转到高亮命令.
+    /// </summary>
+    public ReactiveCommand<Highlight, Unit> JumpToHighlightCommand { get; }
 
-        /// <summary>
-        /// 删除高亮命令.
-        /// </summary>
-        public ReactiveCommand<Highlight, Unit> DeleteHighlightCommand { get; }
+    /// <summary>
+    /// 初始化命令.
+    /// </summary>
+    public ReactiveCommand<Unit, Unit> InitializeCommand { get; }
 
-        /// <summary>
-        /// 跳转到高亮命令.
-        /// </summary>
-        public ReactiveCommand<Highlight, Unit> JumpToHighlightCommand { get; }
+    /// <summary>
+    /// 当前选中书籍.
+    /// </summary>
+    [Reactive]
+    public Book CurrentBook { get; set; }
 
-        /// <summary>
-        /// 初始化命令.
-        /// </summary>
-        public ReactiveCommand<Unit, Unit> InitializeCommand { get; }
+    /// <summary>
+    /// 有高亮标记的书籍列表.
+    /// </summary>
+    public ObservableCollection<Book> Books { get; }
 
-        /// <summary>
-        /// 当前选中书籍.
-        /// </summary>
-        [Reactive]
-        public Book CurrentBook { get; set; }
+    /// <summary>
+    /// 显示的高亮笔记.
+    /// </summary>
+    public ObservableCollection<Highlight> Notes { get; }
 
-        /// <summary>
-        /// 有高亮标记的书籍列表.
-        /// </summary>
-        public ObservableCollection<Book> Books { get; }
+    /// <summary>
+    /// 是否显示空白.
+    /// </summary>
+    [Reactive]
+    public bool IsShowEmpty { get; set; }
 
-        /// <summary>
-        /// 显示的高亮笔记.
-        /// </summary>
-        public ObservableCollection<Highlight> Notes { get; }
+    /// <summary>
+    /// 是否正在初始化.
+    /// </summary>
+    public bool IsInitializing => _isInitializing.Value;
 
-        /// <summary>
-        /// 是否显示空白.
-        /// </summary>
-        [Reactive]
-        public bool IsShowEmpty { get; set; }
-
-        /// <summary>
-        /// 是否正在初始化.
-        /// </summary>
-        public bool IsInitializing => _isInitializing.Value;
-
-        private static DispatcherQueue DispatcherQueue => AppViewModel.Instance.DispatcherQueue;
-    }
+    private static DispatcherQueue DispatcherQueue => AppViewModel.Instance.DispatcherQueue;
 }

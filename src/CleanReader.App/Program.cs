@@ -1,15 +1,10 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 
 using System;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading;
-using System.Threading.Tasks;
-using CleanReader.ViewModels.Desktop;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
-using Windows.ApplicationModel.Activation;
-using Windows.Storage;
 
 namespace CleanReader.App;
 
@@ -18,7 +13,8 @@ namespace CleanReader.App;
 /// </summary>
 internal class Program
 {
-    private static IntPtr redirectEventHandle = IntPtr.Zero;
+    private static bool _isInitialized;
+    private static App _app;
 
     /// <summary>
     /// 介入应用启动过程，在有多实例请求时重定向到已激活实例.
@@ -29,14 +25,16 @@ internal class Program
     {
         WinRT.ComWrappersSupport.InitializeComWrappers();
         var isRedirect = DecideRedirection();
-        if (!isRedirect)
+        if (!isRedirect && !_isInitialized)
         {
-            Microsoft.UI.Xaml.Application.Start((p) =>
+            Application.Start((p) =>
             {
                 var context = new DispatcherQueueSynchronizationContext(DispatcherQueue.GetForCurrentThread());
                 SynchronizationContext.SetSynchronizationContext(context);
-                _ = new App();
+                _app = new App();
             });
+
+            _isInitialized = true;
         }
     }
 
@@ -52,12 +50,12 @@ internal class Program
 
             if (keyInstance.IsCurrent)
             {
-                keyInstance.Activated += OnActivatedAsync;
+                keyInstance.Activated += OnActivated;
             }
             else
             {
                 isRedirect = true;
-                RedirectActivationTo(args, keyInstance);
+                _ = keyInstance.RedirectActivationToAsync(args);
             }
         }
         catch (Exception)
@@ -68,46 +66,6 @@ internal class Program
         return isRedirect;
     }
 
-    [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
-    private static extern IntPtr CreateEvent(IntPtr lpEventAttributes, bool bManualReset, bool bInitialState, string lpName);
-
-    [DllImport("kernel32.dll")]
-    private static extern bool SetEvent(IntPtr hEvent);
-
-    [DllImport("ole32.dll")]
-    private static extern uint CoWaitForMultipleObjects(uint dwFlags, uint dwMilliseconds, ulong nHandles, IntPtr[] pHandles, out uint dwIndex);
-
-    // Do the redirection on another thread, and use a non-blocking
-    // wait method to wait for the redirection to complete.
-    private static void RedirectActivationTo(AppActivationArguments args, AppInstance keyInstance)
-    {
-        redirectEventHandle = CreateEvent(IntPtr.Zero, true, false, null);
-        Task.Run(async () =>
-        {
-            await keyInstance.RedirectActivationToAsync(args);
-            SetEvent(redirectEventHandle);
-        });
-        uint cWMO_DEFAULT = 0;
-        var iNFINITE = 0xFFFFFFFF;
-        _ = CoWaitForMultipleObjects(
-           cWMO_DEFAULT,
-           iNFINITE,
-           1,
-           new IntPtr[] { redirectEventHandle },
-           out var handleIndex);
-    }
-
-    private static async void OnActivatedAsync(object sender, AppActivationArguments args)
-    {
-        if (args.Kind == ExtendedActivationKind.File)
-        {
-            var fileArgs = args.Data as FileActivatedEventArgs;
-            var file = fileArgs.Files.FirstOrDefault();
-            if (file is StorageFile f)
-            {
-                AppViewModel.Instance.InitializeFilePath = f.Path;
-                await LibraryViewModel.Instance.CheckOpenFileOrImportAsync();
-            }
-        }
-    }
+    private static void OnActivated(object sender, AppActivationArguments args)
+        => _app?.ActivateWindow(args);
 }
