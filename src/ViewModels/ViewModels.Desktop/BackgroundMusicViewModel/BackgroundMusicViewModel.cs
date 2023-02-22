@@ -63,7 +63,7 @@ public sealed partial class BackgroundMusicViewModel : ReactiveObject
 
     private async Task PlayAsync()
     {
-        if (!IsAmbieInstalled)
+        if (!IsAmbieInstalled || !IsBackgroundMusicAutoPlay)
         {
             return;
         }
