@@ -67,7 +67,6 @@
     <Use64BitCompiler>true</Use64BitCompiler>
     <PackageCertificateKeyFile>
     </PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>CE75892FEAE50B8E15494AD2683FC3622A88D322</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <AppxBundle>Always</AppxBundle>
@@ -204,7 +203,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.4" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221209.1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.230118.102" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CleanReader.App\CleanReader.App.csproj" />
