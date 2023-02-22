@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Reactive;
 using System.Threading;
 using CleanReader.Services.Novel;
-using CleanReader.Services.Novel.Models;
+using CleanReader.Models.Services;
 using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
@@ -48,42 +48,42 @@ public sealed partial class ExplorePageViewModel
     /// <summary>
     /// 已选中的书源.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public BookSource SelectedBookSource { get; set; }
 
     /// <summary>
     /// 选中的分类.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public Category SelectedCategory { get; set; }
 
     /// <summary>
     /// 没有支持探索模块的书源.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsNotSupportExplore { get; set; }
 
     /// <summary>
     /// 是否显示错误.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsShowError { get; set; }
 
     /// <summary>
     /// 错误信息.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string ErrorMessage { get; set; }
 
     /// <summary>
     /// 是否为分类下的第一次加载.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsFirstLoading { get; set; }
 
     /// <summary>
     /// 是否为分页加载.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsPagerLoading { get; set; }
 }

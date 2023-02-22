@@ -3,6 +3,8 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks.Dataflow;
+using CleanReader.Models.Services;
+using CleanReader.Services.Interfaces;
 using Ionic.Zip;
 
 namespace CleanReader.Services.Epub;
@@ -10,34 +12,18 @@ namespace CleanReader.Services.Epub;
 /// <summary>
 /// EPUB 服务.
 /// </summary>
-public sealed partial class EpubService
+public sealed partial class EpubService : IEpubService
 {
     private static Dictionary<string, string> _chapterNames;
     private string[] _files;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="EpubService"/> class.
-    /// </summary>
-    /// <param name="configuration">服务配置项.</param>
-    public EpubService(EpubServiceConfiguration configuration) => Configuration = configuration;
+    private EpubServiceConfiguration Configuration { get; set; }
 
-    private EpubServiceConfiguration Configuration { get; }
-
-    /// <summary>
-    /// 拆分 TXT 章节，并生成对应的文件列表.
-    /// </summary>
-    /// <param name="filePath">文件路径.</param>
-    /// <param name="splitRegex">分章正则表达式.</param>
-    /// <param name="cancellationTokenSource">终止令牌.</param>
-    /// <returns>EPUB 服务配置项.</returns>
-    /// <exception cref="ArgumentException">传入的文件无法打开.</exception>
-    public static async Task<EpubServiceConfiguration> SplitTxtFileAsync(string filePath, Regex splitRegex = null, CancellationTokenSource cancellationTokenSource = null)
+    /// <inheritdoc/>
+    public async Task<EpubServiceConfiguration> SplitTxtFileAsync(string filePath, Regex splitRegex = null, CancellationTokenSource cancellationTokenSource = null)
     {
         ClearCache();
-        if (splitRegex == null)
-        {
-            splitRegex = CHAPTER_DIVISION_REGEX;
-        }
+        splitRegex ??= CHAPTER_DIVISION_REGEX;
 
         var file = new FileInfo(filePath);
         if (file.Exists)
@@ -129,14 +115,8 @@ public sealed partial class EpubService
         }
     }
 
-    /// <summary>
-    /// 使用指定分割正则表达式分割章节.
-    /// </summary>
-    /// <param name="filePath">TXT 文件路径.</param>
-    /// <param name="splitRegex">分章正则表达式.</param>
-    /// <returns>分割的章节列表，包含章节名和字数.</returns>
-    /// <exception cref="ArgumentException">传入的文件路径有误.</exception>
-    public static async Task<List<Tuple<string, int>>> GenerateTxtChaptersAsync(string filePath, Regex splitRegex = null)
+    /// <inheritdoc/>
+    public async Task<List<Tuple<string, int>>> GenerateTxtChaptersAsync(string filePath, Regex splitRegex = null)
     {
         if (splitRegex == null)
         {
@@ -206,13 +186,8 @@ public sealed partial class EpubService
         }
     }
 
-    /// <summary>
-    /// 将已拆分的内容组合成Epub文件.
-    /// </summary>
-    /// <param name="data">拆分的数据.</param>
-    /// <param name="configuration">书籍配置.</param>
-    /// <returns>保存的文件路径.</returns>
-    public static async Task<EpubServiceConfiguration> InitializeSplitedBookAsync(List<Tuple<int, string, string>> data, EpubServiceConfiguration configuration)
+    /// <inheritdoc/>
+    public async Task<EpubServiceConfiguration> InitializeSplitedBookAsync(List<Tuple<int, string, string>> data, EpubServiceConfiguration configuration)
     {
         if (!Directory.Exists(TXT_FOLDER_PATH))
         {
@@ -246,14 +221,8 @@ public sealed partial class EpubService
         return configuration;
     }
 
-    /// <summary>
-    /// 初始化追加章节.
-    /// </summary>
-    /// <param name="sourceBookPath">来源书籍路径.</param>
-    /// <param name="data">追加的章节内容.</param>
-    /// <param name="configuration">配置.</param>
-    /// <returns>配置文件.</returns>
-    public static async Task<EpubServiceConfiguration> InitializeAdditionalChaptersAsync(string sourceBookPath, List<Tuple<int, string, string>> data, EpubServiceConfiguration configuration)
+    /// <inheritdoc/>
+    public async Task<EpubServiceConfiguration> InitializeAdditionalChaptersAsync(string sourceBookPath, List<Tuple<int, string, string>> data, EpubServiceConfiguration configuration)
     {
         var guid = Guid.NewGuid().ToString("N");
         var folderPath = Path.Combine(TXT_FOLDER_PATH, guid);
@@ -288,12 +257,12 @@ public sealed partial class EpubService
         return configuration;
     }
 
-    /// <summary>
-    /// 是否需要重新生成epub文件.
-    /// </summary>
-    /// <param name="sourceFile">源文件.</param>
-    /// <returns>结果.</returns>
-    public static bool NeedRegenerate(string sourceFile)
+    /// <inheritdoc/>
+    public void SetConfiguration(EpubServiceConfiguration configuration)
+        => Configuration = configuration;
+
+    /// <inheritdoc/>
+    public bool NeedRegenerate(string sourceFile)
     {
         using var zipFile = new ZipFile(sourceFile, Encoding.UTF8);
         var result = !zipFile.EntryFileNames.Any(p => p.Contains("crn.json"));
@@ -301,10 +270,8 @@ public sealed partial class EpubService
         return result;
     }
 
-    /// <summary>
-    /// 清理缓存.
-    /// </summary>
-    public static void ClearCache()
+    /// <inheritdoc/>
+    public void ClearCache()
     {
         if (Directory.Exists(TXT_FOLDER_PATH))
         {
@@ -317,10 +284,8 @@ public sealed partial class EpubService
         }
     }
 
-    /// <summary>
-    /// 清理已生成的文件.
-    /// </summary>
-    public static void ClearGenerated()
+    /// <inheritdoc/>
+    public void ClearGenerated()
     {
         if (Directory.Exists(GENERATE_FOLDER_PATH))
         {
@@ -328,10 +293,7 @@ public sealed partial class EpubService
         }
     }
 
-    /// <summary>
-    /// 创建 Epub 文件.
-    /// </summary>
-    /// <returns><see cref="Task"/>.</returns>
+    /// <inheritdoc/>
     public async Task CreateAsync()
     {
         GetFiles();

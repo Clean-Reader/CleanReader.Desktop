@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 
-using CleanReader.Services.Novel.Models;
+using CleanReader.Models.Constants;
+using CleanReader.Models.Services;
 using HtmlAgilityPack;
 
 namespace CleanReader.Services.Novel;
@@ -127,37 +128,37 @@ public sealed partial class NovelService
             {
                 switch (replace.Field)
                 {
-                    case Enums.FieldType.Title:
+                    case FieldType.Title:
                         book.BookName = ReplaceString(book.BookName, replace.Old, replace.New);
                         break;
-                    case Enums.FieldType.Url:
+                    case FieldType.Url:
                         book.Url = ReplaceString(book.Url, replace.Old, replace.New);
                         break;
-                    case Enums.FieldType.BookCover:
+                    case FieldType.BookCover:
                         book.CoverUrl = ReplaceString(book.CoverUrl, replace.Old, replace.New);
                         break;
-                    case Enums.FieldType.BookAuthor:
+                    case FieldType.BookAuthor:
                         book.Author = ReplaceString(book.Author, replace.Old, replace.New);
                         break;
-                    case Enums.FieldType.BookDescription:
+                    case FieldType.BookDescription:
                         book.Description = ReplaceString(book.Description, replace.Old, replace.New);
                         break;
-                    case Enums.FieldType.LastChapterTitle:
+                    case FieldType.LastChapterTitle:
                         book.LatestChapterTitle = ReplaceString(book.LatestChapterTitle, replace.Old, replace.New);
                         break;
-                    case Enums.FieldType.LastChapterUrl:
+                    case FieldType.LastChapterUrl:
                         book.LatestChapterId = ReplaceString(book.LatestChapterId, replace.Old, replace.New);
                         break;
-                    case Enums.FieldType.Category:
+                    case FieldType.Category:
                         book.Category = ReplaceString(book.Category, replace.Old, replace.New);
                         break;
-                    case Enums.FieldType.Tag:
+                    case FieldType.Tag:
                         book.Tag = ReplaceString(book.Tag, replace.Old, replace.New);
                         break;
-                    case Enums.FieldType.BookStatus:
+                    case FieldType.BookStatus:
                         statusString = ReplaceString(statusString, replace.Old, replace.New);
                         break;
-                    case Enums.FieldType.UpdateTime:
+                    case FieldType.UpdateTime:
                         book.UpdateTime = ReplaceString(book.UpdateTime, replace.Old, replace.New);
                         break;
                     default:
@@ -176,37 +177,37 @@ public sealed partial class NovelService
                 var isLeft = repair.Position == "l";
                 switch (repair.Field)
                 {
-                    case Enums.FieldType.Title:
+                    case FieldType.Title:
                         book.BookName = RepairString(book.BookName, isLeft, repair.Value);
                         break;
-                    case Enums.FieldType.Url:
+                    case FieldType.Url:
                         book.Url = RepairString(book.Url, isLeft, repair.Value);
                         break;
-                    case Enums.FieldType.BookCover:
+                    case FieldType.BookCover:
                         book.CoverUrl = RepairString(book.CoverUrl, isLeft, repair.Value);
                         break;
-                    case Enums.FieldType.BookAuthor:
+                    case FieldType.BookAuthor:
                         book.Author = RepairString(book.Author, isLeft, repair.Value);
                         break;
-                    case Enums.FieldType.BookDescription:
+                    case FieldType.BookDescription:
                         book.Description = RepairString(book.Description, isLeft, repair.Value);
                         break;
-                    case Enums.FieldType.LastChapterTitle:
+                    case FieldType.LastChapterTitle:
                         book.LatestChapterTitle = RepairString(book.LatestChapterTitle, isLeft, repair.Value);
                         break;
-                    case Enums.FieldType.LastChapterUrl:
+                    case FieldType.LastChapterUrl:
                         book.LatestChapterId = RepairString(book.LatestChapterId, isLeft, repair.Value);
                         break;
-                    case Enums.FieldType.Category:
+                    case FieldType.Category:
                         book.Category = RepairString(book.Category, isLeft, repair.Value);
                         break;
-                    case Enums.FieldType.Tag:
+                    case FieldType.Tag:
                         book.Tag = RepairString(book.Tag, isLeft, repair.Value);
                         break;
-                    case Enums.FieldType.BookStatus:
+                    case FieldType.BookStatus:
                         statusString = RepairString(statusString, isLeft, repair.Value);
                         break;
-                    case Enums.FieldType.UpdateTime:
+                    case FieldType.UpdateTime:
                         book.UpdateTime = RepairString(book.UpdateTime, isLeft, repair.Value);
                         break;
                     default:
@@ -226,9 +227,9 @@ public sealed partial class NovelService
         {
             book.Status = statusString switch
             {
-                "连载" => Enums.BookStatus.Writing,
-                "完结" => Enums.BookStatus.Finish,
-                _ => Enums.BookStatus.Invalid,
+                "连载" => BookStatus.Writing,
+                "完结" => BookStatus.Finish,
+                _ => BookStatus.Invalid,
             };
         }
     }

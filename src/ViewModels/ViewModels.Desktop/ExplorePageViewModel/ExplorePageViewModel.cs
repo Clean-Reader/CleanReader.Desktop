@@ -7,7 +7,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using CleanReader.Services.Novel.Models;
+using CleanReader.Models.Services;
 using ReactiveUI;
 
 namespace CleanReader.ViewModels.Desktop;

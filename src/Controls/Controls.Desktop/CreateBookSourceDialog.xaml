@@ -1,0 +1,61 @@
+﻿<local:CustomDialog
+    x:Class="CleanReader.App.Controls.CreateBookSourceDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:CleanReader.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="using:CleanReader.Models.Resources"
+    Title="{x:Bind res:StringResources.CreateBookSource}"
+    CloseButtonText="{x:Bind res:StringResources.Cancel}"
+    DefaultButton="Primary"
+    IsPrimaryButtonEnabled="False"
+    PrimaryButtonText="{x:Bind res:StringResources.Create}"
+    Subtitle="{x:Bind res:StringResources.CreateBookSourceDescription}"
+    mc:Ignorable="d">
+
+    <StackPanel Spacing="12">
+        <TextBlock
+            x:Name="ErrorBlock"
+            FontSize="12"
+            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+            TextWrapping="Wrap"
+            Visibility="Collapsed" />
+        <TextBox
+            x:Name="BookSourceNameBox"
+            HorizontalAlignment="Stretch"
+            Header="{x:Bind res:StringResources.BookSourceName}"
+            TextChanged="OnMustBoxTextChanged" />
+        <TextBox
+            x:Name="IdBox"
+            HorizontalAlignment="Stretch"
+            Header="{x:Bind res:StringResources.Id}"
+            LostFocus="OnIdBoxLostFocus"
+            TextChanged="OnMustBoxTextChanged" />
+        <TextBox
+            x:Name="UrlBox"
+            HorizontalAlignment="Stretch"
+            Header="{x:Bind res:StringResources.WebUrl}"
+            TextChanged="OnMustBoxTextChanged" />
+        <CheckBox
+            x:Name="ExploreBox"
+            Content="{x:Bind res:StringResources.SupportExplore}"
+            IsChecked="True" />
+        <CheckBox
+            x:Name="SearchBox"
+            Content="{x:Bind res:StringResources.SupportSearch}"
+            IsChecked="True" />
+        <CheckBox
+            x:Name="BookDetailBox"
+            Content="{x:Bind res:StringResources.SupportBookDetail}"
+            IsChecked="True" />
+        <CheckBox
+            x:Name="ChapterBox"
+            Content="{x:Bind res:StringResources.SupportChapter}"
+            IsChecked="True" />
+        <CheckBox
+            x:Name="ChapterContentBox"
+            Content="{x:Bind res:StringResources.SupportChapterContent}"
+            IsChecked="True" />
+    </StackPanel>
+</local:CustomDialog>

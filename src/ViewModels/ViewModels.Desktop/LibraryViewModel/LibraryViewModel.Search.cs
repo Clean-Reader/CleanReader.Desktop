@@ -8,13 +8,15 @@ using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using CleanReader.Controls.Interfaces;
 using CleanReader.Locator.Lib;
 using CleanReader.Models.App;
 using CleanReader.Models.Constants;
 using CleanReader.Models.DataBase;
 using CleanReader.Models.Resources;
-using CleanReader.Services.Epub;
 using CleanReader.Services.Novel;
+using CleanReader.ViewModels.Interfaces;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
 
 namespace CleanReader.ViewModels.Desktop;
@@ -24,14 +26,144 @@ namespace CleanReader.ViewModels.Desktop;
 /// </summary>
 public sealed partial class LibraryViewModel
 {
-    private static Book GetBookEntryFromOnlineBook(Services.Novel.Models.Book book, string path)
+    /// <inheritdoc/>
+    public async Task<Book> GenerateBookEntryFromOnlineBookAsync(Models.Services.Book book = null)
+    {
+        book ??= SelectedSearchBook;
+
+        try
+        {
+            if (book != null)
+            {
+                Book entry = null;
+                var dialog = Locator.Lib.Locator.Instance.GetService<IProgressDialog>();
+                var cancelSource = new CancellationTokenSource();
+                dialog.InjectTask(
+                    Task.Run(async () =>
+                    {
+                        _epubService.ClearCache();
+                        _dispatcherQueue.TryEnqueue(() =>
+                        {
+                            dialog.InjectData(StringResources.GettingChapters);
+                        });
+
+                        var chapters = await _novelService.GetBookChaptersAsync(book.SourceId, book.Url, cancelSource);
+                        var chapterContents = new List<Tuple<int, string, string>>();
+                        var progress = 0;
+                        var total = chapters.Count;
+                        var options = new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 12, BoundedCapacity = total };
+                        options.CancellationToken = cancelSource.Token;
+                        var action = new ActionBlock<Models.Services.Chapter>(
+                        async chapter =>
+                        {
+                            if (cancelSource.Token.IsCancellationRequested)
+                            {
+                                return;
+                            }
+
+                            var content = await _novelService.GetChapterContentAsync(book.SourceId, chapter, cancelSource);
+                            chapterContents.Add(new Tuple<int, string, string>(content.ChapterIndex, chapter.Title, content.Content));
+                            progress++;
+                            _dispatcherQueue.TryEnqueue(() =>
+                            {
+                                dialog.InjectData(new Tuple<int, int, string>(progress, total, string.Format(StringResources.ChapterDownloadingProgress, progress, total)));
+                            });
+                        },
+                        options);
+
+                        foreach (var chapter in chapters)
+                        {
+                            action.Post(chapter);
+                        }
+
+                        action.Complete();
+                        await action.Completion;
+
+                        _dispatcherQueue.TryEnqueue(() =>
+                        {
+                            dialog.InjectData(StringResources.ConvertingAndMovingFile);
+                        });
+                        var configure = new Models.Services.EpubServiceConfiguration()
+                        {
+                            Title = book.BookName,
+                            Author = book.Author,
+                            Language = "zh",
+                            OutputFileName = $"{book.BookName}.epub",
+                            OutputFolderPath = Path.Combine(_rootDirectory.FullName, VMConstants.Library.BooksFolder),
+                        };
+
+                        try
+                        {
+                            configure = await _epubService.InitializeSplitedBookAsync(chapterContents, configure);
+                            _epubService.SetConfiguration(configure);
+                            await _epubService.CreateAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            _appViewModel.ShowTip(ex.Message, InfoType.Error);
+                        }
+
+                        entry = GetBookEntryFromOnlineBook(book, Path.Combine(configure.OutputFolderPath, configure.OutputFileName));
+                    }),
+                    cancelSource);
+
+                await dialog.ShowAsync();
+                _epubService.ClearGenerated();
+
+                if (entry != null)
+                {
+                    if (OriginalBook != null)
+                    {
+                        var sourceEntry = await LibraryContext.Books.FirstOrDefaultAsync(p => p.Id == OriginalBook.Id);
+                        if (sourceEntry != null)
+                        {
+                            await UpdateBookEntryAsync(sourceEntry, entry);
+                            entry = sourceEntry;
+                        }
+                        else
+                        {
+                            await InsertBookEntryAsync(entry);
+                        }
+
+                        OriginalBook = null;
+                    }
+                    else
+                    {
+                        await InsertBookEntryAsync(entry);
+                    }
+                }
+
+                if (entry != null)
+                {
+                    _appViewModel.ShowTip(StringResources.ExploreBookAdded, InfoType.Success);
+                    _appViewModel.RequestNavigateTo(_appViewModel.NavigationList.First(p => p.Type == NavigationItemType.Item));
+                }
+                else
+                {
+                    _appViewModel.ShowTip(StringResources.FailedToDownload, InfoType.Error);
+                }
+
+                return entry;
+            }
+            else
+            {
+                throw new Exception(StringResources.NoSelectedOnlineBook);
+            }
+        }
+        catch (Exception ex)
+        {
+            PopupException(ex);
+        }
+    }
+
+    private static Book GetBookEntryFromOnlineBook(Models.Services.Book book, string path)
     {
         var bookEntry = new Book
         {
             Title = book.BookName,
             Type = BookType.Online,
             AddTime = DateTime.Now,
-            Status = BookStatus.NotStart,
+            Status = Models.DataBase.BookStatus.NotStart,
             Id = book.BookId,
             SourceId = book.SourceId,
             Author = book.Author,
@@ -56,23 +188,25 @@ public sealed partial class LibraryViewModel
         return isSame;
     }
 
+    [RelayCommand]
     private async Task ShowOnlineSearchDialogAsync(string initText)
     {
         _importDialog?.Hide();
         ClearOnlineSearchCache();
-        var dialog = ServiceLocator.Instance.GetService<ICustomDialog>(AppConstants.OnlineSearchDialog);
+        var dialog = Locator.Lib.Locator.Instance.GetService<IOnlineSearchDialog>();
         dialog.InjectData(initText);
         IsFirstOnlineSearchTipShown = true;
         await dialog.ShowAsync();
     }
 
+    [RelayCommand]
     private async Task ShowReplaceSourceDialogAsync(Book book)
     {
         ClearOnlineSearchCache();
         ReplaceBookSources.Clear();
         SelectedBookSource = null;
         OriginalBook = book;
-        OriginSource = BookSources.FirstOrDefault(p => p.Id == book.SourceId) ?? new Services.Novel.Models.BookSource()
+        OriginSource = BookSources.FirstOrDefault(p => p.Id == book.SourceId) ?? new Models.Services.BookSource()
         {
             Id = "invalid",
             Name = StringResources.InvalidSource,
@@ -90,6 +224,7 @@ public sealed partial class LibraryViewModel
         await dialog.ShowAsync();
     }
 
+    [RelayCommand]
     private async Task SearchOnlineBooksAsync(string keyword)
     {
         ClearOnlineSearchCache();
@@ -102,7 +237,7 @@ public sealed partial class LibraryViewModel
         else
         {
             var books = await _novelService.SearchBookAsync(SelectedBookSource.Id, keyword);
-            _tempOnlineSearchResult = new Dictionary<string, List<Services.Novel.Models.Book>>()
+            _tempOnlineSearchResult = new Dictionary<string, List<Models.Services.Book>>()
             {
                 { SelectedBookSource.Id, books },
             };
@@ -112,13 +247,19 @@ public sealed partial class LibraryViewModel
         {
             _tempOnlineSearchResult.SelectMany(p => p.Value)
                 .Distinct()
-                .Select(p => new OnlineBookViewModel(p))
+                .Select(p =>
+                {
+                    var vm = Locator.Lib.Locator.Instance.GetService<IOnlineBookViewModel>();
+                    vm.InjectData(p);
+                    return vm;
+                })
                 .ToList()
                 .ForEach(p => OnlineSearchBooks.Add(p));
         }
     }
 
-    private void SetSelectedSearchItem(OnlineBookViewModel vm)
+    [RelayCommand]
+    private void SelectOnlineSearchResult(IOnlineBookViewModel vm)
     {
         if (SelectedSearchBook == vm.Book)
         {
@@ -133,139 +274,15 @@ public sealed partial class LibraryViewModel
         SelectedSearchBook = OnlineSearchBooks.SingleOrDefault(p => p.IsSelected)?.Book;
     }
 
-    private IObservable<Book> GenerateBookEntryFromOnlineBook(Services.Novel.Models.Book book = null) => Observable.StartAsync(async () =>
-                                                                                                                  {
-                                                                                                                      if (book == null)
-                                                                                                                      {
-                                                                                                                          book = SelectedSearchBook;
-                                                                                                                      }
-
-                                                                                                                      if (book != null)
-                                                                                                                      {
-                                                                                                                          Book entry = null;
-                                                                                                                          var dialog = ServiceLocator.Instance.GetService<ICustomDialog>(AppConstants.ProgressDialog);
-                                                                                                                          var cancelSource = new CancellationTokenSource();
-                                                                                                                          dialog.InjectTask(
-                                                                                                                              Task.Run(async () =>
-                                                                                                                              {
-                                                                                                                                  EpubService.ClearCache();
-                                                                                                                                  DispatcherQueue.TryEnqueue(() =>
-                                                                                                                                  {
-                                                                                                                                      dialog.InjectData(StringResources.GettingChapters);
-                                                                                                                                  });
-
-                                                                                                                                  var chapters = await _novelService.GetBookChaptersAsync(book.SourceId, book.Url, cancelSource);
-                                                                                                                                  var chapterContents = new List<Tuple<int, string, string>>();
-                                                                                                                                  var progress = 0;
-                                                                                                                                  var total = chapters.Count;
-                                                                                                                                  var options = new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 12, BoundedCapacity = total };
-                                                                                                                                  options.CancellationToken = cancelSource.Token;
-                                                                                                                                  var action = new ActionBlock<Services.Novel.Models.Chapter>(
-                                                                                                                                  async chapter =>
-                                                                                                                                  {
-                                                                                                                                      if (cancelSource.Token.IsCancellationRequested)
-                                                                                                                                      {
-                                                                                                                                          return;
-                                                                                                                                      }
-
-                                                                                                                                      var content = await _novelService.GetChapterContentAsync(book.SourceId, chapter, cancelSource);
-                                                                                                                                      chapterContents.Add(new Tuple<int, string, string>(content.ChapterIndex, chapter.Title, content.Content));
-                                                                                                                                      progress++;
-                                                                                                                                      DispatcherQueue.TryEnqueue(() =>
-                                                                                                                                      {
-                                                                                                                                          dialog.InjectData(new Tuple<int, int, string>(progress, total, string.Format(StringResources.ChapterDownloadingProgress, progress, total)));
-                                                                                                                                      });
-                                                                                                                                  },
-                                                                                                                                  options);
-
-                                                                                                                                  foreach (var chapter in chapters)
-                                                                                                                                  {
-                                                                                                                                      action.Post(chapter);
-                                                                                                                                  }
-
-                                                                                                                                  action.Complete();
-                                                                                                                                  await action.Completion;
-
-                                                                                                                                  DispatcherQueue.TryEnqueue(() =>
-                                                                                                                                  {
-                                                                                                                                      dialog.InjectData(StringResources.ConvertingAndMovingFile);
-                                                                                                                                  });
-                                                                                                                                  var configure = new EpubServiceConfiguration()
-                                                                                                                                  {
-                                                                                                                                      Title = book.BookName,
-                                                                                                                                      Author = book.Author,
-                                                                                                                                      Language = "zh",
-                                                                                                                                      OutputFileName = $"{book.BookName}.epub",
-                                                                                                                                      OutputFolderPath = Path.Combine(_rootDirectory.FullName, VMConstants.Library.BooksFolder),
-                                                                                                                                  };
-
-                                                                                                                                  try
-                                                                                                                                  {
-                                                                                                                                      configure = await EpubService.InitializeSplitedBookAsync(chapterContents, configure);
-                                                                                                                                      var service = new EpubService(configure);
-                                                                                                                                      await service.CreateAsync();
-                                                                                                                                  }
-                                                                                                                                  catch (Exception ex)
-                                                                                                                                  {
-                                                                                                                                      AppViewModel.Instance.ShowTip(ex.Message, InfoType.Error);
-                                                                                                                                  }
-
-                                                                                                                                  entry = GetBookEntryFromOnlineBook(book, Path.Combine(configure.OutputFolderPath, configure.OutputFileName));
-                                                                                                                              }),
-                                                                                                                              cancelSource);
-
-                                                                                                                          await dialog.ShowAsync();
-                                                                                                                          EpubService.ClearGenerated();
-
-                                                                                                                          if (entry != null)
-                                                                                                                          {
-                                                                                                                              if (OriginalBook != null)
-                                                                                                                              {
-                                                                                                                                  var sourceEntry = await LibraryContext.Books.FirstOrDefaultAsync(p => p.Id == OriginalBook.Id);
-                                                                                                                                  if (sourceEntry != null)
-                                                                                                                                  {
-                                                                                                                                      await UpdateBookEntryAsync(sourceEntry, entry);
-                                                                                                                                      entry = sourceEntry;
-                                                                                                                                  }
-                                                                                                                                  else
-                                                                                                                                  {
-                                                                                                                                      await InsertBookEntryAsync(entry);
-                                                                                                                                  }
-
-                                                                                                                                  OriginalBook = null;
-                                                                                                                              }
-                                                                                                                              else
-                                                                                                                              {
-                                                                                                                                  await InsertBookEntryAsync(entry);
-                                                                                                                              }
-                                                                                                                          }
-
-                                                                                                                          if (entry != null)
-                                                                                                                          {
-                                                                                                                              AppViewModel.Instance.ShowTip(StringResources.ExploreBookAdded, InfoType.Success);
-                                                                                                                              AppViewModel.Instance.RequestNavigateTo(AppViewModel.Instance.NavigationList.First(p => p.Type == NavigationItemType.Item));
-                                                                                                                          }
-                                                                                                                          else
-                                                                                                                          {
-                                                                                                                              AppViewModel.Instance.ShowTip(StringResources.FailedToDownload, InfoType.Error);
-                                                                                                                          }
-
-                                                                                                                          return entry;
-                                                                                                                      }
-                                                                                                                      else
-                                                                                                                      {
-                                                                                                                          throw new Exception(StringResources.NoSelectedOnlineBook);
-                                                                                                                      }
-                                                                                                                  });
-
+    [RelayCommand]
     private async Task SyncBooksAsync()
     {
-        var progressDialog = ServiceLocator.Instance.GetService<ICustomDialog>(AppConstants.ProgressDialog);
+        var progressDialog = Locator.Lib.Locator.Instance.GetService<IProgressDialog>();
         var cancellationTokenSource = new CancellationTokenSource();
         progressDialog.InjectTask(
             Task.Run(async () =>
         {
-            DispatcherQueue.TryEnqueue(() =>
+            _dispatcherQueue.TryEnqueue(() =>
             {
                 progressDialog.InjectData(StringResources.LoadingOnlineBooks);
             });
@@ -277,7 +294,7 @@ public sealed partial class LibraryViewModel
                 var chapterFetchCount = 0;
                 var totalChapterCount = onlineBooks.Count;
                 var tasks = new List<Task>();
-                DispatcherQueue.TryEnqueue(() =>
+                _dispatcherQueue.TryEnqueue(() =>
                 {
                     progressDialog.InjectData(new Tuple<int, int, string>(
                         chapterFetchCount,
@@ -291,7 +308,7 @@ public sealed partial class LibraryViewModel
                 var bookAction = new ActionBlock<Book>(async book =>
                 {
                     var sourceBook = Path.Combine(_rootDirectory.FullName, VMConstants.Library.BooksFolder, Path.GetFileName(book.Path));
-                    var needRegenerate = EpubService.NeedRegenerate(sourceBook);
+                    var needRegenerate = _epubService.NeedRegenerate(sourceBook);
                     var chapters = await _novelService.GetBookChaptersAsync(book.SourceId, book.Url, cancellationTokenSource);
                     if (chapters != null && chapters.Count > 0)
                     {
@@ -313,13 +330,13 @@ public sealed partial class LibraryViewModel
                             var needUpdateChapters = chapters.Skip(index + 1).ToList();
                             var chapterContents = new List<Tuple<int, string, string>>();
                             totalChapterCount += needUpdateChapters.Count;
-                            var chapterAction = new ActionBlock<Services.Novel.Models.Chapter>(
+                            var chapterAction = new ActionBlock<Models.Services.Chapter>(
                                 async chapter =>
                                 {
                                     var content = await _novelService.GetChapterContentAsync(book.SourceId, chapter, cancellationTokenSource);
                                     chapterContents.Add(new Tuple<int, string, string>(content.ChapterIndex, chapter.Title, content.Content));
                                     chapterFetchCount++;
-                                    DispatcherQueue.TryEnqueue(() =>
+                                    _dispatcherQueue.TryEnqueue(() =>
                                     {
                                         progressDialog.InjectData(new Tuple<int, int, string>(
                                             chapterFetchCount,
@@ -341,13 +358,13 @@ public sealed partial class LibraryViewModel
 
                             if (cancellationTokenSource.IsCancellationRequested)
                             {
-                                EpubService.ClearCache();
-                                EpubService.ClearGenerated();
+                                _epubService.ClearCache();
+                                _epubService.ClearGenerated();
                                 return;
                             }
 
                             // 将数据写入已存在的epub文件中.
-                            var configure = new EpubServiceConfiguration()
+                            var configure = new Models.Services.EpubServiceConfiguration()
                             {
                                 Title = book.Title,
                                 Author = book.Author,
@@ -357,17 +374,17 @@ public sealed partial class LibraryViewModel
                             };
 
                             configure = needRegenerate
-                                ? await EpubService.InitializeSplitedBookAsync(chapterContents, configure)
-                                : await EpubService.InitializeAdditionalChaptersAsync(sourceBook, chapterContents, configure);
+                                ? await _epubService.InitializeSplitedBookAsync(chapterContents, configure)
+                                : await _epubService.InitializeAdditionalChaptersAsync(sourceBook, chapterContents, configure);
 
-                            var service = new EpubService(configure);
-                            await service.CreateAsync();
+                            _epubService.SetConfiguration(configure);
+                            await _epubService.CreateAsync();
                             book.LastChapterId = chapters.Last().Id;
                         }
                     }
 
                     chapterFetchCount++;
-                    DispatcherQueue.TryEnqueue(() =>
+                    _dispatcherQueue.TryEnqueue(() =>
                     {
                         progressDialog.InjectData(new Tuple<int, int, string>(
                                         chapterFetchCount,
@@ -417,8 +434,8 @@ public sealed partial class LibraryViewModel
         }), cancellationTokenSource);
 
         await progressDialog.ShowAsync();
-        EpubService.ClearCache();
-        EpubService.ClearGenerated();
+        _epubService.ClearCache();
+        _epubService.ClearGenerated();
     }
 
     private void ClearOnlineSearchCache()

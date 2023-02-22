@@ -7,12 +7,12 @@ using System.Reactive.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using CleanReader.Locator.Lib;
+using CleanReader.Controls.Interfaces;
 using CleanReader.Models.App;
 using CleanReader.Models.Constants;
 using CleanReader.Models.DataBase;
 using CleanReader.Models.Resources;
-using CleanReader.Services.Epub;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
 using VersOne.Epub;
 
@@ -23,74 +23,29 @@ namespace CleanReader.ViewModels.Desktop;
 /// </summary>
 public sealed partial class LibraryViewModel
 {
-    private static Book GetBookEntryFromLocalPath(string path)
+    /// <inheritdoc/>
+    public async Task<string> ImportLocalBookAsync()
     {
-        var bookEntry = new Book
-        {
-            Title = Path.GetFileNameWithoutExtension(path),
-            Type = BookType.Local,
-            AddTime = DateTime.Now,
-            Status = BookStatus.NotStart,
-            Id = Guid.NewGuid().ToString("N"),
-            Path = Path.GetFileName(path),
-        };
-
-        return bookEntry;
-    }
-
-    private async Task ShowImportDialogAsync()
-    {
-        _importDialog = ServiceLocator.Instance.GetService<ICustomDialog>(AppConstants.ImportWayDialog);
-        await _importDialog.ShowAsync();
-        _importDialog = null;
-    }
-
-    private async Task<string> ImportLocalBookAsync()
-    {
-        var path = await _fileToolkit.OpenLocalFileAsync(AppViewModel.Instance.MainWindowHandle, ".txt", ".epub");
+        IsImporting = true;
+        var path = await _fileToolkit.OpenLocalFileAsync(_appViewModel.MainWindowHandle, ".txt", ".epub");
         if (!string.IsNullOrEmpty(path))
         {
             _importDialog?.Hide();
-            if (Path.GetExtension(path).Equals(".epub", StringComparison.OrdinalIgnoreCase))
-            {
-                GetBookEntryFromEpubFileCommand.Execute(path)
-                    .Subscribe(async b => await InsertBookEntryAsync(b));
-            }
-            else if (Path.GetExtension(path).Equals(".txt", StringComparison.OrdinalIgnoreCase))
-            {
-                GetBookEntryFromTxtFileCommand.Execute(path)
-                    .Subscribe(async b => await InsertBookEntryAsync(b));
-            }
+            var book = Path.GetExtension(path).Equals(".epub", StringComparison.OrdinalIgnoreCase)
+                ? await GenerateBookEntryFromEpubFileAsync(path)
+                : await GenerateBookEntryFromTxtFileAsync(path);
+            await InsertBookEntryAsync(book);
         }
 
+        IsImporting = false;
         return path;
     }
 
-    private async Task SplitChapterAsync(string regex)
-    {
-        SplitChapters.Clear();
-        if (string.IsNullOrEmpty(_tempSelectedFilePath))
-        {
-            throw new Exception(StringResources.InvalidFilePath);
-        }
-
-        Regex r = null;
-        if (!string.IsNullOrEmpty(regex))
-        {
-            r = new Regex(regex);
-        }
-
-        _tempSplitRegex = regex;
-        var result = await EpubService.GenerateTxtChaptersAsync(_tempSelectedFilePath, r);
-        result.Select(p => new SplitChapter() { Title = p.Item1, WordCount = p.Item2 })
-            .ToList()
-            .ForEach(p => SplitChapters.Add(p));
-    }
-
-    private async Task<Book> GenerateBookEntryFromTxtFileAsync(string path)
+    /// <inheritdoc/>
+    public async Task<Book> GenerateBookEntryFromTxtFileAsync(string path)
     {
         _tempSelectedFilePath = path;
-        var code = await ServiceLocator.Instance.GetService<ICustomDialog>(AppConstants.TxtSplitDialog).ShowAsync();
+        var code = await Locator.Lib.Locator.Instance.GetService<ITxtSplitDialog>().ShowAsync();
         Book entry = null;
 
         if (code == 0)
@@ -98,15 +53,15 @@ public sealed partial class LibraryViewModel
             var cancellationTokenSource = new CancellationTokenSource();
 
             // 生成Epub文件.
-            var progressDialog = ServiceLocator.Instance.GetService<ICustomDialog>(AppConstants.ProgressDialog);
+            var progressDialog = Locator.Lib.Locator.Instance.GetService<IProgressDialog>();
             progressDialog.InjectData(StringResources.ConvertingAndMovingFile);
             progressDialog.InjectTask(
                 Task.Run(async () =>
                 {
                     var r = string.IsNullOrEmpty(_tempSplitRegex) ? null : new Regex(_tempSplitRegex);
-                    var configuration = await EpubService.SplitTxtFileAsync(_tempSelectedFilePath, r, cancellationTokenSource);
-                    var service = new EpubService(configuration);
-                    await service.CreateAsync();
+                    var configuration = await _epubService.SplitTxtFileAsync(_tempSelectedFilePath, r, cancellationTokenSource);
+                    _epubService.SetConfiguration(configuration);
+                    await _epubService.CreateAsync();
                     var generatePath = Path.Combine(configuration.OutputFolderPath, configuration.OutputFileName);
                     var destPath = Path.Combine(_rootDirectory.FullName, VMConstants.Library.BooksFolder, Path.GetFileName(generatePath));
                     await _fileToolkit.CopyAsync(generatePath, destPath, true);
@@ -115,7 +70,7 @@ public sealed partial class LibraryViewModel
                 cancellationTokenSource);
 
             await progressDialog.ShowAsync();
-            EpubService.ClearGenerated();
+            _epubService.ClearGenerated();
         }
 
         _tempSplitRegex = null;
@@ -123,11 +78,12 @@ public sealed partial class LibraryViewModel
         return entry;
     }
 
-    private async Task<Book> GenerateBookEntryFromEpubFileAsync(string path)
+    /// <inheritdoc/>
+    public async Task<Book> GenerateBookEntryFromEpubFileAsync(string path)
     {
         // 直接导入.
         var destPath = Path.Combine(_rootDirectory.FullName, VMConstants.Library.BooksFolder, Path.GetFileName(path));
-        var progressDialog = ServiceLocator.Instance.GetService<ICustomDialog>(AppConstants.ProgressDialog);
+        var progressDialog = Locator.Lib.Locator.Instance.GetService<IProgressDialog>();
         progressDialog.InjectData(StringResources.MovingFile);
         progressDialog.InjectTask(_fileToolkit.CopyAsync(path, destPath));
 
@@ -148,6 +104,51 @@ public sealed partial class LibraryViewModel
         }
 
         return book;
+    }
+
+    private static Book GetBookEntryFromLocalPath(string path)
+    {
+        var bookEntry = new Book
+        {
+            Title = Path.GetFileNameWithoutExtension(path),
+            Type = BookType.Local,
+            AddTime = DateTime.Now,
+            Status = Models.DataBase.BookStatus.NotStart,
+            Id = Guid.NewGuid().ToString("N"),
+            Path = Path.GetFileName(path),
+        };
+
+        return bookEntry;
+    }
+
+    [RelayCommand]
+    private async Task ShowImportDialogAsync()
+    {
+        _importDialog = Locator.Lib.Locator.Instance.GetService<IImportWayDialog>();
+        await _importDialog.ShowAsync();
+        _importDialog = null;
+    }
+
+    [RelayCommand]
+    private async Task SplitChapterAsync(string regex)
+    {
+        SplitChapters.Clear();
+        if (string.IsNullOrEmpty(_tempSelectedFilePath))
+        {
+            throw new Exception(StringResources.InvalidFilePath);
+        }
+
+        Regex r = null;
+        if (!string.IsNullOrEmpty(regex))
+        {
+            r = new Regex(regex);
+        }
+
+        _tempSplitRegex = regex;
+        var result = await _epubService.GenerateTxtChaptersAsync(_tempSelectedFilePath, r);
+        result.Select(p => new SplitChapter() { Title = p.Item1, WordCount = p.Item2 })
+            .ToList()
+            .ForEach(p => SplitChapters.Add(p));
     }
 
     private async Task InsertBookEntryAsync(Book bookEntry)
@@ -199,7 +200,7 @@ public sealed partial class LibraryViewModel
                 await LibraryContext.SaveChangesAsync();
             });
 
-            DispatcherQueue.TryEnqueue(() =>
+            _dispatcherQueue.TryEnqueue(() =>
             {
                 BookAdded?.Invoke(this, EventArgs.Empty);
             });
@@ -222,7 +223,7 @@ public sealed partial class LibraryViewModel
             LibraryContext.Books.Update(sourceEntry);
             await LibraryContext.SaveChangesAsync();
         });
-        DispatcherQueue.TryEnqueue(() =>
+        _dispatcherQueue.TryEnqueue(() =>
         {
             BookAdded?.Invoke(this, EventArgs.Empty);
         });

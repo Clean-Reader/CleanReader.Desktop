@@ -1,0 +1,88 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows10.0.22000.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>CleanReader.Controls</RootNamespace>
+    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <UseWinUI>true</UseWinUI>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Popups\BookInformationDialog.xaml" />
+    <None Remove="Popups\ConfirmDialog.xaml" />
+    <None Remove="Popups\CreateBookSourceDialog.xaml" />
+    <None Remove="Popups\CreateOrUpdateShelfDialog.xaml" />
+    <None Remove="Popups\GithubUpdateDialog.xaml" />
+    <None Remove="Popups\ImportWayDialog.xaml" />
+    <None Remove="Popups\InternalSearchDialog.xaml" />
+    <None Remove="Popups\OnlineSearchDialog.xaml" />
+    <None Remove="Popups\ProgressDialog.xaml" />
+    <None Remove="Popups\ReadDurationDetailDialog.xaml" />
+    <None Remove="Popups\ReaderHighlightDialog.xaml" />
+    <None Remove="Popups\ReaderStyleOptionsDialog.xaml" />
+    <None Remove="Popups\ReplaceSourceDialog.xaml" />
+    <None Remove="Popups\ShelfTransferDialog.xaml" />
+    <None Remove="Popups\TxtSplitDialog.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
+      <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221209.1" />
+      <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Models\Models.Resources\Models.Resources.csproj" />
+    <ProjectReference Include="..\..\Utilities\Locator\Locator.Lib\Locator.Lib.csproj" />
+    <ProjectReference Include="..\..\ViewModels\ViewModels.Interfaces\ViewModels.Interfaces.csproj" />
+    <ProjectReference Include="..\Controls.Interfaces\Controls.Interfaces.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Popups\BookInformationDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Popups\ConfirmDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Popups\CreateBookSourceDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Popups\CreateOrUpdateShelfDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Popups\GithubUpdateDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Popups\ImportWayDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Popups\InternalSearchDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Popups\OnlineSearchDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Popups\ProgressDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Popups\ReadDurationDetailDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Popups\ReaderHighlightDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Popups\ReaderStyleOptionsDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Popups\ReplaceSourceDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Popups\ShelfTransferDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+    <Page Update="Popups\TxtSplitDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+    </Page>
+  </ItemGroup>
+</Project>

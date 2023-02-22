@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 
 using System.Text.RegularExpressions;
-using CleanReader.Services.Novel.Models;
+using CleanReader.Models.Services;
 using Fizzler.Systems.HtmlAgilityPack;
 using HtmlAgilityPack;
 

@@ -3,7 +3,7 @@
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
-using CleanReader.Services.Novel.Models;
+using CleanReader.Models.Services;
 using Fizzler.Systems.HtmlAgilityPack;
 using HtmlAgilityPack;
 

@@ -1,7 +1,8 @@
 ﻿// Copyright (c) Richasy. All rights reserved.
 
 using System.Text.RegularExpressions;
-using CleanReader.Services.Novel.Models;
+using CleanReader.Models.Constants;
+using CleanReader.Models.Services;
 using Fizzler.Systems.HtmlAgilityPack;
 using HtmlAgilityPack;
 
@@ -50,7 +51,7 @@ public partial class NovelService
         {
             foreach (var repair in chapterConfig.Repair)
             {
-                if (repair.Field == Enums.FieldType.Url)
+                if (repair.Field == FieldType.Url)
                 {
                     chapter.Id = repair.Position.Equals("r", StringComparison.OrdinalIgnoreCase)
                         ? repair.Value == OriginUrl
@@ -60,7 +61,7 @@ public partial class NovelService
                         ? originUrl + chapter.Id
                         : repair.Value + chapter.Id;
                 }
-                else if (repair.Field == Enums.FieldType.Title)
+                else if (repair.Field == FieldType.Title)
                 {
                     chapter.Title = repair.Position.Equals("r", StringComparison.OrdinalIgnoreCase)
                         ? repair.Value == OriginUrl
@@ -80,11 +81,11 @@ public partial class NovelService
         {
             foreach (var replace in chapterConfig.Replace)
             {
-                if (replace.Field == Enums.FieldType.Url && !string.IsNullOrEmpty(replace.Old))
+                if (replace.Field == FieldType.Url && !string.IsNullOrEmpty(replace.Old))
                 {
                     chapter.Id = Regex.Replace(chapter.Id, replace.Old, replace.New);
                 }
-                else if (replace.Field == Enums.FieldType.Title)
+                else if (replace.Field == FieldType.Title)
                 {
                     chapter.Title = Regex.Replace(chapter.Id, replace.Old, replace.New);
                 }

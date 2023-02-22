@@ -31,13 +31,13 @@ public sealed partial class ReadDurationPageViewModel
     /// <summary>
     /// 总阅读小时数.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public double TotalReadHours { get; set; }
 
     /// <summary>
     /// 是否显示无时长记录.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsEmptyShown { get; set; }
 
     /// <summary>

@@ -9,6 +9,7 @@
   </PropertyGroup>
   
   <ItemGroup>
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0-preview3" />
       <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221209.1" />
       <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
       <PackageReference Include="ReactiveUI" Version="18.4.1" />
@@ -19,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Controls\Controls.Interfaces\Controls.Interfaces.csproj" />
     <ProjectReference Include="..\..\Models\Models.App\Models.App.csproj" />
     <ProjectReference Include="..\..\Models\Models.DataBase\Models.DataBase.csproj" />
     <ProjectReference Include="..\..\Models\Models.Resources\Models.Resources.csproj" />
@@ -27,6 +29,7 @@
     <ProjectReference Include="..\..\Utilities\Locator\Locator.Lib\Locator.Lib.csproj" />
     <ProjectReference Include="..\..\Utilities\Toolkit\Toolkit.Desktop\Toolkit.Desktop.csproj" />
     <ProjectReference Include="..\..\Utilities\Toolkit\Toolkit.Interfaces\Toolkit.Interfaces.csproj" />
+    <ProjectReference Include="..\ViewModels.Interfaces\ViewModels.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>

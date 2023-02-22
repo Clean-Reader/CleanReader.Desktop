@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CleanReader.Models.Constants;
 using CleanReader.Models.DataBase;
 using CleanReader.Models.Resources;
+using CommunityToolkit.Mvvm.Input;
 using Windows.ApplicationModel;
 
 namespace CleanReader.ViewModels.Desktop;
@@ -39,10 +40,11 @@ public sealed partial class LibraryViewModel
         await _fileToolkit.CopyAsync(defaultFilePath, destFilePath, true);
     }
 
+    [RelayCommand]
     private async Task OpenLibraryFolderAsync()
     {
         RemoveException();
-        var folder = await _fileToolkit.OpenFolderAsync(AppViewModel.Instance.MainWindowHandle);
+        var folder = await _fileToolkit.OpenFolderAsync(_appViewModel.MainWindowHandle);
         if (!string.IsNullOrEmpty(folder))
         {
             var directory = new DirectoryInfo(folder);
@@ -80,17 +82,18 @@ public sealed partial class LibraryViewModel
             LibraryContext = new LibraryDbContext(Path.Combine(folder, VMConstants.Library.DbFile));
             _settingsToolkit.WriteLocalSetting(SettingNames.LibraryPath, folder);
 
-            DispatcherQueue.TryEnqueue(() =>
+            _dispatcherQueue.TryEnqueue(() =>
             {
                 LibraryInitialized?.Invoke(this, EventArgs.Empty);
             });
         }
     }
 
+    [RelayCommand]
     private async Task CreateLibraryFolderAsync()
     {
         RemoveException();
-        var folder = await _fileToolkit.OpenFolderAsync(AppViewModel.Instance.MainWindowHandle);
+        var folder = await _fileToolkit.OpenFolderAsync(_appViewModel.MainWindowHandle);
 
         if (Directory.GetFiles(folder).Length > 0 || Directory.GetDirectories(folder).Length > 0)
         {
@@ -104,18 +107,18 @@ public sealed partial class LibraryViewModel
         new DirectoryInfo(folder).CreateSubdirectory(VMConstants.Library.BooksFolder);
 
         _settingsToolkit.WriteLocalSetting(SettingNames.LibraryPath, folder);
-        DispatcherQueue.TryEnqueue(() =>
+        _dispatcherQueue.TryEnqueue(() =>
         {
             LibraryInitialized?.Invoke(this, EventArgs.Empty);
         });
     }
 
-    private void ClearCurentCache()
+    [RelayCommand]
+    private void Clear()
     {
         _rootDirectory = null;
         _settingsToolkit.DeleteLocalSetting(SettingNames.LibraryPath);
         LibraryContext?.Dispose();
         LibraryContext = null;
-        _novelService = null;
     }
 }

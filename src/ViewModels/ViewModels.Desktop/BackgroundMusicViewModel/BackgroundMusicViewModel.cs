@@ -3,9 +3,10 @@
 using System;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
-using CleanReader.Locator.Lib;
 using CleanReader.Models.Constants;
-using ReactiveUI;
+using CleanReader.Toolkit.Interfaces;
+using CleanReader.ViewModels.Interfaces;
+using CommunityToolkit.Mvvm.Input;
 using Windows.ApplicationModel.AppService;
 using Windows.System;
 
@@ -14,32 +15,18 @@ namespace CleanReader.ViewModels.Desktop;
 /// <summary>
 /// 背景音乐视图模型.
 /// </summary>
-public sealed partial class BackgroundMusicViewModel : ReactiveObject
+public sealed partial class BackgroundMusicViewModel : ViewModelBase, IBackgroundMusicViewModel
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="BackgroundMusicViewModel"/> class.
     /// </summary>
-    public BackgroundMusicViewModel()
+    public BackgroundMusicViewModel(ISettingsToolkit settingsToolkit)
     {
-        ServiceLocator.Instance.LoadService(out _settingsToolkit);
-        PlayCommand = ReactiveCommand.CreateFromTask(PlayAsync, outputScheduler: RxApp.MainThreadScheduler);
-        StopCommand = ReactiveCommand.CreateFromTask(StopAsync, outputScheduler: RxApp.MainThreadScheduler);
+        _settingsToolkit = settingsToolkit;
 
         IsBackgroundMusicAutoPlay = _settingsToolkit.ReadLocalSetting(SettingNames.IsAutoPlayBackgroundMusic, true);
         IsAmbieAutoPlay = _settingsToolkit.ReadLocalSetting(SettingNames.AmbieAutoPlay, true);
         IsAmbieCompact = _settingsToolkit.ReadLocalSetting(SettingNames.AmbieCompact, false);
-
-        this.WhenAnyValue(x => x.IsBackgroundMusicAutoPlay)
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(x => _settingsToolkit.WriteLocalSetting(SettingNames.IsAutoPlayBackgroundMusic, x));
-
-        this.WhenAnyValue(x => x.IsAmbieAutoPlay)
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(x => _settingsToolkit.WriteLocalSetting(SettingNames.AmbieAutoPlay, x));
-
-        this.WhenAnyValue(x => x.IsAmbieCompact)
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(x => _settingsToolkit.WriteLocalSetting(SettingNames.AmbieCompact, x));
     }
 
     /// <summary>
@@ -58,6 +45,7 @@ public sealed partial class BackgroundMusicViewModel : ReactiveObject
         PackageFamilyName = VMConstants.Service.AmbiePackageId,
     };
 
+    [RelayCommand]
     private async Task PlayAsync()
     {
         if (!IsAmbieInstalled)
@@ -70,6 +58,7 @@ public sealed partial class BackgroundMusicViewModel : ReactiveObject
         await Launcher.LaunchUriAsync(new Uri($"ambie://launch?compact={isCompact}&autoPlay={isAutoPlay}"));
     }
 
+    [RelayCommand]
     private async Task StopAsync()
     {
         if (!IsAmbieInstalled)
@@ -89,4 +78,13 @@ public sealed partial class BackgroundMusicViewModel : ReactiveObject
             await connection.SendMessageAsync(msg);
         }
     }
+
+    partial void OnIsBackgroundMusicAutoPlayChanged(bool value)
+        => _settingsToolkit.WriteLocalSetting(SettingNames.IsAutoPlayBackgroundMusic, value);
+
+    partial void OnIsAmbieAutoPlayChanged(bool value)
+        => _settingsToolkit.WriteLocalSetting(SettingNames.AmbieAutoPlay, value);
+
+    partial void OnIsAmbieCompactChanged(bool value)
+        => _settingsToolkit.WriteLocalSetting(SettingNames.AmbieCompact, value);
 }

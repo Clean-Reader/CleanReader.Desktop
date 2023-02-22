@@ -2,23 +2,22 @@
 
 using Microsoft.UI.Xaml.Automation.Peers;
 
-namespace CleanReader.Core
+namespace CleanReader.Core;
+
+/// <summary>
+/// Exposes <see cref="ExpanderExQuadratePanel"/> to Microsoft UI Automation.
+/// </summary>
+public class ExpanderExQuadratePanelAutomationPeer : ButtonAutomationPeer
 {
+    private readonly ExpanderExQuadratePanel owner;
+
     /// <summary>
-    /// Exposes <see cref="ExpanderExQuadratePanel"/> to Microsoft UI Automation.
+    /// Initializes a new instance of the <see cref="ExpanderExQuadratePanelAutomationPeer"/> class.
     /// </summary>
-    public class ExpanderExQuadratePanelAutomationPeer : ButtonAutomationPeer
-    {
-        private readonly ExpanderExQuadratePanel owner;
+    /// <param name="owner">The owner element to create for.</param>
+    public ExpanderExQuadratePanelAutomationPeer(ExpanderExQuadratePanel owner)
+        : base(owner) => this.owner = owner;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ExpanderExQuadratePanelAutomationPeer"/> class.
-        /// </summary>
-        /// <param name="owner">The owner element to create for.</param>
-        public ExpanderExQuadratePanelAutomationPeer(ExpanderExQuadratePanel owner)
-            : base(owner) => this.owner = owner;
-
-        /// <inheritdoc/>
-        protected override AutomationControlType GetAutomationControlTypeCore() => AutomationControlType.Group;
-    }
+    /// <inheritdoc/>
+    protected override AutomationControlType GetAutomationControlTypeCore() => AutomationControlType.Group;
 }

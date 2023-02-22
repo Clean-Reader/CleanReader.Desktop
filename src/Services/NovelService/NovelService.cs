@@ -3,7 +3,8 @@
 using System.Text;
 using System.Threading.Tasks.Dataflow;
 using System.Web;
-using CleanReader.Services.Novel.Models;
+using CleanReader.Models.Services;
+using CleanReader.Services.Interfaces;
 using Fizzler.Systems.HtmlAgilityPack;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
@@ -13,17 +14,13 @@ namespace CleanReader.Services.Novel;
 /// <summary>
 /// 在线小说解析服务.
 /// </summary>
-public sealed partial class NovelService
+public sealed partial class NovelService : INovelService
 {
     private const string TextNode = "text";
     private const string OriginUrl = "ORIGIN_URL";
     private Dictionary<string, BookSource> _sources;
 
-    /// <summary>
-    /// 初始化目前的可用书源.
-    /// </summary>
-    /// <param name="sourceFolderPath">书源文件夹地址.</param>
-    /// <returns><see cref="Task"/>.</returns>
+    /// <inheritdoc/>
     public async Task InitializeBookSourcesAsync(string sourceFolderPath)
     {
         _sources = new Dictionary<string, BookSource>();
@@ -45,22 +42,12 @@ public sealed partial class NovelService
         }
     }
 
-    /// <summary>
-    /// 获取全部的书源.
-    /// </summary>
-    /// <returns><see cref="BookSource"/> 列表.</returns>
+    /// <inheritdoc/>
     public List<BookSource> GetBookSources() => _sources == null ?
             new List<BookSource>() :
             _sources.Select(p => p.Value).ToList();
 
-    /// <summary>
-    /// 根据书名查询书籍.
-    /// </summary>
-    /// <param name="sourceId">书源Id.</param>
-    /// <param name="bookName">书名.</param>
-    /// <returns><see cref="Book"/> 列表.</returns>
-    /// <exception cref="InvalidDataException">书源定义中没有搜索模块.</exception>
-    /// <exception cref="ArgumentOutOfRangeException">指定的源不存在.</exception>
+    /// <inheritdoc/>
     public async Task<List<Book>> SearchBookAsync(string sourceId, string bookName)
     {
         if (_sources.ContainsKey(sourceId))
@@ -136,11 +123,7 @@ public sealed partial class NovelService
         }
     }
 
-    /// <summary>
-    /// 从不同源搜索书名.
-    /// </summary>
-    /// <param name="bookName">书名.</param>
-    /// <returns>以书源分组的搜索结果.</returns>
+    /// <inheritdoc/>
     public async Task<Dictionary<string, List<Book>>> SearchBookAsync(string bookName)
     {
         var tasks = new List<Task>();
@@ -164,15 +147,7 @@ public sealed partial class NovelService
         return result;
     }
 
-    /// <summary>
-    /// 获取书籍目录.
-    /// </summary>
-    /// <param name="sourceId">书源Id.</param>
-    /// <param name="bookUrl">书籍地址.</param>
-    /// <param name="cancellationTokenSource">中止令牌.</param>
-    /// <returns>章节列表.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">书源不存在.</exception>
-    /// <exception cref="InvalidDataException">书源定义中没有章节目录模块.</exception>
+    /// <inheritdoc/>
     public async Task<List<Chapter>> GetBookChaptersAsync(string sourceId, string bookUrl, CancellationTokenSource cancellationTokenSource)
     {
         var index = 0;
@@ -231,15 +206,7 @@ public sealed partial class NovelService
         return chapters;
     }
 
-    /// <summary>
-    /// 获取章节内容.
-    /// </summary>
-    /// <param name="sourceId">书源Id.</param>
-    /// <param name="chapter">章节实例.</param>
-    /// <param name="cancellationTokenSource">中止令牌.</param>
-    /// <returns>章节内容.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">书源不存在.</exception>
-    /// <exception cref="InvalidDataException">指定源中没有章节内容模块.</exception>
+    /// <inheritdoc/>
     public async Task<ChapterContent> GetChapterContentAsync(string sourceId, Chapter chapter, CancellationTokenSource cancellationTokenSource)
     {
         var url = DecodingBase64ToString(chapter.Id);
@@ -295,14 +262,7 @@ public sealed partial class NovelService
         return content;
     }
 
-    /// <summary>
-    /// 初始化书籍详情.
-    /// </summary>
-    /// <param name="sourceId">书源Id.</param>
-    /// <param name="book">书籍实例.</param>
-    /// <returns><see cref="Task"/>.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">书源不存在.</exception>
-    /// <exception cref="InvalidOperationException">指定源中不支持获取章节详情.</exception>
+    /// <inheritdoc/>
     public async Task InitializeBookDetailAsync(string sourceId, Book book)
     {
         if (_sources.ContainsKey(sourceId))
@@ -340,16 +300,7 @@ public sealed partial class NovelService
         }
     }
 
-    /// <summary>
-    /// 从分类中获取书籍列表.
-    /// </summary>
-    /// <param name="sourceId">源Id.</param>
-    /// <param name="categoryName">分类名.</param>
-    /// <param name="page">页码.</param>
-    /// <param name="tokenSource">终止令牌.</param>
-    /// <returns>书籍列表.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">源或配置不存在.</exception>
-    /// <exception cref="InvalidOperationException">不支持该操作.</exception>
+    /// <inheritdoc/>
     public async Task<List<Book>> GetBooksWithCategoryAsync(string sourceId, string categoryName, int page = 1, CancellationTokenSource tokenSource = null)
     {
         if (!_sources.ContainsKey(sourceId))

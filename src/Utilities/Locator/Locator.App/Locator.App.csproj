@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows10.0.22000.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>CleanReader.Locator.App</RootNamespace>
+    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+    <UseWinUI>true</UseWinUI>
+  </PropertyGroup>
+
+  <ItemGroup>
+      <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221209.1" />
+      <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.755" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Controls\Controls.Desktop\Controls.Desktop.csproj" />
+    <ProjectReference Include="..\..\..\Controls\Controls.Interfaces\Controls.Interfaces.csproj" />
+    <ProjectReference Include="..\..\..\Services\EpubService\EpubService.csproj" />
+    <ProjectReference Include="..\..\..\Services\NovelService\NovelService.csproj" />
+    <ProjectReference Include="..\..\..\Services\Services.Interfaces\Services.Interfaces.csproj" />
+    <ProjectReference Include="..\..\..\ViewModels\ViewModels.Desktop\ViewModels.Desktop.csproj" />
+    <ProjectReference Include="..\..\Toolkit\Toolkit.Desktop\Toolkit.Desktop.csproj" />
+    <ProjectReference Include="..\..\Toolkit\Toolkit.Interfaces\Toolkit.Interfaces.csproj" />
+    <ProjectReference Include="..\Locator.Lib\Locator.Lib.csproj" />
+  </ItemGroup>
+</Project>

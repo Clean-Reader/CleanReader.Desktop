@@ -2,6 +2,7 @@
 
 using System;
 using System.Threading;
+using CleanReader.Locator.App;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
@@ -24,6 +25,11 @@ internal class Program
     internal static void Main(string[] args)
     {
         WinRT.ComWrappersSupport.InitializeComWrappers();
+        if (!_isInitialized)
+        {
+            DIFactory.RegisterAppRequiredServices();
+        }
+
         var isRedirect = DecideRedirection();
         if (!isRedirect && !_isInitialized)
         {

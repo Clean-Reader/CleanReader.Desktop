@@ -4,24 +4,21 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
-using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CleanReader.Locator.Lib;
+using CleanReader.Controls.Interfaces;
 using CleanReader.Models.App;
 using CleanReader.Models.Constants;
 using CleanReader.Models.DataBase;
 using CleanReader.Models.Resources;
-using CleanReader.Services.Epub;
-using CleanReader.Toolkit.Desktop;
+using CleanReader.Services.Interfaces;
 using CleanReader.Toolkit.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
+using CleanReader.ViewModels.Interfaces;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
-using Microsoft.UI.Xaml;
 using Newtonsoft.Json;
-using ReactiveUI;
 using Windows.ApplicationModel;
 using Windows.Graphics;
 using Windows.Storage;
@@ -32,54 +29,31 @@ namespace CleanReader.ViewModels.Desktop;
 /// <summary>
 /// 应用视图模型，贯穿应用生命周期始终.
 /// </summary>
-public sealed partial class AppViewModel : ReactiveObject, IDisposable
+public sealed partial class AppViewModel : ViewModelBase, IAppViewModel
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="AppViewModel"/> class.
     /// </summary>
-    private AppViewModel()
+    public AppViewModel(
+        IAppToolkit appToolkit,
+        ISettingsToolkit settingsToolkit,
+        IEpubService epubService)
     {
         IsFullScreen = false;
-        RegisterServices();
-        ServiceLocator.Instance.LoadService(out _appToolkit)
-            .LoadService(out _settingsToolkit);
-
+        _appToolkit = appToolkit;
+        _settingsToolkit = settingsToolkit;
+        _epubService = epubService;
         NavigationList = new List<NavigationItem>();
 
-        CheckGithubUpdateCommand = ReactiveCommand.CreateFromTask(CheckGithubUpdateAsync, outputScheduler: RxApp.MainThreadScheduler);
-
-        _mainWindowSubscription = this.WhenAnyValue(x => x.MainWindow)
-            .WhereNotNull()
-            .Subscribe(w => InitializeMainWindow());
-
-        this.WhenAnyValue(x => x.IsFullScreen, x => x.IsMiniView)
-            .Subscribe(i =>
-            {
-                if (i.Item1)
-                {
-                    EnterFullScreen();
-                    IsMiniView = false;
-                }
-                else if (i.Item2)
-                {
-                    EnterMiniView();
-                    IsFullScreen = false;
-                }
-                else
-                {
-                    EnterDefaultView();
-                }
-            });
-
-        EpubService.RootPath = ApplicationData.Current.LocalFolder.Path;
-        EpubService.PackagePath = Package.Current.InstalledPath;
+        _epubService.RootPath = ApplicationData.Current.LocalFolder.Path;
+        _epubService.PackagePath = Package.Current.InstalledPath;
     }
 
     /// <summary>
     /// 获取当前版本号.
     /// </summary>
     /// <returns>版本号.</returns>
-    public static string GetVersioNumber()
+    public string GetVersioNumber()
     {
         var version = Package.Current.Id.Version;
         return $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
@@ -89,7 +63,7 @@ public sealed partial class AppViewModel : ReactiveObject, IDisposable
     /// 设置主窗口.
     /// </summary>
     /// <param name="mainWindow">主窗口对象.</param>
-    public void SetMainWindow(Window mainWindow)
+    public void SetMainWindow(object mainWindow)
         => MainWindow = mainWindow;
 
     /// <summary>
@@ -147,7 +121,7 @@ public sealed partial class AppViewModel : ReactiveObject, IDisposable
         {
             IsFullScreen = false;
             IsMiniView = false;
-            _appToolkit.InitializeTitleBar(AppWindow.TitleBar);
+            _appToolkit.InitializeTitleBar(((AppWindow)AppWindow).TitleBar);
         }
 
         ReadRequested?.Invoke(this, new ReadRequestEventArgs(book, startCfi));
@@ -171,132 +145,7 @@ public sealed partial class AppViewModel : ReactiveObject, IDisposable
     public void ShowTip(string message, InfoType type = InfoType.Information)
         => RequestShowTip?.Invoke(this, new AppTipNotificationEventArgs(message, type));
 
-    /// <inheritdoc/>
-    public void Dispose()
-    {
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
-    }
-
-    private static void RegisterServices()
-    {
-        var serviceCollection = new ServiceCollection()
-            .AddSingleton<ISettingsToolkit, SettingsToolkit>()
-            .AddSingleton<IAppToolkit, AppToolkit>()
-            .AddSingleton<IResourceToolkit, ResourceToolkit>()
-            .AddSingleton<IFileToolkit, FileToolkit>()
-            .AddSingleton<IFontToolkit, FontToolkit>()
-            .AddSingleton<ILoggerToolkit, LoggerToolkit>();
-
-        _ = new ServiceLocator((ServiceCollection)serviceCollection);
-    }
-
-    /// <summary>
-    /// 初始化主窗口内容.
-    /// </summary>
-    /// <param name="mainWindow">主窗口.</param>
-    private void InitializeMainWindow()
-    {
-        MainWindowHandle = WindowNative.GetWindowHandle(MainWindow);
-        var windowId = Win32Interop.GetWindowIdFromWindow(MainWindowHandle);
-        AppWindow = AppWindow.GetFromWindowId(windowId);
-        AppWindow.Closing += OnAppWindowClosing;
-        AppWindow.Title = StringResources.AppName;
-        var path = Path.Combine(Package.Current.InstalledPath, "Assets/favicon.ico");
-        AppWindow.SetIcon(path);
-        _appToolkit.InitializeTitleBar(AppWindow.TitleBar);
-        RestoreWindowSizeAndPosition();
-        DispatcherQueue = MainWindow.DispatcherQueue;
-    }
-
-    private void WriteWindowSizeAndPosition()
-    {
-        var width = _appToolkit.GetNormalizePixel(AppWindow.Size.Width, MainWindowHandle);
-        var height = _appToolkit.GetNormalizePixel(AppWindow.Size.Height, MainWindowHandle);
-        var left = _appToolkit.GetNormalizePixel(AppWindow.Position.X, MainWindowHandle);
-        var top = _appToolkit.GetNormalizePixel(AppWindow.Position.Y, MainWindowHandle);
-        _settingsToolkit.WriteLocalSetting(SettingNames.WindowWidth, width);
-        _settingsToolkit.WriteLocalSetting(SettingNames.WindowHeight, height);
-        _settingsToolkit.WriteLocalSetting(SettingNames.WindowLeft, left);
-        _settingsToolkit.WriteLocalSetting(SettingNames.WindowTop, top);
-    }
-
-    private void RestoreWindowSizeAndPosition()
-    {
-        var width = _appToolkit.GetScalePixel(_settingsToolkit.ReadLocalSetting(SettingNames.WindowWidth, 0), MainWindowHandle);
-
-        if (width > 0)
-        {
-            var height = _appToolkit.GetScalePixel(_settingsToolkit.ReadLocalSetting(SettingNames.WindowHeight, 0), MainWindowHandle);
-            var left = _appToolkit.GetScalePixel(_settingsToolkit.ReadLocalSetting(SettingNames.WindowLeft, 0), MainWindowHandle);
-            var top = _appToolkit.GetScalePixel(_settingsToolkit.ReadLocalSetting(SettingNames.WindowTop, 0), MainWindowHandle);
-            AppWindow.Resize(new SizeInt32(width, height));
-            AppWindow.Move(new PointInt32(left, top));
-        }
-        else
-        {
-            var minWidth = _appToolkit.GetScalePixel(AppConstants.AppWideWidth, MainWindowHandle);
-            var minHeight = _appToolkit.GetScalePixel(AppConstants.AppWideHeight, MainWindowHandle);
-            var screenWidth = Screen.PrimaryScreen.WorkingArea.Width;
-            var screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
-
-            if (minWidth > screenWidth)
-            {
-                minWidth = screenWidth - 40;
-            }
-
-            if (minHeight > screenHeight)
-            {
-                minHeight = screenHeight - 40;
-            }
-
-            AppWindow.Resize(new SizeInt32(minWidth, minHeight));
-        }
-    }
-
-    private void OnAppWindowClosing(AppWindow sender, AppWindowClosingEventArgs args)
-    {
-        WriteWindowSizeAndPosition();
-        Dispose();
-    }
-
-    private void EnterFullScreen()
-    {
-        if (AppWindow != null && AppWindow.Presenter.Kind != AppWindowPresenterKind.FullScreen)
-        {
-            AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
-        }
-    }
-
-    private void EnterDefaultView()
-    {
-        if (AppWindow != null && AppWindow.Presenter.Kind != AppWindowPresenterKind.Default)
-        {
-            AppWindow.SetPresenter(AppWindowPresenterKind.Default);
-        }
-    }
-
-    private void EnterMiniView()
-    {
-        if (AppWindow != null && AppWindow.Presenter.Kind != AppWindowPresenterKind.CompactOverlay)
-        {
-            AppWindow.SetPresenter(AppWindowPresenterKind.CompactOverlay);
-        }
-    }
-
-    private void Dispose(bool disposing)
-    {
-        if (!_disposedValue)
-        {
-            if (disposing)
-            {
-                _mainWindowSubscription?.Dispose();
-            }
-
-            _disposedValue = true;
-        }
-    }
-
+    [RelayCommand]
     private async Task CheckGithubUpdateAsync()
     {
         using var httpClient = new HttpClient();
@@ -322,9 +171,130 @@ public sealed partial class AppViewModel : ReactiveObject, IDisposable
         if (version != currentVersion && version != ignoreVersion)
         {
             // Show update dialog.
-            var dialog = ServiceLocator.Instance.GetService<ICustomDialog>(AppConstants.GithubUpdateDialog);
+            var dialog = Locator.Lib.Locator.Instance.GetService<IGithubUpdateDialog>();
             dialog.InjectData(data);
             await dialog.ShowAsync();
         }
     }
+
+    /// <summary>
+    /// 初始化主窗口内容.
+    /// </summary>
+    /// <param name="mainWindow">主窗口.</param>
+    private void InitializeMainWindow()
+    {
+        MainWindowHandle = WindowNative.GetWindowHandle(MainWindow);
+        var windowId = Win32Interop.GetWindowIdFromWindow(MainWindowHandle);
+        var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+        appWindow.Closing += OnAppWindowClosing;
+        appWindow.Title = StringResources.AppName;
+        var path = Path.Combine(Package.Current.InstalledPath, "Assets/favicon.ico");
+        appWindow.SetIcon(path);
+        _appToolkit.InitializeTitleBar(appWindow.TitleBar);
+        AppWindow = appWindow;
+        RestoreWindowSizeAndPosition();
+    }
+
+    private void WriteWindowSizeAndPosition()
+    {
+        var appWindow = (AppWindow)AppWindow;
+        var width = _appToolkit.GetNormalizePixel(appWindow.Size.Width, MainWindowHandle);
+        var height = _appToolkit.GetNormalizePixel(appWindow.Size.Height, MainWindowHandle);
+        var left = _appToolkit.GetNormalizePixel(appWindow.Position.X, MainWindowHandle);
+        var top = _appToolkit.GetNormalizePixel(appWindow.Position.Y, MainWindowHandle);
+        _settingsToolkit.WriteLocalSetting(SettingNames.WindowWidth, width);
+        _settingsToolkit.WriteLocalSetting(SettingNames.WindowHeight, height);
+        _settingsToolkit.WriteLocalSetting(SettingNames.WindowLeft, left);
+        _settingsToolkit.WriteLocalSetting(SettingNames.WindowTop, top);
+    }
+
+    private void RestoreWindowSizeAndPosition()
+    {
+        var width = _appToolkit.GetScalePixel(_settingsToolkit.ReadLocalSetting(SettingNames.WindowWidth, 0), MainWindowHandle);
+        var appWindow = (AppWindow)AppWindow;
+
+        if (width > 0)
+        {
+            var height = _appToolkit.GetScalePixel(_settingsToolkit.ReadLocalSetting(SettingNames.WindowHeight, 0), MainWindowHandle);
+            var left = _appToolkit.GetScalePixel(_settingsToolkit.ReadLocalSetting(SettingNames.WindowLeft, 0), MainWindowHandle);
+            var top = _appToolkit.GetScalePixel(_settingsToolkit.ReadLocalSetting(SettingNames.WindowTop, 0), MainWindowHandle);
+            appWindow.Resize(new SizeInt32(width, height));
+            appWindow.Move(new PointInt32(left, top));
+        }
+        else
+        {
+            var minWidth = _appToolkit.GetScalePixel(AppConstants.AppWideWidth, MainWindowHandle);
+            var minHeight = _appToolkit.GetScalePixel(AppConstants.AppWideHeight, MainWindowHandle);
+            var screenWidth = Screen.PrimaryScreen.WorkingArea.Width;
+            var screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
+
+            if (minWidth > screenWidth)
+            {
+                minWidth = screenWidth - 40;
+            }
+
+            if (minHeight > screenHeight)
+            {
+                minHeight = screenHeight - 40;
+            }
+
+            appWindow.Resize(new SizeInt32(minWidth, minHeight));
+        }
+    }
+
+    private void OnAppWindowClosing(AppWindow sender, AppWindowClosingEventArgs args)
+    {
+        WriteWindowSizeAndPosition();
+    }
+
+    private void EnterFullScreen()
+    {
+        if (AppWindow is AppWindow appWindow && appWindow.Presenter.Kind != AppWindowPresenterKind.FullScreen)
+        {
+            appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+        }
+    }
+
+    private void EnterDefaultView()
+    {
+        if (AppWindow is AppWindow appWindow && appWindow.Presenter.Kind != AppWindowPresenterKind.Default)
+        {
+            appWindow.SetPresenter(AppWindowPresenterKind.Default);
+        }
+    }
+
+    private void EnterMiniView()
+    {
+        if (AppWindow is AppWindow appWindow && appWindow.Presenter.Kind != AppWindowPresenterKind.CompactOverlay)
+        {
+            appWindow.SetPresenter(AppWindowPresenterKind.CompactOverlay);
+        }
+    }
+
+    private void CheckViewState()
+    {
+        if (IsFullScreen)
+        {
+            EnterFullScreen();
+            IsMiniView = false;
+        }
+        else if (IsMiniView)
+        {
+            EnterMiniView();
+            IsFullScreen = false;
+        }
+        else
+        {
+            EnterDefaultView();
+        }
+    }
+
+    partial void OnMainWindowChanged(object value)
+        => InitializeMainWindow();
+
+    partial void OnIsFullScreenChanged(bool value)
+        => CheckViewState();
+
+    partial void OnIsMiniViewChanged(bool value)
+        => CheckViewState();
 }

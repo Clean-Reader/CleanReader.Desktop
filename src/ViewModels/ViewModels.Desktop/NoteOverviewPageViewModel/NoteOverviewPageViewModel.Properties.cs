@@ -44,7 +44,7 @@ public sealed partial class NoteOverviewPageViewModel
     /// <summary>
     /// 当前选中书籍.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public Book CurrentBook { get; set; }
 
     /// <summary>
@@ -60,7 +60,7 @@ public sealed partial class NoteOverviewPageViewModel
     /// <summary>
     /// 是否显示空白.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsShowEmpty { get; set; }
 
     /// <summary>

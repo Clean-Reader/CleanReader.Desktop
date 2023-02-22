@@ -5,11 +5,13 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using CleanReader.App.Controls;
 using CleanReader.App.Pages;
+using CleanReader.Controls.Interfaces;
 using CleanReader.Locator.Lib;
 using CleanReader.Models.App;
 using CleanReader.Models.Constants;
 using CleanReader.Toolkit.Interfaces;
 using CleanReader.ViewModels.Desktop;
+using CleanReader.ViewModels.Interfaces;
 using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -24,9 +26,9 @@ namespace CleanReader.App;
 /// <summary>
 /// An empty window that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class MainWindow : Window
+public sealed partial class MainWindow : Window, IMainWindow
 {
-    private readonly AppViewModel _viewModel;
+    private readonly IAppViewModel _viewModel;
     private readonly WindowsSystemDispatcherQueueHelper _wsdqHelper;
     private WinProc _newWndProc = null;
     private IntPtr _oldWndProc = IntPtr.Zero;
@@ -40,10 +42,10 @@ public sealed partial class MainWindow : Window
     {
         InitializeComponent();
 
+        _viewModel = Locator.Lib.Locator.Instance.GetService<IAppViewModel>();
         _wsdqHelper = new WindowsSystemDispatcherQueueHelper();
         _wsdqHelper.EnsureWindowsSystemDispatcherQueueController();
 
-        _viewModel = AppViewModel.Instance;
         _viewModel.ReadRequested += OnReadRequested;
         _viewModel.StartupRequested += OnStartupRequested;
         _viewModel.MigrationRequested += OnMigrationRequested;
@@ -58,14 +60,19 @@ public sealed partial class MainWindow : Window
     /// 显示顶层视图.
     /// </summary>
     /// <param name="element">要显示的元素.</param>
-    public void ShowOnHolder(UIElement element)
+    public void ShowOnHolder(object element)
     {
-        if (!HolderContainer.Children.Contains(element))
+        if (element is not UIElement ele)
         {
-            HolderContainer.Children.Add(element);
+            return;
         }
 
-        AppViewModel.Instance.IsMaskShown = true;
+        if (!HolderContainer.Children.Contains(ele))
+        {
+            HolderContainer.Children.Add(ele);
+        }
+
+        _viewModel.IsMaskShown = true;
         HolderContainer.Visibility = Visibility.Visible;
     }
 
@@ -73,12 +80,17 @@ public sealed partial class MainWindow : Window
     /// 从顶层视图中移除元素.
     /// </summary>
     /// <param name="element">UI元素.</param>
-    public void RemoveFromHolder(UIElement element)
+    public void RemoveFromHolder(object element)
     {
-        HolderContainer.Children.Remove(element);
+        if (element is not UIElement ele)
+        {
+            return;
+        }
+
+        HolderContainer.Children.Remove(ele);
         if (HolderContainer.Children.Count == 0)
         {
-            AppViewModel.Instance.IsMaskShown = false;
+            _viewModel.IsMaskShown = false;
         }
     }
 
@@ -104,7 +116,7 @@ public sealed partial class MainWindow : Window
                     var getActualPixel = ServiceLocator.Instance.GetService<IAppToolkit>().GetScalePixel;
                     var minMaxInfo = Marshal.PtrToStructure<PInvoke.User32.MINMAXINFO>(lParam);
 
-                    if (!AppViewModel.Instance.IsMiniView)
+                    if (!_viewModel.IsMiniView)
                     {
                         var screenWidth = Screen.PrimaryScreen.WorkingArea.Width;
                         var screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
@@ -130,7 +142,7 @@ public sealed partial class MainWindow : Window
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        if (AppViewModel.Instance.ShouldShowStartup())
+        if (_viewModel.ShouldShowStartup())
         {
             Frame.Navigate(typeof(StartupPage));
         }

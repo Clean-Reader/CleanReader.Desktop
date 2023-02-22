@@ -1,0 +1,184 @@
+﻿<local:CustomDialog
+    x:Class="CleanReader.App.Controls.ReaderStyleOptionsDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:app="using:CleanReader.Models.App"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:CleanReader.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="using:CleanReader.Models.Resources"
+    Title="{x:Bind res:StringResources.Interface}"
+    CloseButtonText="{x:Bind res:StringResources.Cancel}"
+    DefaultButton="Primary"
+    Loaded="OnLoaded"
+    PrimaryButtonText="{x:Bind res:StringResources.Confirm}"
+    mc:Ignorable="d">
+
+    <local:CustomDialog.Resources>
+        <Flyout x:Name="BackgroundPickerFlyout">
+            <ColorPicker
+                x:Name="BackgroundPicker"
+                ColorChanged="OnBackgroundColorChanged"
+                IsAlphaEnabled="False"
+                IsAlphaSliderVisible="False"
+                IsAlphaTextInputVisible="False" />
+        </Flyout>
+        <Flyout x:Name="ForegroundPickerFlyout">
+            <ColorPicker
+                x:Name="ForegroundPicker"
+                ColorChanged="OnForegroundColorChanged"
+                IsAlphaEnabled="False"
+                IsAlphaSliderVisible="False"
+                IsAlphaTextInputVisible="False" />
+        </Flyout>
+        <Flyout x:Name="AdditionalStyleEditFlyout">
+            <TextBox
+                x:Name="AdditionalStyleBox"
+                Width="400"
+                Height="400"
+                AcceptsReturn="True"
+                FontSize="12"
+                TextWrapping="Wrap" />
+        </Flyout>
+    </local:CustomDialog.Resources>
+
+    <ScrollViewer HorizontalScrollMode="Disabled" VerticalScrollBarVisibility="Hidden">
+        <StackPanel Width="320" Spacing="12">
+            <ScrollViewer
+                HorizontalAlignment="Stretch"
+                HorizontalScrollBarVisibility="Auto"
+                VerticalScrollMode="Disabled"
+                Visibility="{x:Bind _viewModel.IsThemeSelectionShown, Mode=OneWay}">
+                <ItemsRepeater Margin="0,4,0,0" ItemsSource="{x:Bind _viewModel.Themes}">
+                    <ItemsRepeater.Layout>
+                        <StackLayout Orientation="Horizontal" Spacing="12" />
+                    </ItemsRepeater.Layout>
+                    <ItemsRepeater.ItemTemplate>
+                        <DataTemplate x:DataType="app:ReaderThemeConfig">
+                            <local:CardPanel
+                                AutomationProperties.Name="{x:Bind Name}"
+                                Width="32"
+                                Height="32"
+                                Background="{x:Bind Background, Converter={StaticResource ColorConverter}}"
+                                BorderThickness="0"
+                                Click="OnThemeClick"
+                                DataContext="{x:Bind}"
+                                Foreground="{x:Bind Foreground, Converter={StaticResource ColorConverter}}"
+                                IsEnableShadow="False"
+                                PointerOverBackground="{x:Bind Background, Converter={StaticResource ColorConverter}}"
+                                PressedBackground="{x:Bind Background, Converter={StaticResource ColorConverter}}"
+                                ToolTipService.ToolTip="{x:Bind Name}">
+                                <Grid>
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{x:Bind FontFamily}"
+                                        FontSize="20"
+                                        Text="A"
+                                        TextLineBounds="Tight" />
+                                </Grid>
+                            </local:CardPanel>
+                        </DataTemplate>
+                    </ItemsRepeater.ItemTemplate>
+                </ItemsRepeater>
+            </ScrollViewer>
+            <ComboBox
+                x:Name="FontComboBox"
+                HorizontalAlignment="Stretch"
+                Header="{x:Bind res:StringResources.FontFamily}"
+                ItemsSource="{x:Bind _viewModel.Fonts}"
+                SelectedItem="{x:Bind _viewModel.FontFamily, Mode=OneWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <TextBlock FontFamily="{x:Bind}" Text="{x:Bind}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <NumberBox
+                x:Name="FontSizeBox"
+                HorizontalAlignment="Stretch"
+                Header="{x:Bind res:StringResources.FontSize}"
+                Maximum="30"
+                Minimum="10"
+                SpinButtonPlacementMode="Inline"
+                Value="{x:Bind _viewModel.FontSize, Mode=OneWay}" />
+            <Slider
+                x:Name="LineHeightSlider"
+                HorizontalAlignment="Stretch"
+                Header="{x:Bind res:StringResources.LineHeight}"
+                Maximum="3"
+                Minimum="0.5"
+                StepFrequency="0.1"
+                TickFrequency="0.1"
+                TickPlacement="Outside"
+                ValueChanged="OnLineHeightValueChanged"
+                Value="{x:Bind _viewModel.LineHeight, Mode=OneWay}" />
+            <ToggleSwitch
+                MinWidth="0"
+                VerticalAlignment="Center"
+                Header="{x:Bind res:StringResources.SmoothScrolling}"
+                IsOn="{x:Bind _viewModel.IsSmoothScroll, Mode=TwoWay}" />
+            <Grid ColumnSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    x:Name="BackgroundBox"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Bottom"
+                    Header="{x:Bind res:StringResources.Background}"
+                    IsReadOnly="True" />
+                <Rectangle
+                    x:Name="BackgroundRect"
+                    Grid.Column="1"
+                    Width="80"
+                    Height="32"
+                    VerticalAlignment="Bottom"
+                    RadiusX="4"
+                    RadiusY="4"
+                    Tapped="OnBackgroundRectTapped" />
+            </Grid>
+            <Grid ColumnSpacing="8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox
+                    x:Name="ForegroundBox"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Bottom"
+                    Header="{x:Bind res:StringResources.Foreground}"
+                    IsReadOnly="True" />
+                <Rectangle
+                    x:Name="ForegroundRect"
+                    Grid.Column="1"
+                    Width="80"
+                    Height="32"
+                    VerticalAlignment="Bottom"
+                    RadiusX="4"
+                    RadiusY="4"
+                    Tapped="OnForegroundRectTapped" />
+            </Grid>
+            <HyperlinkButton
+                HorizontalAlignment="Left"
+                Click="OnEditStyleButtonClick"
+                Content="{x:Bind res:StringResources.EditAdditionalStyle}" />
+            <Grid
+                x:Name="HolderContainer"
+                Padding="12"
+                HorizontalAlignment="Stretch"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{StaticResource ControlCornerRadius}">
+                <TextBlock
+                    x:Name="HolderBlock"
+                    FontFamily="{Binding ElementName=FontComboBox, Path=SelectedItem}"
+                    FontSize="{Binding ElementName=FontSizeBox, Path=Value}"
+                    Text="{x:Bind res:StringResources.PlaceholderText}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="Wrap" />
+            </Grid>
+        </StackPanel>
+    </ScrollViewer>
+</local:CustomDialog>

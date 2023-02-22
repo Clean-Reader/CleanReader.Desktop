@@ -8,6 +8,7 @@ using CleanReader.Locator.Lib;
 using CleanReader.Models.App;
 using CleanReader.Toolkit.Interfaces;
 using CleanReader.ViewModels.Desktop;
+using CleanReader.ViewModels.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
@@ -34,10 +35,8 @@ public partial class App : Application
     {
         InitializeComponent();
         Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-        _ = AppViewModel.Instance;
-        ServiceLocator.Instance.GetService<IAppToolkit>()
+        Locator.Lib.Locator.Instance.GetService<IAppToolkit>()
             .InitializeTheme();
-        InitializeViewService();
         var sysLan = CultureInfo.CurrentCulture.TwoLetterISOLanguageName.StartsWith("zh") ? "zh-CN" : "en-US";
         var customLan = ServiceLocator.Instance.GetService<ISettingsToolkit>().ReadLocalSetting(Models.Constants.SettingNames.AppLanguage, sysLan);
         ApplicationLanguages.PrimaryLanguageOverride = customLan;
@@ -63,36 +62,20 @@ public partial class App : Application
         _mainWindow = new MainWindow();
         _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
         var activatedEventArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
+        var appVM = Locator.Lib.Locator.Instance.GetService<IAppViewModel>();
         if (activatedEventArgs.Kind == ExtendedActivationKind.File)
         {
             var fileArgs = activatedEventArgs.Data as FileActivatedEventArgs;
             var file = fileArgs.Files.FirstOrDefault();
             if (file is StorageFile f)
             {
-                AppViewModel.Instance.InitializeFilePath = f.Path;
+                appVM.InitializeFilePath = f.Path;
             }
         }
 
-        AppViewModel.Instance.SetMainWindow(_mainWindow);
+        appVM.SetMainWindow(_mainWindow);
         _mainWindow.Activate();
     }
-
-    private static void InitializeViewService() => ServiceLocator.Instance.ServiceCollection.AddTransient<ICustomDialog, ImportWayDialog>()
-            .AddTransient<ICustomDialog, TxtSplitDialog>()
-            .AddTransient<ICustomDialog, ProgressDialog>()
-            .AddTransient<ICustomDialog, OnlineSearchDialog>()
-            .AddTransient<ICustomDialog, ConfirmDialog>()
-            .AddTransient<ICustomDialog, BookInformationDialog>()
-            .AddTransient<ICustomDialog, ReaderStyleOptionsDialog>()
-            .AddTransient<ICustomDialog, ReaderHighlightDialog>()
-            .AddTransient<ICustomDialog, InternalSearchDialog>()
-            .AddTransient<ICustomDialog, ShelfTransferDialog>()
-            .AddTransient<ICustomDialog, CreateOrUpdateShelfDialog>()
-            .AddTransient<ICustomDialog, CreateBookSourceDialog>()
-            .AddTransient<ICustomDialog, ReplaceSourceDialog>()
-            .AddTransient<ICustomDialog, GithubUpdateDialog>()
-            .AddTransient<ICustomDialog, ReadDurationDetailDialog>()
-            .RebuildServiceProvider();
 
     private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e) => e.Handled = true;
 }

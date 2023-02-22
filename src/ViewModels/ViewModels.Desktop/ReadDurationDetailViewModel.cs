@@ -58,13 +58,13 @@ public sealed class ReadDurationDetailViewModel : ReactiveObject, IDisposable
     /// <summary>
     /// 阅读记录是否为空.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsEmpty { get; set; }
 
     /// <summary>
     /// 阅读数据.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public ReaderDuration Data { get; set; }
 
     /// <inheritdoc/>

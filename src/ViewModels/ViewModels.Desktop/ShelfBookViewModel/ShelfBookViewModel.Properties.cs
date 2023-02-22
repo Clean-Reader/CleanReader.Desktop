@@ -60,42 +60,42 @@ public sealed partial class ShelfBookViewModel
     /// <summary>
     /// 封面.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string Cover { get; set; }
 
     /// <summary>
     /// 书籍名.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public Book Book { get; set; }
 
     /// <summary>
     /// 是否为在线书籍.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsOnlineBook { get; set; }
 
     /// <summary>
     /// 进度.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string Progress { get; set; }
 
     /// <summary>
     /// 状态图标.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string StatusIcon { get; set; }
 
     /// <summary>
     /// 是否显示封面.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsShowCover { get; set; }
 
     /// <summary>
     /// 本地路径.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string LocalPath { get; set; }
 }

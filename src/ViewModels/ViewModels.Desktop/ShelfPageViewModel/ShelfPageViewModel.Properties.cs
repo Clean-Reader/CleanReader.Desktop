@@ -67,25 +67,25 @@ public sealed partial class ShelfPageViewModel
     /// <summary>
     /// 当前书架.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public Shelf CurrentShelf { get; set; }
 
     /// <summary>
     /// 当前书籍类型.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string CurrentBookType { get; set; }
 
     /// <summary>
     /// 当前排序方式.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string CurrentSort { get; set; }
 
     /// <summary>
     /// 当前书架是否为空.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsShelfEmpty { get; set; }
 
     /// <summary>

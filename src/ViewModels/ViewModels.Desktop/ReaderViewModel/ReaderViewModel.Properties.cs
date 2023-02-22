@@ -195,7 +195,7 @@ public sealed partial class ReaderViewModel
     /// <summary>
     /// 当前选中章节.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public ReaderChapterViewModel CurrentChapter { get; set; }
 
     /// <summary>
@@ -206,139 +206,139 @@ public sealed partial class ReaderViewModel
     /// <summary>
     /// 书名.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string BookTitle { get; set; }
 
     /// <summary>
     /// 当前章节名.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string CurrentChapterTitle { get; set; }
 
     /// <summary>
     /// 进度.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string Progresss { get; set; }
 
     /// <summary>
     /// 是否显示菜单.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsMenuShown { get; set; }
 
     /// <summary>
     /// 目录是否显示.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsCatalogShown { get; set; }
 
     /// <summary>
     /// 笔记是否显示.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsNotesShown { get; set; }
 
     /// <summary>
     /// 字体.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string FontFamily { get; set; }
 
     /// <summary>
     /// 字体大小.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public double FontSize { get; set; }
 
     /// <summary>
     /// 行高.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public double LineHeight { get; set; }
 
     /// <summary>
     /// 背景色.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string Background { get; set; }
 
     /// <summary>
     /// 前景色.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string Foreground { get; set; }
 
     /// <summary>
     /// 附加样式.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string AdditionalStyle { get; set; }
 
     /// <summary>
     /// 是否显式主题选择器.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsThemeSelectionShown { get; set; }
 
     /// <summary>
     /// 是否正在初始化.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsInitializing { get; set; }
 
     /// <summary>
     /// 是否加载失败.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsInitializeFailed { get; set; }
 
     /// <summary>
     /// 加载错误文本.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string InitializeErrorText { get; set; }
 
     /// <summary>
     /// 原始文本.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string SourceText { get; set; }
 
     /// <summary>
     /// 翻译后文本.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public string TranslatedText { get; set; }
 
     /// <summary>
     /// 翻译出错.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsTranslateError { get; set; }
 
     /// <summary>
     /// 是否正在搜索.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsSearcing { get; set; }
 
     /// <summary>
     /// 搜索结果是否为空.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsSearchEmptyShown { get; set; }
 
     /// <summary>
     /// 笔记是否为空.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsNotesEmptyShown { get; set; }
 
     /// <summary>
     /// 是否顺滑滚动.
     /// </summary>
-    [Reactive]
+    [ObservableProperty]
     public bool IsSmoothScroll { get; set; }
 
     /// <summary>

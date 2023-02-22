@@ -33,7 +33,7 @@
   <ItemGroup>
     <None Remove="Controls\AmbieSettingItem.xaml" />
     <None Remove="Controls\AppTitleBar.xaml" />
-    <None Remove="Controls\App\CustomDialog\CustomDialog.xaml" />
+    <None Remove="Controls\App\CustomDialog.xaml" />
     <None Remove="Controls\App\ExpanderEx.xaml" />
     <None Remove="Controls\App\FileSystemErrorPanel.xaml" />
     <None Remove="Controls\App\TipPopup.xaml" />
@@ -51,8 +51,6 @@
     <None Remove="Controls\LibrarySettingItem.xaml" />
     <None Remove="Controls\OnlineBookCard.xaml" />
     <None Remove="Controls\OnlineSearchDialog.xaml" />
-    <None Remove="Controls\Popups\ConfirmDialog.xaml" />
-    <None Remove="Controls\Popups\GithubUpdateDialog.xaml" />
     <None Remove="Controls\ProgressDialog.xaml" />
     <None Remove="Controls\ReadDurationDetailDialog.xaml" />
     <None Remove="Controls\ReaderCatalog.xaml" />
@@ -107,23 +105,23 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CleanReader.Core\CleanReader.Core.csproj" />
+    <ProjectReference Include="..\Controls\Controls.Interfaces\Controls.Interfaces.csproj" />
     <ProjectReference Include="..\Models\Models.Resources\Models.Resources.csproj" />
     <ProjectReference Include="..\Utilities\Generator\Generator.String\Generator.String.csproj" />
+    <ProjectReference Include="..\Utilities\Locator\Locator.App\Locator.App.csproj" />
     <ProjectReference Include="..\Utilities\Locator\Locator.Lib\Locator.Lib.csproj" />
     <ProjectReference Include="..\Utilities\Toolkit\Toolkit.Desktop\Toolkit.Desktop.csproj" />
     <ProjectReference Include="..\Utilities\Toolkit\Toolkit.Interfaces\Toolkit.Interfaces.csproj" />
     <ProjectReference Include="..\ViewModels\ViewModels.Desktop\ViewModels.Desktop.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\App\CustomDialog\CustomDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
+    <Page Update="Controls\App\CustomDialog.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\App\ExpanderEx.xaml">
       <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Controls\Popups\BookInformationDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\App\FileSystemErrorPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -140,13 +138,7 @@
     <Page Update="Controls\Reader\ReaderDurationCard.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Controls\Popups\ReadDurationDetailDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="Themes\Style.Dimensions.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Controls\Popups\GithubUpdateDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <PackageReference Update="Microsoft.CodeAnalysis.Metrics" Version="3.3.3">
@@ -154,9 +146,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <Page Update="Controls\Settings\LanguageSettingItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Controls\Popups\ReplaceSourceDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\App\CoverImage.xaml">
@@ -171,16 +160,7 @@
     <Page Update="Pages\MigrationPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Controls\Popups\CreateBookSourceDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="Controls\Settings\ShelfSettingItem.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Controls\Popups\CreateOrUpdateShelfDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Controls\Popups\ShelfTransferDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Settings\ContinueReadingSettingItem.xaml">
@@ -198,15 +178,6 @@
     <Page Update="Controls\Settings\LibrarySettingItem.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Controls\Popups\InternalSearchDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Controls\Popups\ReaderHighlightDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Controls\Popups\ReaderStyleOptionsDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="Controls\Reader\ReaderMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -216,9 +187,6 @@
     <Page Update="Pages\ReaderPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Update="Controls\Popups\ConfirmDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="Controls\Reader\ShelfBookCard.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -226,15 +194,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Reader\OnlineBookCard.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Controls\Popups\OnlineSearchDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Controls\Popups\ProgressDialog.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Controls\Popups\TxtSplitDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Update="Controls\Dialogs\ImportWayDialog.xaml">
