@@ -431,7 +431,7 @@
     <value>书库位置</value>
   </data>
   <data name="LibraryLocationDescription" xml:space="preserve">
-    <value>你可以查看或者关闭当前书库</value>
+    <value>是否确认关闭当前书库？</value>
   </data>
   <data name="Light" xml:space="preserve">
     <value>浅色</value>

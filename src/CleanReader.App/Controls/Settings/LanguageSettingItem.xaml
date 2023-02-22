@@ -2,34 +2,24 @@
     x:Class="CleanReader.App.Controls.LanguageSettingItem"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:core="using:CleanReader.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:local="using:CleanReader.App.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:res="using:CleanReader.Models.Resources"
     Loaded="OnLoaded"
     mc:Ignorable="d">
 
-    <core:ExpanderEx>
-        <core:ExpanderEx.Header>
-            <core:ExpanderExWrapper Style="{StaticResource WrapperInExpanderHeaderStyle}">
-                <core:ExpanderExWrapper.MainContent>
-                    <core:ExpanderExDescriptor Title="{x:Bind res:StringResources.AppLanguage}" Description="{x:Bind res:StringResources.AppLanguageDescription}">
-                        <core:ExpanderExDescriptor.Icon>
-                            <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE8C1;" />
-                        </core:ExpanderExDescriptor.Icon>
-                    </core:ExpanderExDescriptor>
-                </core:ExpanderExWrapper.MainContent>
-                <core:ExpanderExWrapper.WrapContent>
-                    <ComboBox
-                        x:Name="LanguageBox"
-                        MinWidth="120"
-                        SelectionChanged="OnLanguageSelectionChanged">
-                        <ComboBoxItem Content="简体中文" Tag="zh-CN" />
-                        <ComboBoxItem Content="English" Tag="en-US" />
-                    </ComboBox>
-                </core:ExpanderExWrapper.WrapContent>
-            </core:ExpanderExWrapper>
-        </core:ExpanderEx.Header>
-    </core:ExpanderEx>
+    <labs:SettingsCard Description="{x:Bind res:StringResources.AppLanguageDescription}" Header="{x:Bind res:StringResources.AppLanguage}">
+        <labs:SettingsCard.HeaderIcon>
+            <FontIcon Style="{StaticResource SymbolFontIconStyle}" Glyph="&#xE8C1;" />
+        </labs:SettingsCard.HeaderIcon>
+        <ComboBox
+            x:Name="LanguageBox"
+            MinWidth="120"
+            SelectionChanged="OnLanguageSelectionChanged">
+            <ComboBoxItem Content="简体中文" Tag="zh-CN" />
+            <ComboBoxItem Content="English" Tag="en-US" />
+        </ComboBox>
+    </labs:SettingsCard>
 </UserControl>

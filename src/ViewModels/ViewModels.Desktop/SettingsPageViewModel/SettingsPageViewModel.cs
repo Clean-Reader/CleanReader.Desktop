@@ -25,7 +25,7 @@ namespace CleanReader.ViewModels.Desktop
             ServiceLocator.Instance.LoadService(out _settingsToolkit);
 
             InitializeCommand = ReactiveCommand.Create(Initialize, outputScheduler: RxApp.MainThreadScheduler);
-            CloseLibraryCommand = ReactiveCommand.Create(CloseLibrary, outputScheduler: RxApp.MainThreadScheduler);
+            CloseLibraryCommand = ReactiveCommand.CreateFromTask(CloseLibraryAsync, outputScheduler: RxApp.MainThreadScheduler);
             OpenLibraryCommand = ReactiveCommand.CreateFromTask(OpenLibraryAsync, outputScheduler: RxApp.MainThreadScheduler);
             ShowCreateOrUpdateShelfDialogCommand = ReactiveCommand.CreateFromTask<Shelf>(ShowCreateOrUpdateShelfDialogAsync, outputScheduler: RxApp.MainThreadScheduler);
 
@@ -84,7 +84,15 @@ namespace CleanReader.ViewModels.Desktop
             await dialog.ShowAsync();
         }
 
-        private void CloseLibrary()
-            => AppViewModel.Instance.RequestStartup();
+        private async Task CloseLibraryAsync()
+        {
+            var dialog = ServiceLocator.Instance.GetService<ICustomDialog>(AppConstants.ConfirmDialog);
+            dialog.InjectData(StringResources.LibraryLocationDescription);
+            var result = await dialog.ShowAsync();
+            if (result == 0)
+            {
+                AppViewModel.Instance.RequestStartup();
+            }
+        }
     }
 }

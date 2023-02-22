@@ -431,7 +431,7 @@ The book will be removed from your library, and the history / notes related to t
     <value>Library location</value>
   </data>
   <data name="LibraryLocationDescription" xml:space="preserve">
-    <value>You can view or close the current library</value>
+    <value>Do you want to close the current library?</value>
   </data>
   <data name="Light" xml:space="preserve">
     <value>Light</value>

@@ -11,7 +11,6 @@
                 <ResourceDictionary Source="ms-appx:///Themes/Style.Dimensions.xaml" />
                 <ResourceDictionary Source="ms-appx:///Controls/App/CardPanel/CardPanel.xaml" />
                 <ResourceDictionary Source="ms-appx:///Controls/App/CustomDialog/CustomDialog.xaml" />
-                <ResourceDictionary Source="ms-appx:///Controls/App/ExpanderEx.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light" Source="ms-appx:///Themes/Themes.Light.xaml" />
