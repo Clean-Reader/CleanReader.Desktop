@@ -34,7 +34,6 @@
     <None Remove="Controls\AmbieSettingItem.xaml" />
     <None Remove="Controls\AppTitleBar.xaml" />
     <None Remove="Controls\App\CustomDialog\CustomDialog.xaml" />
-    <None Remove="Controls\App\ExpanderEx.xaml" />
     <None Remove="Controls\App\FileSystemErrorPanel.xaml" />
     <None Remove="Controls\App\TipPopup.xaml" />
     <None Remove="Controls\BookInformationDialog.xaml" />
@@ -89,6 +88,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Labs.WinUI.SettingsControls" Version="0.0.15" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Animations" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
     <PackageReference Include="CommunityToolkit.WinUI.UI.Media" Version="7.1.2" />
@@ -117,10 +117,6 @@
   <ItemGroup>
     <Page Update="Controls\App\CustomDialog\CustomDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Update="Controls\App\ExpanderEx.xaml">
-      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\Popups\BookInformationDialog.xaml">
       <Generator>MSBuild:Compile</Generator>

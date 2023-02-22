@@ -37,12 +37,10 @@ namespace CleanReader.App.Controls
         private async void OnWindowActivatedAsync(object sender, WindowActivatedEventArgs args)
             => await _viewModel.CheckAmbieInstalledAsync();
 
-#pragma warning disable CA1822 // 将成员标记为 static
-        private async void OnDownloadLinkClickAsync(Microsoft.UI.Xaml.Documents.Hyperlink sender, Microsoft.UI.Xaml.Documents.HyperlinkClickEventArgs args)
+        private async void OnDownloadLinkClickAsync(object sender, RoutedEventArgs e)
         {
             var uri = new Uri("ms-windows-store://pdp/?productid=9P07XNM5CHP0");
             await Launcher.LaunchUriAsync(uri);
         }
-#pragma warning restore CA1822 // 将成员标记为 static
     }
 }

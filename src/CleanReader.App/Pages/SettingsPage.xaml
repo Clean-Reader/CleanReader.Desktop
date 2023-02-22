@@ -46,27 +46,29 @@
             Padding="{StaticResource DefaultContainerPadding}"
             HorizontalScrollMode="Disabled"
             VerticalScrollBarVisibility="Auto">
-            <StackPanel Margin="0,0,0,26">
+            <StackPanel Margin="0,0,0,24" Spacing="4">
+                <StackPanel.ChildrenTransitions>
+                    <RepositionThemeTransition IsStaggeringEnabled="False" />
+                </StackPanel.ChildrenTransitions>
                 <TextBlock
                     Style="{StaticResource BodyTextBlockStyle}"
+                    Margin="0,0,0,8"
                     FontWeight="Bold"
                     Text="{x:Bind res:StringResources.Read}" />
-                <StackPanel Margin="0,8,0,20" Spacing="4">
-                    <!-- 阅读相关设置 -->
-                    <controls:LibrarySettingItem />
-                    <controls:ShelfSettingItem IsEnabled="{x:Bind _libraryViewModel.IsFileSystemLimited, Mode=OneWay, Converter={StaticResource BoolReverseConverter}}" />
-                    <controls:SpreadSettingItem />
-                    <controls:ContinueReadingSettingItem />
-                    <controls:AmbieSettingItem />
-                </StackPanel>
+                <!-- 阅读相关设置 -->
+                <controls:LibrarySettingItem />
+                <controls:ShelfSettingItem IsEnabled="{x:Bind _libraryViewModel.IsFileSystemLimited, Mode=OneWay, Converter={StaticResource BoolReverseConverter}}" />
+                <controls:SpreadSettingItem />
+                <controls:ContinueReadingSettingItem />
+                <controls:AmbieSettingItem />
                 <TextBlock
                     Style="{StaticResource BodyTextBlockStyle}"
+                    Margin="0,12,0,8"
                     FontWeight="Bold"
                     Text="{x:Bind res:StringResources.Personalization}" />
-                <StackPanel Margin="0,8,0,20" Spacing="4">
-                    <controls:ThemeSettingItem />
-                    <controls:LanguageSettingItem />
-                </StackPanel>
+                <!-- 通用设置 -->
+                <controls:ThemeSettingItem />
+                <controls:LanguageSettingItem />
                 <TextBlock
                     Style="{StaticResource BodyTextBlockStyle}"
                     FontWeight="Bold"
