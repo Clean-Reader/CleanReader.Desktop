@@ -14,7 +14,7 @@
       <PackageReference Include="ReactiveUI" Version="18.4.22" />
       <PackageReference Include="ReactiveUI.Fody" Version="18.4.22" />
       <PackageReference Include="ReactiveUI.WinUI" Version="18.4.22" />
-      <PackageReference Include="VersOne.Epub" Version="3.2.0" />
+      <PackageReference Include="VersOne.Epub" Version="3.3.0-alpha1" />
       <PackageReference Include="Wadereye.GoogleTranslateFreeApi" Version="1.3.0" />
   </ItemGroup>
 
