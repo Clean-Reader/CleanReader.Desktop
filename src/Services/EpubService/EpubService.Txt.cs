@@ -27,12 +27,7 @@ namespace CleanReader.Services.Epub
 
         private static bool IsExtra(string line)
         {
-            if (line.Length > MAX_CHAPTER_TITLE_LENGTH)
-            {
-                return false;
-            }
-
-            return CHAPTER_EXTRA_KEYS.Any(k => line.StartsWith(k));
+            return line.Length > MAX_CHAPTER_TITLE_LENGTH ? false : CHAPTER_EXTRA_KEYS.Any(k => line.StartsWith(k));
         }
 
         private static async Task GenerateHtmlFromTxtAsync(string title, string[] lines, int index, string folderPath = "")
