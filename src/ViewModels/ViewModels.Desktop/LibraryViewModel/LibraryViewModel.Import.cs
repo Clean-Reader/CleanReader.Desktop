@@ -128,10 +128,14 @@ namespace CleanReader.ViewModels.Desktop
             // 直接导入.
             var destPath = Path.Combine(_rootDirectory.FullName, VMConstants.Library.BooksFolder, Path.GetFileName(path));
             var progressDialog = ServiceLocator.Instance.GetService<ICustomDialog>(AppConstants.ProgressDialog);
+            var movingTask = _fileToolkit.CopyAsync(path, destPath);
             progressDialog.InjectData(StringResources.MovingFile);
-            progressDialog.InjectTask(_fileToolkit.CopyAsync(path, destPath));
+            progressDialog.InjectTask(movingTask);
+            if (!movingTask.IsCompleted)
+            {
+                await progressDialog.ShowAsync();
+            }
 
-            await progressDialog.ShowAsync();
             var book = GetBookEntryFromLocalPath(destPath);
 
             try
@@ -145,6 +149,7 @@ namespace CleanReader.ViewModels.Desktop
             }
             catch (Exception)
             {
+                book.Title = Path.GetFileNameWithoutExtension(path);
             }
 
             return book;

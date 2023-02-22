@@ -45,7 +45,7 @@ namespace CleanReader.App.Controls
 
         public void Hide()
         {
-            _taskSource.SetResult(_hideCode);
+            _taskSource?.SetResult(_hideCode);
             VisualStateManager.GoToState(this, "DialogHidden", true);
             ((MainWindow)AppViewModel.Instance.MainWindow).RemoveFromHolder(this);
             OnHide();
