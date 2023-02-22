@@ -37,10 +37,7 @@ namespace CleanReader.Services.Epub
         public static async Task<EpubServiceConfiguration> SplitTxtFileAsync(string filePath, Regex? splitRegex = null, CancellationTokenSource cancellationTokenSource = null)
         {
             ClearCache();
-            if (splitRegex == null)
-            {
-                splitRegex = CHAPTER_DIVISION_REGEX;
-            }
+            splitRegex ??= CHAPTER_DIVISION_REGEX;
 
             var file = new FileInfo(filePath);
             if (file.Exists)
@@ -104,9 +101,14 @@ namespace CleanReader.Services.Epub
                 lineAction.Complete();
                 await lineAction.Completion;
 
-                if (filterLines.Count > 0 && !string.IsNullOrEmpty(chapterTitle))
+                if (filterLines.Count > 0)
                 {
-                    await GenerateHtmlFromTxtAsync(chapterTitle, filterLines.ToArray(), chapterIndex);
+                    if (string.IsNullOrEmpty(lastTitle))
+                    {
+                        lastTitle = "Untitled";
+                    }
+
+                    await GenerateHtmlFromTxtAsync(lastTitle, filterLines.ToArray(), chapterIndex);
                 }
 
                 if (!Directory.Exists(GENERATE_FOLDER_PATH))
@@ -196,9 +198,14 @@ namespace CleanReader.Services.Epub
                     }
                 }
 
-                if (filterLines.Count > 0 && !string.IsNullOrEmpty(chapterTitle))
+                if (filterLines.Count > 0)
                 {
-                    result.Add(new Tuple<string, int>(chapterTitle, filterLines.Sum(p => p.Length)));
+                    if (string.IsNullOrEmpty(lastTitle))
+                    {
+                        lastTitle = "Untitled";
+                    }
+
+                    result.Add(new Tuple<string, int>(lastTitle, filterLines.Sum(p => p.Length)));
                 }
 
                 return result;

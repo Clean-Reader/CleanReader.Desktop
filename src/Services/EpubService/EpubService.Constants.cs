@@ -11,7 +11,7 @@ namespace CleanReader.Services.Epub
     {
         private const string MIME_TYPE = "application/epub+zip";
 
-        private static readonly Regex CHAPTER_DIVISION_REGEX = new (@"(正文){0,1}(\s|\n)(第)([\u4e00-\u9fa5a-zA-Z0-9]{1,7})[章节卷集部篇回幕计](\s{0})(.*)($\s*)");
+        private static readonly Regex CHAPTER_DIVISION_REGEX = new (@"^[ 　\t]{0,4}(?:序章|楔子|正文(?!完|结)|终章|后记|尾声|番外|第?\s{0,4}[\d〇零一二两三四五六七八九十百千万壹贰叁肆伍陆柒捌玖拾佰仟]+?\s{0,4}(?:章|节(?!课)|卷|集(?![合和])|部(?![分赛游])|篇(?!张))).{0,30}$");
         private static readonly string[] CHAPTER_EXTRA_KEYS = new string[] { "序", "前言", "后记", "楔子", "附录", "外传" };
 
         /// <summary>
