@@ -3,13 +3,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CleanReader.App.Controls.Popups;
+using CleanReader.Locator.Lib;
 using CleanReader.Models.App;
+using CleanReader.Models.Constants;
 using CleanReader.Models.Resources;
+using CleanReader.Toolkit.Interfaces;
 using CleanReader.ViewModels.Desktop;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
+using Windows.Services.Store;
 using Windows.System;
 
 namespace CleanReader.App.Pages
@@ -113,6 +118,21 @@ namespace CleanReader.App.Pages
                 await _libraryViewModel.CheckContinueReadingAsync();
             }
 
+            var settingToolkit = ServiceLocator.Instance.GetService<ISettingsToolkit>();
+            var shouldShowFinalUpdate = !settingToolkit.ReadLocalSetting(SettingNames.IsFinalUpdateShown, false);
+            if (shouldShowFinalUpdate)
+            {
+                var license = await StoreContext.GetDefault().GetAppLicenseAsync();
+                if (license?.IsActive ?? false)
+                {
+                    var dialog = new FinalUpdateDialog();
+                    dialog.XamlRoot = XamlRoot;
+                    await dialog.ShowAsync();
+                }
+
+                settingToolkit.WriteLocalSetting(SettingNames.IsFinalUpdateShown, true);
+            }
+
 #if !DEBUG
             _viewModel.CheckGithubUpdateCommand.Execute().Subscribe();
 #endif
@@ -151,10 +171,7 @@ namespace CleanReader.App.Pages
         private void OnNavigationRequested(object sender, NavigationEventArgs e)
         {
             var navItem = _viewModel.NavigationList.Where(p => p.PageType == e.PageType).FirstOrDefault();
-            if (navItem == null)
-            {
-                navItem = _viewModel.NavigationList.Where(p => p.Children != null).SelectMany(p => p.Children).Where(p => p.Id == e.Id).FirstOrDefault();
-            }
+            navItem ??= _viewModel.NavigationList.Where(p => p.Children != null).SelectMany(p => p.Children).Where(p => p.Id == e.Id).FirstOrDefault();
 
             if (navItem != null)
             {

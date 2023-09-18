@@ -22,6 +22,11 @@ namespace CleanReader.App
     public partial class App : Application
     {
         /// <summary>
+        /// App id.
+        /// </summary>
+        public const string Id = "DE6B36F9-011A-4087-9564-EED4AF90D2F6";
+
+        /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>

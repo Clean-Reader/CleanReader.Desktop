@@ -328,6 +328,9 @@
   <data name="FailedToDownload" xml:space="preserve">
     <value>下载失败，请稍后重试</value>
   </data>
+  <data name="FinalUpdate" xml:space="preserve">
+    <value>最终通知</value>
+  </data>
   <data name="FirstReplaceTip" xml:space="preserve">
     <value>请切换书源以进行搜索</value>
   </data>
@@ -522,6 +525,9 @@
   </data>
   <data name="OpenDownloadPage" xml:space="preserve">
     <value>前往下载</value>
+  </data>
+  <data name="OpenForm" xml:space="preserve">
+    <value>打开表单</value>
   </data>
   <data name="OpenInBroswer" xml:space="preserve">
     <value>在浏览器中打开</value>

@@ -35,5 +35,6 @@ namespace CleanReader.Models.Constants
         AmbieCompact,
         AmbieAutoPlay,
         IsAutoPlayBackgroundMusic,
+        IsFinalUpdateShown,
     }
 }
