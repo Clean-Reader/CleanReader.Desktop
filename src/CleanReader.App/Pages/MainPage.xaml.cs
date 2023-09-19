@@ -119,7 +119,8 @@ namespace CleanReader.App.Pages
             }
 
             var settingToolkit = ServiceLocator.Instance.GetService<ISettingsToolkit>();
-            var shouldShowFinalUpdate = !settingToolkit.ReadLocalSetting(SettingNames.IsFinalUpdateShown, false);
+            var shouldShowFinalUpdate = !settingToolkit.ReadLocalSetting(SettingNames.IsFinalUpdateShown, false)
+                && DateTimeOffset.Now.Date > new DateTimeOffset(2023, 9, 30, 0, 0, 0, TimeSpan.Zero);
             if (shouldShowFinalUpdate)
             {
                 var license = await StoreContext.GetDefault().GetAppLicenseAsync();
